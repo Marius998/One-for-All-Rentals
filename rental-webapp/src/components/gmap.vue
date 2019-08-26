@@ -35,8 +35,31 @@ export default {
     markers : markers, 
   }),
   computed : {
+
+    
   },
   methods : {
+
+    panToCurrent ()  {
+
+          console.log("panTOCUrrent");
+         if (navigator.geolocation) {
+                  let position = navigator.geolocation.getCurrentPosition((data)=>{
+                                 console.log("located");
+                                 console.log(data.coords.longitude);
+                                 console.log(data.coords.latitude);
+                                 let position = data;
+
+                                  this.$refs.mapRef.$mapPromise.then((map) => {
+                                  map.panTo({lat : position.coords.latitude , lng: position.coords.longitude})
+                                  })
+                  });              
+              }
+
+
+    }
+
+
     },
 
     mounted: function () {
