@@ -1,18 +1,14 @@
 <template>
   <div>
     <GmapMap
+      ref="mapRef"
       class="gmap"
       :center="{lat:50.946256, lng:6.897077}"
       :zoom="16"
-      map-type-id="terrain"
+      map-type-id="roadmap"
       :options="{
-   zoomControl: false,
-   mapTypeControl: false,
-   scaleControl: false,
-   streetViewControl: false,
-   rotateControl: false,
-   fullscreenControl: false,
-   disableDefaultUi: false
+      gestureHandling : 'greedy',
+      disableDefaultUI : true
  }"
     >
       <GmapMarker
@@ -29,7 +25,45 @@
 
 
 <script>
-export default {};
+var markers = [];
+import Vue from 'vue';
+import * as VueGoogleMaps from 'vue2-google-maps'
+
+export default {
+  name : 'gmap',
+  data: () => ({
+    markers : markers, 
+  }),
+  computed : {
+  },
+  methods : {
+    },
+
+    mounted: function () {
+
+    this.$nextTick(function () {        
+
+                  console.log("locating ...");
+                  if (navigator.geolocation) {
+                  let position = navigator.geolocation.getCurrentPosition((data)=>{
+                                 console.log("located");
+                                 console.log(data.coords.longitude);
+                                 console.log(data.coords.latitude);
+                                 let position = data;
+
+                                  this.$refs.mapRef.$mapPromise.then((map) => {
+                                  map.panTo({lat : position.coords.latitude , lng: position.coords.longitude})
+                                  })
+                  });              
+              }
+              else {
+                console.log("No geolocation");
+              }
+       })
+     }
+  
+ 
+};
 </script>
 
 
