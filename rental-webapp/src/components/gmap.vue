@@ -1,8 +1,10 @@
 <template>
   <div>
-    <v-btn class="geolocation-btn" rounded @click="panToCurrent">
-      <v-icon>location_searching</v-icon>
-    </v-btn>
+    <div class="geolocation-btn" @click="panToCurrent">
+      <v-btn color="white" fab dark>
+        <v-icon color="black">location_searching</v-icon>
+      </v-btn>
+    </div>
     <GmapMap
       ref="mapRef"
       class="gmap"
@@ -106,6 +108,7 @@
         :clickable="true"
         :draggable="true"
         @click="center=m.position"
+        icon="https://img.icons8.com/officel/46/000000/scooter.png"
       />
     </GmapMap>
   </div>
@@ -113,6 +116,7 @@
 
 
 <script>
+// icon= "https://store-images.s-microsoft.com/image/apps.58743.9007199266343078.3ba0f22e-dc41-4cec-9c9c-cb807ffdb230.06103844-c1ce-454e-bb62-be27206c7a65?mode=scale&q=90&h=70&w=70"
 import Vue from "vue";
 import * as VueGoogleMaps from "vue2-google-maps";
 const fetch = require("node-fetch");
@@ -120,35 +124,13 @@ const fetch = require("node-fetch");
 var cityID = 14;
 var api = "https://api.nextbike.net/maps/nextbike-live.json?city=" + cityID;
 
-var markers = (lat, lng) => {
-  console.log(lat, lng);
-  return markers[
-    ({
-      position: {
-        lat: lat,
-        lng: lng
-      }
-    },
-    {
-      position: {
-        lat: 50.949833,
-        lng: 6.916409
-      }
-    },
-    {
-      position: {
-        lat: 50.941278,
-        lng: 6.958281
-      }
-    })
-  ];
-};
-
 export default {
   name: "gmap",
-  data: () => ({
-    markers: markers
-  }),
+  data() {
+    return {
+      markers: []
+    };
+  },
   computed: {},
   methods: {
     panToCurrent() {
@@ -172,6 +154,26 @@ export default {
     getData: async function() {
       var liste = [];
 
+      var addMarker = (list = []) => {
+        console.log("klappt");
+
+        const marker1 = {
+          lat: 50.941278,
+          lng: 6.958281
+        };
+        const marker2 = {
+          lat: list[2],
+          lng: list[3]
+        };
+        const marker3 = {
+          lat: list[0],
+          lng: list[1]
+        };
+        this.markers.push({ position: marker1 });
+        this.markers.push({ position: marker2 });
+        this.markers.push({ position: marker3 });
+      };
+
       fetch(api)
         .then(res => res.json())
         .then(json => {
@@ -183,13 +185,10 @@ export default {
             });
           });
 
-          // console.log(json.countries[0].cities[0].places[100].lng)
-          // console.log(json.countries[0].cities[0].places[100].lat)
+          // var lat = json.countries[0].cities[0].places[100].lat;
+          // var lng = json.countries[0].cities[0].places[100].lng;
 
-          var lat = json.countries[0].cities[0].places[100].lat;
-          var lng = json.countries[0].cities[0].places[100].lng;
-
-          markers(lat, lng);
+          addMarker(liste);
         });
     }
   },
@@ -233,8 +232,8 @@ export default {
 .geolocation-btn {
   z-index: 2;
   position: fixed;
-  margin-top: 5vh;
-  margin-left: 80vw;
+  right: 50px;
+  top: 100px;
 }
 </style>
 
