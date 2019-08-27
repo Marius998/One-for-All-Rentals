@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-btn class="geolocation-btn" rounded @click="panToCurrent"> <v-icon>location_searching</v-icon> </v-btn>
     <GmapMap
       ref="mapRef"
       class="gmap"
@@ -19,7 +20,11 @@
         :draggable="true"
         @click="center=m.position"
       />
+
+    
     </GmapMap>
+
+    
   </div>
 </template>
 
@@ -95,6 +100,16 @@ export default {
 .gmap {
   width: 100vw;
   height: 100vh;
+}
+
+.geolocation-btn {
+  z-index: 2;
+  position: fixed;
+  margin-top: 5vh;
+  margin-left: 80vw;
+ 
+  
+  
 }
 </style>
 
