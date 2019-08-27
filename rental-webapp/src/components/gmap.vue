@@ -1,6 +1,8 @@
 <template>
   <div>
-    <v-btn class="geolocation-btn" rounded @click="panToCurrent"> <v-icon>location_searching</v-icon> </v-btn>
+    <v-btn class="geolocation-btn" rounded @click="panToCurrent">
+      <v-icon>location_searching</v-icon>
+    </v-btn>
     <GmapMap
       ref="mapRef"
       class="gmap"
@@ -105,68 +107,118 @@
         :draggable="true"
         @click="center=m.position"
       />
-
-    
     </GmapMap>
-
-    
   </div>
 </template>
 
 
 <script>
-var markers = [];
-import Vue from 'vue';
-import * as VueGoogleMaps from 'vue2-google-maps'
+import Vue from "vue";
+import * as VueGoogleMaps from "vue2-google-maps";
+const fetch = require("node-fetch");
+
+var cityID = 14;
+var api = "https://api.nextbike.net/maps/nextbike-live.json?city=" + cityID;
+
+var markers = (lat, lng) => {
+  console.log(lat, lng);
+  return markers[
+    ({
+      position: {
+        lat: lat,
+        lng: lng
+      }
+    },
+    {
+      position: {
+        lat: 50.949833,
+        lng: 6.916409
+      }
+    },
+    {
+      position: {
+        lat: 50.941278,
+        lng: 6.958281
+      }
+    })
+  ];
+};
 
 export default {
-  name : 'gmap',
+  name: "gmap",
   data: () => ({
-    markers : markers, 
+    markers: markers
   }),
-  computed : {
-
-  },
-  methods : {
-    panToCurrent ()  {
+  computed: {},
+  methods: {
+    panToCurrent() {
       console.log("panTOCUrrent");
       if (navigator.geolocation) {
-        let position = navigator.geolocation.getCurrentPosition((data)=>{
+        let position = navigator.geolocation.getCurrentPosition(data => {
           console.log("located");
           console.log(data.coords.longitude);
           console.log(data.coords.latitude);
           let position = data;
-          
-          this.$refs.mapRef.$mapPromise.then((map) => {
-            map.panTo({lat : position.coords.latitude , lng: position.coords.longitude})
-          })
-        });              
+
+          this.$refs.mapRef.$mapPromise.then(map => {
+            map.panTo({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            });
+          });
+        });
       }
+    },
+    getData: async function() {
+      var liste = [];
+
+      fetch(api)
+        .then(res => res.json())
+        .then(json => {
+          json.countries.forEach(country => {
+            country.cities.forEach(city => {
+              city.places.forEach(place => {
+                if (place.uid < 3176060) liste.push(place.lat, place.lng);
+              });
+            });
+          });
+
+          // console.log(json.countries[0].cities[0].places[100].lng)
+          // console.log(json.countries[0].cities[0].places[100].lat)
+
+          var lat = json.countries[0].cities[0].places[100].lat;
+          var lng = json.countries[0].cities[0].places[100].lng;
+
+          markers(lat, lng);
+        });
     }
   },
+  beforeMount() {
+    this.getData();
+  },
 
-  mounted: function () {
-    
-    this.$nextTick(function () {
-      
+  mounted: function() {
+    this.$nextTick(function() {
       console.log("locating ...");
       if (navigator.geolocation) {
-        let position = navigator.geolocation.getCurrentPosition((data)=>{
+        let position = navigator.geolocation.getCurrentPosition(data => {
           console.log("located");
           console.log(data.coords.longitude);
           console.log(data.coords.latitude);
           let position = data;
-          
-          this.$refs.mapRef.$mapPromise.then((map) => {
-            map.panTo({lat : position.coords.latitude , lng: position.coords.longitude})
-          })
-        });              
+
+          this.$refs.mapRef.$mapPromise.then(map => {
+            map.panTo({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            });
+          });
+        });
       } else {
         console.log("No geolocation");
       }
-    })
+    });
   }
-  
 };
 </script>
 
