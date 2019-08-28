@@ -120,18 +120,19 @@ import Vue from "vue";
 import * as VueGoogleMaps from "vue2-google-maps";
 const fetch = require("node-fetch");
 
-var cityID = 14;
-var api = "https://api.nextbike.net/maps/nextbike-live.json?city=" + cityID;
+
+import * as fetchNextbike from '@/scripts/nextBike';
 
 export default {
   name: "gmap",
   data() {
     return {
-      markers: []
+      markers: [],
+      nextBikes : []
     };
   },
-  computed: {},
   methods: {
+
     panToCurrent() {
       console.log("panTOCUrrent");
       if (navigator.geolocation) {
@@ -149,48 +150,24 @@ export default {
           });
         });
       }
-    },
-    getData: async function() {
-      var bikeList = [];
-
-      var addMarker = (bikeList) => {
-        console.log(bikeList);
-
-        var bikecounter = 0;
-        var i = 0;
-        while(bikeList[i] != undefined) {
-
-          const marker1 = {
-          lat: bikeList[i][0],
-          lng: bikeList[i][1]
-          };
-        
-          this.markers.push({ position: marker1 });
-
-          bikecounter++;
-          i++;
-        }
-        console.log(bikecounter);
-      };
-
-      fetch(api)
-        .then(res => res.json())
-        .then(json => {
-          json.countries.forEach(country => {
-            country.cities.forEach(city => {
-              city.places.forEach(place => {
-                if (place.bike == true) bikeList.push([place.lat, place.lng]);
-              });
-            });
-          });
-
-          //console.log(bikeList);
-          addMarker(bikeList);
-      });
-    }
+    }    
   },
+
   beforeMount() {
-    this.getData();
+
+
+      this.nextBikes = fetchNextbike.fetchNextbike();    
+
+    
+  },
+
+  watch : {
+
+    nextBikes : function draw(){
+        
+    }    
+
+
   },
 
   mounted: function() {
@@ -214,6 +191,7 @@ export default {
         console.log("No geolocation");
       }
     });
+
   }
 };
 </script>
