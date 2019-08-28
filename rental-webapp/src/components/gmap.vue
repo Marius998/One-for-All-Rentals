@@ -116,7 +116,6 @@
 
 
 <script>
-// icon= "https://store-images.s-microsoft.com/image/apps.58743.9007199266343078.3ba0f22e-dc41-4cec-9c9c-cb807ffdb230.06103844-c1ce-454e-bb62-be27206c7a65?mode=scale&q=90&h=70&w=70"
 import Vue from "vue";
 import * as VueGoogleMaps from "vue2-google-maps";
 const fetch = require("node-fetch");
