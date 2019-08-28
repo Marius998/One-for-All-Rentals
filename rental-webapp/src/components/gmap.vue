@@ -106,7 +106,7 @@
         v-for="(m, index) in markers"
         :position="m.position"
         :clickable="true"
-        :draggable="true"
+        :draggable="false"
         @click="center=m.position"
         icon="https://img.icons8.com/officel/46/000000/scooter.png"
       />
@@ -152,26 +152,26 @@ export default {
       }
     },
     getData: async function() {
-      var liste = [];
+      var bikeList = [];
 
-      var addMarker = (list = []) => {
-        console.log("klappt");
+      var addMarker = (bikeList) => {
+        console.log(bikeList);
 
-        const marker1 = {
-          lat: 50.941278,
-          lng: 6.958281
-        };
-        const marker2 = {
-          lat: list[2],
-          lng: list[3]
-        };
-        const marker3 = {
-          lat: list[0],
-          lng: list[1]
-        };
-        this.markers.push({ position: marker1 });
-        this.markers.push({ position: marker2 });
-        this.markers.push({ position: marker3 });
+        var bikecounter = 0;
+        var i = 0;
+        while(bikeList[i] != undefined) {
+
+          const marker1 = {
+          lat: bikeList[i][0],
+          lng: bikeList[i][1]
+          };
+        
+          this.markers.push({ position: marker1 });
+
+          bikecounter++;
+          i++;
+        }
+        console.log(bikecounter);
       };
 
       fetch(api)
@@ -180,16 +180,14 @@ export default {
           json.countries.forEach(country => {
             country.cities.forEach(city => {
               city.places.forEach(place => {
-                if (place.uid < 3176060) liste.push(place.lat, place.lng);
+                if (place.bike == true) bikeList.push([place.lat, place.lng]);
               });
             });
           });
 
-          // var lat = json.countries[0].cities[0].places[100].lat;
-          // var lng = json.countries[0].cities[0].places[100].lng;
-
-          addMarker(liste);
-        });
+          //console.log(bikeList);
+          addMarker(bikeList);
+      });
     }
   },
   beforeMount() {
