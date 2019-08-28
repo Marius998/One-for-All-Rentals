@@ -150,27 +150,47 @@ export default {
           });
         });
       }
-    }    
-  },
-
-  beforeMount() {
-
-
-      this.nextBikes = fetchNextbike.fetchNextbike();    
-
+    },
     
-  },
+    addMarker : function(bikeList) {
 
-  watch : {
-
-    nextBikes : function draw(){
+        console.log("bikeList");
+        console.log(bikeList);
+        var bikecounter = 0;
+        var i = 0;
+        while(bikeList[i] != undefined) {
+          const marker1 = {
+          lat: bikeList[i][0],
+          lng: bikeList[i][1]
+          };
         
-    }    
+          this.markers.push({ position: marker1 });
+          bikecounter++;
+          i++;
+        }
+        console.log(bikecounter);
+      }
+  },
+
+  beforeMount() { 
+        fetchNextbike.fetchNextbike()
+        .then( (bikes) =>{
+          this.nextBikes = bikes;
+        })   
+  },
+  created() {
 
 
   },
 
-  mounted: function() {
+  watch : {  
+      nextBikes : function ()  {
+          this.addMarker(this.nextBikes);
+      }
+  },
+      
+
+    mounted: function() {
     this.$nextTick(function() {
       console.log("locating ...");
       if (navigator.geolocation) {
