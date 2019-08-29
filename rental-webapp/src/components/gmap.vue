@@ -1,6 +1,10 @@
 <template>
   <div>
-    <v-btn class="geolocation-btn" rounded @click="panToCurrent"> <v-icon>location_searching</v-icon> </v-btn>
+    <div class="geolocation-btn" @click="panToCurrent">
+      <v-btn color="white" fab dark>
+        <v-icon color="black">location_searching</v-icon>
+      </v-btn>
+    </div>
     <GmapMap
       ref="mapRef"
       class="gmap"
@@ -102,71 +106,113 @@
         v-for="(m, index) in markers"
         :position="m.position"
         :clickable="true"
-        :draggable="true"
+        :draggable="false"
         @click="center=m.position"
+        icon="https://img.icons8.com/officel/46/000000/scooter.png"
       />
-
-    
     </GmapMap>
-
-    
   </div>
 </template>
 
 
 <script>
-var markers = [];
-import Vue from 'vue';
-import * as VueGoogleMaps from 'vue2-google-maps'
+import Vue from "vue";
+import * as VueGoogleMaps from "vue2-google-maps";
+const fetch = require("node-fetch");
+
+
+import * as fetchNextbike from '@/scripts/nextBike';
 
 export default {
-  name : 'gmap',
-  data: () => ({
-    markers : markers, 
-  }),
-  computed : {
-
+  name: "gmap",
+  data() {
+    return {
+      markers: [],
+      nextBikes : []
+    };
   },
-  methods : {
-    panToCurrent ()  {
+  methods: {
+
+    panToCurrent() {
       console.log("panTOCUrrent");
       if (navigator.geolocation) {
-        let position = navigator.geolocation.getCurrentPosition((data)=>{
+        let position = navigator.geolocation.getCurrentPosition(data => {
           console.log("located");
           console.log(data.coords.longitude);
           console.log(data.coords.latitude);
           let position = data;
-          
-          this.$refs.mapRef.$mapPromise.then((map) => {
-            map.panTo({lat : position.coords.latitude , lng: position.coords.longitude})
-          })
-        });              
+
+          this.$refs.mapRef.$mapPromise.then(map => {
+            map.panTo({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            });
+          });
+        });
       }
-    }
+    },
+    
+    addMarker : function(bikeList) {
+
+        console.log("bikeList");
+        console.log(bikeList);
+        var bikecounter = 0;
+        var i = 0;
+        while(bikeList[i] != undefined) {
+          const marker1 = {
+          lat: bikeList[i][0],
+          lng: bikeList[i][1]
+          };
+        
+          this.markers.push({ position: marker1 });
+          bikecounter++;
+          i++;
+        }
+        console.log(bikecounter);
+      }
   },
 
-  mounted: function () {
-    
-    this.$nextTick(function () {
+  beforeMount() { 
+        fetchNextbike.fetchNextbike()
+        .then( (bikes) =>{
+          this.nextBikes = bikes;
+        })   
+  },
+  created() {
+
+
+  },
+
+  watch : {  
+      nextBikes : function ()  {
+          this.addMarker(this.nextBikes);
+      }
+  },
       
+
+    mounted: function() {
+    this.$nextTick(function() {
       console.log("locating ...");
       if (navigator.geolocation) {
-        let position = navigator.geolocation.getCurrentPosition((data)=>{
+        let position = navigator.geolocation.getCurrentPosition(data => {
           console.log("located");
           console.log(data.coords.longitude);
           console.log(data.coords.latitude);
           let position = data;
-          
-          this.$refs.mapRef.$mapPromise.then((map) => {
-            map.panTo({lat : position.coords.latitude , lng: position.coords.longitude})
-          })
-        });              
+
+          this.$refs.mapRef.$mapPromise.then(map => {
+            map.panTo({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            });
+          });
+        });
       } else {
         console.log("No geolocation");
       }
-    })
+    });
+
   }
-  
 };
 </script>
 
@@ -181,8 +227,8 @@ export default {
 .geolocation-btn {
   z-index: 2;
   position: fixed;
-  margin-top: 5vh;
-  margin-left: 80vw;
+  right: 50px;
+  top: 100px;
 }
 </style>
 
