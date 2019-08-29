@@ -172,25 +172,7 @@ export default {
       }
   },
 
-  beforeMount() { 
-        fetchNextbike.fetchNextbike()
-        .then( (bikes) =>{
-          this.nextBikes = bikes;
-        })   
-  },
-  created() {
-
-
-  },
-
-  watch : {  
-      nextBikes : function ()  {
-          this.addMarker(this.nextBikes);
-      }
-  },
-      
-
-    mounted: function() {
+  beforeMount() {
     this.$nextTick(function() {
       console.log("locating ...");
       if (navigator.geolocation) {
@@ -211,8 +193,26 @@ export default {
         console.log("No geolocation");
       }
     });
+  },
 
+  mounted() {
+
+    fetchNextbike.fetchNextbike()
+    .then( (bikes) =>{
+      this.nextBikes = bikes;
+    })
+    .catch(function() {
+        console.log("error");
+    }); 
+
+  },
+
+  watch : {  
+    nextBikes : function ()  {
+       this.addMarker(this.nextBikes);
+    }
   }
+
 };
 </script>
 
