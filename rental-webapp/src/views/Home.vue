@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- <gmap ref="gmap" >
-    </gmap>-->
+    <gmap ref="gmap" >
+    </gmap>
   </div>
 </template>
 
@@ -15,6 +15,8 @@ export default {
     gmap,
     
   },
-  data: () => ({})
+  data: () => ({
+    
+  }),
 };
 </script>
