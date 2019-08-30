@@ -153,15 +153,15 @@ export default {
       }
     },
 
-    addMarker: function(bikeList) {
-      console.log("bikeList");
-      console.log(bikeList);
+    addMarker: function(vehicleList) {
+      console.log("vehicleList");
+      console.log(vehicleList);
       var bikecounter = 0;
       var i = 0;
-      while (bikeList[i] != undefined) {
+      while (vehicleList[i] != undefined) {
         const marker1 = {
-          lat: bikeList[i][0],
-          lng: bikeList[i][1]
+          lat: vehicleList[i][0],
+          lng: vehicleList[i][1]
         };
 
         this.markers.push({ position: marker1 });
@@ -172,8 +172,8 @@ export default {
     }
   },
 
-  beforeMount() {
-  
+  created() {
+
     this.$nextTick(function() {
       console.log("locating ...");
       if (navigator.geolocation) {
@@ -201,14 +201,15 @@ export default {
     fetchNextbike.fetchNextbike()
     .then( (bikes) =>{
       this.nextBikes = bikes;
-    })
-    .catch(function() {
+    }).catch(function() {
         console.log("error");
     }),
     
     fetchRhingo.fetchRhingo().then(moped => {
       this.rhingo = moped;
-    });
+    }).catch(function() {
+        console.log("error");
+    })
 
   },
 
