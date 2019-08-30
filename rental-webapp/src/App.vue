@@ -1,35 +1,23 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span @click="panToCurrent">Rental App</span>
-      </v-toolbar-title>
-    </v-app-bar>
+    <appBar />
 
     <v-content>
-      <gmap ref="gmap" >
-      </gmap>
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import gmap from './components/gmap';
-
+import appBar from "./components/appBar";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    gmap,
-  },
-  methods : {
-      panToCurrent () {
-          console.log("klick");
-          this.$refs.gmap.panToCurrent();
-      }
+    appBar
   },
   data: () => ({
     //
-  }),
+  })
 };
 </script>

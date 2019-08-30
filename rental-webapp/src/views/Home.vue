@@ -1,13 +1,22 @@
 <template>
-  <HelloWorld />
+  <div>
+    <gmap ref="gmap" >
+    </gmap>
+  </div>
 </template>
 
+
 <script>
-import HelloWorld from '../components/HelloWorld';
+import gmap from "../components/gmap";
 
 export default {
+  name: "App",
   components: {
-    HelloWorld,
+    gmap,
+    
   },
+  data: () => ({
+    
+  }),
 };
 </script>

@@ -5,11 +5,13 @@
         <v-icon color="black">location_searching</v-icon>
       </v-btn>
     </div>
+
     <GmapMap
       ref="mapRef"
       class="gmap"
       :center="{lat:50.946256, lng:6.897077}"
       :zoom="16"
+      @click="display = false"
       map-type-id="roadmap"
       :options="{
       gestureHandling : 'greedy',
@@ -107,10 +109,12 @@
         :position="m.position"
         :clickable="true"
         :draggable="false"
-        @click="center=m.position"
+        @click="display = true"
         icon="https://img.icons8.com/officel/46/000000/scooter.png"
       />
     </GmapMap>
+
+    <InfoCard v-show="display" />
   </div>
 </template>
 
@@ -120,19 +124,29 @@ import Vue from "vue";
 import * as VueGoogleMaps from "vue2-google-maps";
 const fetch = require("node-fetch");
 
+
+import InfoCard from "./infoCard";
+
 import * as fetchNextbike from "@/scripts/nextBike";
 import * as fetchRhingo from "@/scripts/rhingo";
 import { constants } from "crypto";
 
+
 export default {
   name: "gmap",
+  components: {
+    InfoCard
+  },
+  
   data() {
     return {
       markers: [],
       nextBikes: [],
-      rhingo: []
+      rhingo: [],
+      display: false
     };
   },
+  
   methods: {
     panToCurrent() {
       console.log("panTOCUrrent");
@@ -173,7 +187,7 @@ export default {
   },
 
   created() {
-
+  
     this.$nextTick(function() {
       console.log("locating ...");
       if (navigator.geolocation) {
@@ -194,6 +208,7 @@ export default {
         console.log("No geolocation");
       }
     });
+    
   },
 
   mounted() {
@@ -220,6 +235,7 @@ export default {
     rhingo: function() {
       this.addMarker(this.rhingo);
     }
+
   }
 
 };
