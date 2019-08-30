@@ -124,22 +124,29 @@ import Vue from "vue";
 import * as VueGoogleMaps from "vue2-google-maps";
 const fetch = require("node-fetch");
 
+
 import InfoCard from "./infoCard";
 
 import * as fetchNextbike from "@/scripts/nextBike";
+import * as fetchRhingo from "@/scripts/rhingo";
+import { constants } from "crypto";
+
 
 export default {
   name: "gmap",
   components: {
     InfoCard
   },
+  
   data() {
     return {
       markers: [],
       nextBikes: [],
+      rhingo: [],
       display: false
     };
   },
+  
   methods: {
     panToCurrent() {
       console.log("panTOCUrrent");
@@ -160,15 +167,15 @@ export default {
       }
     },
 
-    addMarker: function(bikeList) {
-      console.log("bikeList");
-      console.log(bikeList);
+    addMarker: function(vehicleList) {
+      console.log("vehicleList");
+      console.log(vehicleList);
       var bikecounter = 0;
       var i = 0;
-      while (bikeList[i] != undefined) {
+      while (vehicleList[i] != undefined) {
         const marker1 = {
-          lat: bikeList[i][0],
-          lng: bikeList[i][1]
+          lat: vehicleList[i][0],
+          lng: vehicleList[i][1]
         };
 
         this.markers.push({ position: marker1 });
@@ -179,20 +186,8 @@ export default {
     }
   },
 
-  beforeMount() {
-    fetchNextbike.fetchNextbike().then(bikes => {
-      this.nextBikes = bikes;
-    });
-  },
-  created() {},
-
-  watch: {
-    nextBikes : function ()  {
-        this.addMarker(this.nextBikes);
-    }
-  },
-
-  mounted: function() {
+  created() {
+  
     this.$nextTick(function() {
       console.log("locating ...");
       if (navigator.geolocation) {
@@ -213,7 +208,36 @@ export default {
         console.log("No geolocation");
       }
     });
+    
+  },
+
+  mounted() {
+
+    fetchNextbike.fetchNextbike()
+    .then( (bikes) =>{
+      this.nextBikes = bikes;
+    }).catch(function() {
+        console.log("error");
+    }),
+    
+    fetchRhingo.fetchRhingo().then(moped => {
+      this.rhingo = moped;
+    }).catch(function() {
+        console.log("error");
+    })
+
+  },
+
+  watch : {  
+    nextBikes : function ()  {
+       this.addMarker(this.nextBikes);
+    },
+    rhingo: function() {
+      this.addMarker(this.rhingo);
+    }
+
   }
+
 };
 </script>
 
