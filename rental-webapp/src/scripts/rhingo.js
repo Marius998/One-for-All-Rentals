@@ -9,13 +9,11 @@ export function fetchRhingo() {
         console.log("fetching");
 
         fetch(proxyUrl + api)
-
             .then(response => response.json())
             .then(data => {
 
                 data.forEach(geo => {
-                    mopedListe.push(geo.lat, geo.lon)
-
+                    mopedListe.push([geo.lat, geo.lon]);
                 })
                 resolve(mopedListe);
             });
