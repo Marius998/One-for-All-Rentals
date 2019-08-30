@@ -173,26 +173,7 @@ export default {
   },
 
   beforeMount() {
-    fetchRhingo.fetchRhingo().then(moped => {
-      this.rhingo = moped;
-    }),
-      fetchNextbike.fetchNextbike().then(bikes => {
-        this.nextBikes = bikes;
-      });
-  },
-
-  created() {},
-
-  watch: {
-    nextBikes: function() {
-      this.addMarker(this.nextBikes);
-    },
-    rhingo: function() {
-      this.addMarker(this.rhingo);
-    }
-  },
-
-  mounted: function() {
+  
     this.$nextTick(function() {
       console.log("locating ...");
       if (navigator.geolocation) {
@@ -213,7 +194,33 @@ export default {
         console.log("No geolocation");
       }
     });
+  },
+
+  mounted() {
+
+    fetchNextbike.fetchNextbike()
+    .then( (bikes) =>{
+      this.nextBikes = bikes;
+    })
+    .catch(function() {
+        console.log("error");
+    }),
+    
+    fetchRhingo.fetchRhingo().then(moped => {
+      this.rhingo = moped;
+    });
+
+  },
+
+  watch : {  
+    nextBikes : function ()  {
+       this.addMarker(this.nextBikes);
+    },
+    rhingo: function() {
+      this.addMarker(this.rhingo);
+    }
   }
+
 };
 </script>
 
