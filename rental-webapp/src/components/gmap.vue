@@ -12,6 +12,7 @@
       :center="{lat:50.946256, lng:6.897077}"
       :zoom="16"
       @click="display = false"
+      :class="{blurred : display}"
       map-type-id="roadmap"
       :options="{
       gestureHandling : 'greedy',
@@ -110,11 +111,11 @@
         :clickable="true"
         :draggable="false"
         :icon= m.icon
-        @click="display = true"
+        @click="openInfoCard(index)"
       />
     </GmapMap>
 
-    <InfoCard v-show="display" />
+    <InfoCard v-show="display" :scooter="currentScooter" />
   </div>
 </template>
 
@@ -144,7 +145,8 @@ export default {
       nextBikes: [],
       rhingo: [],
       tier: [],
-      display: false
+      display: false,
+      currentScooter : Object,
     };
   },
   
@@ -180,12 +182,19 @@ export default {
           lng: vehicleList[vehicleCounter].lng
         };
 
-        this.markers.push({ position: marker, icon: vehicleList[vehicleCounter].icon });
+        this.markers.push({ position: marker, icon: vehicleList[vehicleCounter].icon, provider : vehicleList[vehicleCounter].provider });
         vehicleCounter++;
         
       }
 
       console.log (vehicleCounter);
+    },
+
+    openInfoCard : function(key){
+        console.log(key);
+        this.display = !this.display;
+        this.currentScooter = this.markers[key];
+        console.log(this.markers[key]);
     }
   },
 
@@ -266,6 +275,10 @@ export default {
   position: fixed;
   right: 50px;
   top: 100px;
+}
+
+.blurred {
+  filter: blur(6px);
 }
 </style>
 

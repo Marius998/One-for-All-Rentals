@@ -5,7 +5,7 @@
         <img src="../assets/logo.png" alt />
 
         <v-card-title>
-          <h1>lol</h1>
+          <h1>{{scooter.provider}}</h1>
           <span class="grey--text subtitle-1">lol</span>
         </v-card-title>
 
@@ -33,7 +33,10 @@ export default {
     drawer: false,
     item: 1,
     show: false
-  })
+  }),
+  props : {
+    scooter : Object
+  }
 };
 </script>
 
@@ -42,6 +45,6 @@ export default {
 .mx-auto {
   position: fixed;
   z-index: 100;
-  bottom: 30vh;
+  bottom: 20vh;
 }
 </style>

@@ -18,7 +18,7 @@ export function fetchNextbike() {
             city.places.forEach(place => {
               if (place.bike == true)
                 bikeList.push({
-                  'provider' : 'nextbike',
+                  'provider' : 'Nextbike',
                   'id' : parseInt(place.bike_numbers[0]),
                   'battery' : false,
                   'batteryLevel' : null,
