@@ -280,6 +280,7 @@ export default {
 .blurred {
   filter: blur(6px);
 }
+
 </style>
 
 
