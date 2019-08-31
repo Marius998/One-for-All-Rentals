@@ -109,8 +109,8 @@
         :position="m.position"
         :clickable="true"
         :draggable="false"
+        :icon= m.icon
         @click="display = true"
-        icon="https://img.icons8.com/officel/46/000000/scooter.png"
       />
     </GmapMap>
 
@@ -171,19 +171,21 @@ export default {
     addMarker: function(vehicleList) {
       console.log("vehicleList");
       console.log(vehicleList);
-      var bikecounter = 0;
-      var i = 0;
-      while (vehicleList[i] != undefined) {
-        const marker1 = {
-          lat: vehicleList[i][0],
-          lng: vehicleList[i][1]
+      
+      var vehicleCounter = 0;
+
+      while (vehicleList[vehicleCounter] != undefined) {
+        const marker = {
+          lat: vehicleList[vehicleCounter].lat,
+          lng: vehicleList[vehicleCounter].lng
         };
 
-        this.markers.push({ position: marker1 });
-        bikecounter++;
-        i++;
+        this.markers.push({ position: marker, icon: vehicleList[vehicleCounter].icon });
+        vehicleCounter++;
+        
       }
-      console.log(bikecounter);
+
+      console.log (vehicleCounter);
     }
   },
 

@@ -13,7 +13,15 @@ export function fetchRhingo() {
             .then(data => {
 
                 data.forEach(geo => {
-                    mopedListe.push([geo.lat, geo.lon]);
+                    mopedListe.push({
+                        'provider' : 'Rhingo',
+                        'id' : geo.titel,
+                        'battery' : true,
+                        'batteryLevel' : geo.fuelLevel,
+                        'icon' : 'https://img.icons8.com/officel/46/000000/scooter.png',
+                        'lat' : geo.lat,
+                        'lng' : geo.lon
+                    });
                 })
                 resolve(mopedListe);
             });

@@ -17,10 +17,20 @@ export function fetchNextbike() {
           country.cities.forEach(city => {
             city.places.forEach(place => {
               if (place.bike == true)
-                bikeList.push([place.lat, place.lng])
+                bikeList.push({
+                  'provider' : 'nextbike',
+                  'id' : parseInt(place.bike_numbers[0]),
+                  'battery' : false,
+                  'batteryLevel' : null,
+                  'icon' : 'https://img.icons8.com/ultraviolet/40/000000/bicycle.png',
+                  'lat' : place.lat,
+                  'lng' : place.lng
+                })
             });
           });
         });
+
+        console.log(bikeList);
 
         resolve(bikeList);
       });

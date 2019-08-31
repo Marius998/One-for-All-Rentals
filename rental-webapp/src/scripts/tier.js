@@ -18,7 +18,15 @@ export function fetchTier() {
       .then(json => {
         json.data.forEach(scooter => {
           if (scooter.isRentable == true)
-            scooterList.push([scooter.lat, scooter.lng])
+            scooterList.push({
+              'provider' : 'Tier',
+              'id' : parseInt(scooter.id),
+              'battery' : true,
+              'batteryLevel' : scooter.batteryLevel,
+              'icon' : 'https://img.icons8.com/doodle/48/000000/kick-scooter.png',
+              'lat' : scooter.lat,
+              'lng' : scooter.lng
+            });
         });
         resolve(scooterList);
       }).catch(function() {
