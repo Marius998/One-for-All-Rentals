@@ -1,42 +1,35 @@
 <template>
-  <div class="info">
-    <v-row justify="center">
-      <v-card class="mx-auto" width="70vw" >
-        <!-- <img src="../assets/logo.png" alt /> -->
+  <div>
+    <div class="infoCard">
+      <v-card-title class="title">
+        <p class="display-3">{{scooter.provider}}</p>
+        <img class="providerLogo" :src="scooter.logo" />
+      </v-card-title>
 
-        <v-row justify="center" align="center" style="padding-top:10px" >
+      <v-card-text class="flex-box">
+        <div>
+          <v-chip class="ma-2" color="white" text-color="black" large>
+            <v-icon left>directions_bike</v-icon>
+            {{scooter.id}}
+          </v-chip>
 
-        <v-card-title>
-          <h1>{{scooter.provider}}</h1>
-        </v-card-title>
+          <v-chip class="ma-2" color="white" text-color="black" large>
+            <v-icon left>done_all</v-icon>available
+          </v-chip>
+        </div>
 
-          <img width="20%" :src="scooter.icon"></img>
+        <img class="vehicleImg" :src="scooter.vehicleImg" />
+      </v-card-text>
 
-      
-        </v-row>
+      <v-row align="center" justify="center" v-if="scooter.battery">
+        <v-progress-linear class="battery" :value="scooter.batteryLevel"></v-progress-linear>
+        <span>{{scooter.batteryLevel}}%</span>
+      </v-row>
 
-
-          <div style="height:20px"></div>
-
-            <v-row align="center" justify="center" v-if="scooter.battery">
-
-          <v-progress-linear class="battery" :value="scooter.batteryLevel"></v-progress-linear>
-          <span>{{scooter.batteryLevel}}%</span>
-
-            </v-row>
-
-          <v-spacer></v-spacer>
-
-            <v-card-actions>
-          <v-btn text>Mieten</v-btn>
-
-          <v-btn text color="purple">
-            <v-icon>clear</v-icon>
-          </v-btn>
-
-        </v-card-actions>
-      </v-card>
-    </v-row>
+      <v-card-actions class="flex-box">
+        <v-btn large class="rentBtn">Ausleihen</v-btn>
+      </v-card-actions>
+    </div>
   </div>
 </template>
 
@@ -45,26 +38,66 @@
 export default {
   components: {},
   data: () => ({
-    drawer: false,
-    item: 1,
-    show: false
+    drawer: false
   }),
-  props : {
-    scooter : Object
+  props: {
+    scooter: Object
   }
 };
 </script>
 
 
 <style scoped>
-.mx-auto {
-  position: fixed;
+.infoCard {
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
   z-index: 100;
-  bottom: 20vh;
+  background-image: linear-gradient(135deg, #fff720 10%, #3cd500 100%);
+  border-top-left-radius: 45px;
+  border-top-right-radius: 45px;
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.8);
 }
 
-.battery{
-  width : 40%;
+.flex-box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.title {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.ma-2 {
+  width: 40vw;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
+.rentBtn {
+  width: 85%;
+  bottom: 2vh;
+  margin-top: 40px;
+  background-color: white;
+  text-transform: uppercase;
+}
+
+.providerLogo {
+  width: 10%;
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.vehicleImg {
+  width: 30%;
+}
+
+.battery {
+  width: 40%;
   border-radius: 20px;
   display: inline-block;
   margin-left: -13%;
