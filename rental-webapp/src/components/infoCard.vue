@@ -2,24 +2,25 @@
   <div>
     <v-row justify="center">
       <v-card class="mx-auto" max-width="70vw" max-height="60vh">
-        <img src="../assets/logo.png" alt />
+        <!-- <img src="../assets/logo.png" alt /> -->
 
         <v-card-title>
           <h1>{{scooter.provider}}</h1>
-          <span class="grey--text subtitle-1">lol</span>
         </v-card-title>
+      
 
-        <v-card-actions>
+        <v-card-text>I'm a thing. But, like most politicians, he promised more than he could deliver.</v-card-text>
+
+          <v-spacer></v-spacer>
+
+            <v-card-actions>
           <v-btn class="info" text>Mieten</v-btn>
 
           <v-btn text color="purple">
             <v-icon>clear</v-icon>
           </v-btn>
 
-          <v-spacer></v-spacer>
         </v-card-actions>
-
-        <v-card-text>I'm a thing. But, like most politicians, he promised more than he could deliver.</v-card-text>
       </v-card>
     </v-row>
   </div>

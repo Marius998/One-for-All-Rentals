@@ -182,7 +182,7 @@ export default {
           lng: vehicleList[vehicleCounter].lng
         };
 
-        this.markers.push({ position: marker, icon: vehicleList[vehicleCounter].icon, provider : vehicleList[vehicleCounter].provider });
+        this.markers.push({ position: marker, icon : vehicleList[vehicleCounter].icon ,  vehicle : vehicleList[vehicleCounter]});
         vehicleCounter++;
         
       }
@@ -193,7 +193,7 @@ export default {
     openInfoCard : function(key){
         console.log(key);
         this.display = !this.display;
-        this.currentScooter = this.markers[key];
+        this.currentScooter = this.markers[key].vehicle;
         console.log(this.markers[key]);
     }
   },
