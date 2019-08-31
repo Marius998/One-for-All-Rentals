@@ -124,11 +124,11 @@ import Vue from "vue";
 import * as VueGoogleMaps from "vue2-google-maps";
 const fetch = require("node-fetch");
 
-
 import InfoCard from "./infoCard";
 
 import * as fetchNextbike from "@/scripts/nextBike";
 import * as fetchRhingo from "@/scripts/rhingo";
+import * as fetchTier from "@/scripts/tier";
 import { constants } from "crypto";
 
 
@@ -143,6 +143,7 @@ export default {
       markers: [],
       nextBikes: [],
       rhingo: [],
+      tier: [],
       display: false
     };
   },
@@ -217,13 +218,19 @@ export default {
     .then( (bikes) =>{
       this.nextBikes = bikes;
     }).catch(function() {
-        console.log("error");
+        console.log("errorNextBike");
     }),
     
     fetchRhingo.fetchRhingo().then(moped => {
       this.rhingo = moped;
     }).catch(function() {
-        console.log("error");
+        console.log("errorRhingo");
+    }),
+
+    fetchTier.fetchTier().then(scooter => {
+      this.rhingo = scooter;
+    }).catch(function() {
+        console.log("errorTier");
     })
 
   },
@@ -234,6 +241,9 @@ export default {
     },
     rhingo: function() {
       this.addMarker(this.rhingo);
+    },
+    tier: function() {
+      this.addMarker(this.tier);
     }
 
   }
