@@ -21,9 +21,12 @@
         <img class="vehicleImg" :src="scooter.vehicleImg" />
       </v-card-text>
 
-      <v-row align="center" justify="center" v-if="scooter.battery">
+
+      <v-row style="margin-top: 20px;" class="flex-box" v-if="scooter.battery">
         <v-progress-linear class="battery" :value="scooter.batteryLevel"></v-progress-linear>
-        <span>{{scooter.batteryLevel}}%</span>
+        <v-chip class="ma-1" color="white" text-color="black" large>
+            {{scooter.batteryLevel}}%<v-icon right="">battery_charging_full</v-icon>
+          </v-chip>
       </v-row>
 
       <v-card-actions class="flex-box">
@@ -71,6 +74,13 @@ export default {
   margin-left: 10px;
 }
 
+.ma-1 {
+  width: 25vw;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
 .ma-2 {
   width: 40vw;
   display: flex;
@@ -100,7 +110,6 @@ export default {
   width: 40%;
   border-radius: 20px;
   display: inline-block;
-  margin-left: -13%;
-  margin-right: 7%;
+  
 }
 </style>
