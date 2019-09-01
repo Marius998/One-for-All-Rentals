@@ -106,7 +106,7 @@
     >
       <GmapMarker
         :key="index"
-        v-for="(m, index) in markers"
+        v-for="(m, index) in currentScooters"
         :position="m.position"
         :clickable="true"
         :draggable="false"
@@ -141,12 +141,16 @@ export default {
   
   data() {
     return {
-      markers: [],
-      nextBikes: [],
-      rhingo: [],
-      tier: [],
-      display: false,
-      currentScooter : Object,
+      nextBikes: [], // speichert die next Bikes
+      showNextBikes: true, // entscheidet ob next Bikes als Marker dargestellt werden sollen
+      rhingo: [], // speichert die next Rhingo Vehicle
+      showRhingo: true, // entscheidet ob Rhingo Vehicle als Marker dargestellt werden sollen
+      tier: [], // speichert die next Tier Vehicle
+      showTier: true, // entscheidet ob Tier Vehicle als Marker dargestellt werden sollen
+      display: false, // entscheidet um die infoCard angezeigt werden soll
+      currentScooter : Object, // speichert das ausgewählte Vehicle für die infoCard 
+      currentScooters : [], // speichert die gewünschten Vehicle, welche als GmapMarker angezeigt werden | z.B nur Rhino oder im Radius 500m
+
     };
   },
   
@@ -167,7 +171,7 @@ export default {
             });
           });
         });
-      }
+      }     
     },
 
     addMarker: function(vehicleList) {
@@ -182,7 +186,7 @@ export default {
           lng: vehicleList[vehicleCounter].lng
         };
 
-        this.markers.push({ position: marker, icon : vehicleList[vehicleCounter].icon ,  vehicle : vehicleList[vehicleCounter]});
+        this.currentScooters.push({ position: marker, icon : vehicleList[vehicleCounter].icon ,  vehicle : vehicleList[vehicleCounter],provider : vehicleList[vehicleCounter].provider});
         vehicleCounter++;
         
       }
@@ -193,8 +197,16 @@ export default {
     openInfoCard : function(key){
         console.log(key);
         this.display = !this.display;
-        this.currentScooter = this.markers[key].vehicle;
-        console.log(this.markers[key]);
+        this.currentScooter = this.currentScooters[key].vehicle;
+        console.log(this.currentScooters[key]);
+    },
+
+    removeMarker : function (provider){
+        console.log("remove Marker");
+      this.currentScooters = this.currentScooters.filter(function(obj){
+        return obj.provider != provider;
+      })
+
     }
   },
 
@@ -238,8 +250,8 @@ export default {
         console.log("errorRhingo");
     }),
 
-    fetchTier.fetchTier().then(scooter => {
-      this.rhingo = scooter;
+    fetchTier.fetchTier().then(tierScooter => {
+      this.tier = tierScooter;
     }).catch(function() {
         console.log("errorTier");
     })
@@ -248,15 +260,48 @@ export default {
 
   watch : {  
     nextBikes : function ()  {
-       this.addMarker(this.nextBikes);
+      if(this.showNextBikes){
+        this.addMarker(this.nextBikes);
+      }
     },
     rhingo: function() {
-      this.addMarker(this.rhingo);
+      if(this.showRhingo){
+        this.addMarker(this.rhingo);  }
     },
     tier: function() {
-      this.addMarker(this.tier);
-    }
+      if(this.showTier){
+        this.addMarker(this.tier);
+      }
+    },
+    showNextBikes : function (){
+      if(this.showNextBikes){
+        this.addMarker(this.nextBikes);
+        }
+      else {
+        this.removeMarker("Nextbike");
+      }
+    },
 
+     showRhingo : function (){
+      if(this.showRhingo){
+        this.addMarker(this.rhingo);
+        }
+      else {
+        this.removeMarker("Nextbike");
+      }
+    },
+
+     showTier : function (){
+      if(this.showTier){
+        this.addMarker(this.tier);
+        }
+      else {
+        this.removeMarker("Tier");
+      }
+    }
+  },
+
+  computed : {   
   }
 
 };
