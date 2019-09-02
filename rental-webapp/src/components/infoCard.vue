@@ -1,27 +1,38 @@
 <template>
   <div>
-    <v-row justify="center">
-      <v-card class="mx-auto" max-width="70vw" max-height="60vh">
-        <img src="../assets/logo.png" alt />
+    <div class="infoCard">
+      <v-card-title class="title">
+        <p class="display-3">{{scooter.provider}}</p>
+        <img class="providerLogo" :src="scooter.logo" />
+      </v-card-title>
 
-        <v-card-title>
-          <h1>lol</h1>
-          <span class="grey--text subtitle-1">lol</span>
-        </v-card-title>
+      <v-card-text class="flex-box">
+        <div>
+          <v-chip class="ma-2" color="white" text-color="black" large>
+            <v-icon left>directions_bike</v-icon>
+            {{scooter.id}}
+          </v-chip>
 
-        <v-card-actions>
-          <v-btn class="info" text>Mieten</v-btn>
+          <v-chip class="ma-2" color="white" text-color="black" large>
+            <v-icon left>done_all</v-icon>available
+          </v-chip>
+        </div>
 
-          <v-btn text color="purple">
-            <v-icon>clear</v-icon>
-          </v-btn>
+        <img class="vehicleImg" :src="scooter.vehicleImg" />
+      </v-card-text>
 
-          <v-spacer></v-spacer>
-        </v-card-actions>
 
-        <v-card-text>I'm a thing. But, like most politicians, he promised more than he could deliver.</v-card-text>
-      </v-card>
-    </v-row>
+      <v-row style="margin-top: 20px;" class="flex-box" v-if="scooter.battery">
+        <v-progress-linear class="battery" :value="scooter.batteryLevel"></v-progress-linear>
+        <v-chip class="ma-1" color="white" text-color="black" large>
+            {{scooter.batteryLevel}}%<v-icon right="">battery_charging_full</v-icon>
+          </v-chip>
+      </v-row>
+
+      <v-card-actions class="flex-box">
+        <v-btn large class="rentBtn">Ausleihen</v-btn>
+      </v-card-actions>
+    </div>
   </div>
 </template>
 
@@ -30,18 +41,75 @@
 export default {
   components: {},
   data: () => ({
-    drawer: false,
-    item: 1,
-    show: false
-  })
+    drawer: false
+  }),
+  props: {
+    scooter: Object
+  }
 };
 </script>
 
 
 <style scoped>
-.mx-auto {
-  position: fixed;
+.infoCard {
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
   z-index: 100;
-  bottom: 30vh;
+  background-image: linear-gradient(135deg, #fff720 10%, #3cd500 100%);
+  border-top-left-radius: 45px;
+  border-top-right-radius: 45px;
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.8);
+}
+
+.flex-box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.title {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.ma-1 {
+  width: 25vw;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
+.ma-2 {
+  width: 40vw;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
+.rentBtn {
+  width: 85%;
+  bottom: 2vh;
+  margin-top: 40px;
+  background-color: white;
+  text-transform: uppercase;
+}
+
+.providerLogo {
+  width: 10%;
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.vehicleImg {
+  width: 30%;
+}
+
+.battery {
+  width: 40%;
+  border-radius: 20px;
+  display: inline-block;
+  
 }
 </style>
