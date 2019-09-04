@@ -20,11 +20,11 @@
       </v-chip>
     </div>
 
-    <v-card color="transparent" flat v-if="distanz">
+    <v-card color="transparent" flat>
       <v-container class="pa-2" fluid>
         <v-row>
           <v-col v-for="(item, i) in items" :key="i" class="flex-box">
-            <v-card :color="item.color"  dark>
+            <v-card :color="item.color" dark>
               <v-list-item three-line>
                 <v-list-item-content class="align-self-start">
                   <v-list-item-title class="headline mb-2" v-text="item.provider"></v-list-item-title>
@@ -43,18 +43,13 @@
                     </v-chip>
                   </div>
                 </v-list-item-content>
-                <v-img
-                  :src="item.src"
-                  class="providerLogos"
-                  max-width="190"
-                  style="margin-right: 10px;"
-                ></v-img>
+
+                <v-img :src="item.src" max-width="40vw"></v-img>
               </v-list-item>
             </v-card>
           </v-col>
         </v-row>
       </v-container>
-      
     </v-card>
   </div>
 </template>
@@ -68,7 +63,6 @@ var tier = 0.15;
 var rhingo = 0.23;
 var nextbike = 1;
 
-
 export default {
   data() {
     return {
@@ -77,9 +71,9 @@ export default {
       destination: "",
       start: "",
       userPosition: {
-        lat: '',
-        lng: ''
-      }, 
+        lat: "",
+        lng: ""
+      },
       items: [
         {
           color: "#46DD00",
@@ -110,11 +104,20 @@ export default {
           duration: "",
           price: "",
           distance: ""
+        },
+        {
+          color: "#E30614",
+          src:
+            "https://lh3.googleusercontent.com/YCKOqHnqQrDq9gydSW2dDHiasP6UcZr00gi8AOEPU6p1KTqGtnKfAlZ0aISSk8YJzYwtwtiQjYHfJqZfRfN4M8zz0EV8dv_TmYkFn0lZ-QNs2tKD54Zt3CDeKGi4w89rmdOWvz24oXNFn3bbFwe2QWzPxBR4qKnXdJZo0xTeA_qD5g4BSZ8u0_8_Ef3TG_suxNkBlPADmvBqh48U1uvkxGO8DyQLiJQH76fRE6B8xOSu3lje23QhgguJqdZxChS0PCd44UPp1deJdbyNDMOyU3hlbp4YKEq-hzU1H7MONys9KG3670n3uJHnH7YH15x4DAqbcQ_dS8jB0SlC8mH_tR6RMmUZlK5JfQzPA1PIhwqkV8nD4okBXnctJwA28FG-KYnhzBvxfi2s5Iq9uPC7WSkSwfetYnj-Up6e27TEBLCDSg19ejzkPA8XIcwxWDIhZrAFlmHgp6ZQGQMxnQ580vzuqPsPskaeV_yMSxRXDC6iGeayKxA6OVg0PisJD5qKbCVr7zs9XpZx9-bg-UcuqUkp027y5oH3AUTrA5EMMWQ1n4XXP_YJ66SzaMqY4nKVXZgE17luFLuQhXpP384qVAa8_Pe5it7OCNZdsIFUJYIyfxQCUBUEjTlZL5X-arqD3TKgF2O8x9ZX1LaCkEHHo5Bebd1WN9IEmPsqVN1cZdnxKUrP9bZzKg=w705-h581-no",
+          provider: "Rhingo",
+          type: "Motorroller",
+          duration: "",
+          price: "",
+          distance: ""
         }
       ]
     };
   },
-  props: ["liste"],
   methods: {
     getRoute: function() {
       console.log("route wird berechnet");
@@ -122,16 +125,28 @@ export default {
 
       var apiBike =
         "https://maps.googleapis.com/maps/api/directions/json?origin=" +
-        this.userPosition.lat +"," + this.userPosition.lng +
+        this.userPosition.lat +
+        "," +
+        this.userPosition.lng +
         "&destination=" +
         this.destination +
         "&mode=bicycling&key=" +
         key;
-      // var apiMoped = 'https://maps.googleapis.com/maps/api/directions/json?origin=' + start + '&destination=' + ende + '&key=' + key
+      var apiMoped =
+        "https://maps.googleapis.com/maps/api/directions/json?origin=" +
+        this.userPosition.lat +
+        "," +
+        this.userPosition.lng +
+        "&destination=" +
+        this.destination +
+        "&key=" +
+        key;
       var proxyUrl = "https://cors-anywhere.herokuapp.com/";
 
       var liste = [];
+      var listeMoped = [];
 
+      //  fetch e-scooter/bike
       return new Promise((resolve, reject) => {
         fetch(proxyUrl + apiBike)
           .then(res => res.json())
@@ -140,20 +155,32 @@ export default {
             var duration = data.routes[0].legs[0].duration.value;
 
             liste.push(duration, distance);
-            console.log(liste);
-
-            resolve(liste);
           })
           .catch(function() {
-            console.log("errorDirectionsFetch");
+            console.log("errorBikeFetch");
           });
+
+        // fetch Moped
+        fetch(proxyUrl + apiMoped)
+          .then(res => res.json())
+          .then(data => {
+            var distanceMoped = data.routes[0].legs[0].distance.value;
+            var durationMoped = data.routes[0].legs[0].duration.value;
+
+            liste.push(durationMoped, distanceMoped);
+          })
+          .catch(function() {
+            console.log("errorMopedFetch");
+          });
+
+        resolve(liste);
       })
 
         .then(data => {
           this.routeData = data;
         })
         .catch(function() {
-          console.log("errorLOl");
+          console.log("scheise");
         });
     },
     calculateLime: function(dauer, distanz) {
@@ -182,7 +209,7 @@ export default {
       var roundPreis = Math.round(preis * 100) / 100;
       this.items[1].duration = roundDauer;
       this.items[1].price = roundPreis;
-      this.items[0].distance = roundDistanz;
+      this.items[1].distance = roundDistanz;
 
       console.log(roundPreis);
     },
@@ -194,6 +221,9 @@ export default {
       console.log(" rhingo dauer" + dauer);
       var preis = dauer * rhingo;
       var roundPreis = Math.round(preis * 100) / 100;
+      this.items[3].duration = roundDauer;
+      this.items[3].price = roundPreis;
+      this.items[3].distance = roundDistanz;
 
       console.log(roundPreis);
     },
@@ -210,7 +240,7 @@ export default {
       }
       this.items[2].duration = roundDauer;
       this.items[2].price = preis;
-      this.items[0].distance = roundDistanz;
+      this.items[2].distance = roundDistanz;
 
       console.log(preis);
     }
@@ -220,27 +250,18 @@ export default {
       this.calculateLime(this.routeData[0], this.routeData[1]);
       this.calculateTierCirc(this.routeData[0], this.routeData[1]);
       this.calculateNextBike(this.routeData[0], this.routeData[1]);
+      this.calculateRhingo(this.routeData[2], this.routeData[3]);
     }
   },
-  mounted () {
-      let position = navigator.geolocation.getCurrentPosition( position => {
-          console.log(position)
-          console.log('lat:', position.coords.latitude);
-          console.log('lng:', position.coords.longitude);
+  mounted() {
+    let position = navigator.geolocation.getCurrentPosition(position => {
+      console.log("lat:", position.coords.latitude);
+      console.log("lng:", position.coords.longitude);
 
-          this.userPosition.lat = position.coords.latitude
-          this.userPosition.lng = position.coords.longitude
-      })
+      this.userPosition.lat = position.coords.latitude;
+      this.userPosition.lng = position.coords.longitude;
+    });
   }
-//   created() {
-//       this.$nextTick(function() {
-//       let position = navigator.geolocation.getCurrentPosition( position => {
-//           console.log(position)
-//           console.log('lat:', position.coords.latitude);
-//           console.log('lng:', position.coords.longitude);
-//       })
-//   })
-//   }
 };
 </script>
 
