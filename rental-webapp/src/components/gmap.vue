@@ -268,25 +268,30 @@ export default {
     this.$nextTick(function() {
       console.log("locating ...");
 
-      if (navigator.geolocation) {
-        let position = navigator.geolocation.watchPosition(position => {
-          
+      let position = navigator.geolocation.watchPosition(
+        position => {
           console.log("located");
           console.log(position)
           console.log('lat:', position.coords.latitude);
           console.log('lng:', position.coords.longitude);
-
+          
           this.userPosition = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-        });
-
-        this.panToCurrent();
-
-      } else {
-        console.log("No geolocation Support");
-      }
+          
+          this.panToCurrent();
+        }, 
+        positionError => {
+          console.log(positionError);
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 30000,
+          maximumAge: 15000
+        }
+      );
+    
     });
   },
 
