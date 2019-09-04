@@ -157,6 +157,14 @@
         :icon="m.icon"
         @click="openInfoCard(index)"
       />
+      <GmapMarker
+        titel = 'userPosition'
+        :position="userPosition"
+        :clickable="false"
+        :draggable="false"
+        watch = true
+        icon = 'https://img.icons8.com/color/48/000000/street-view.png'
+      />
     </GmapMap>
 
     <InfoCard v-show="display" :scooter="currentScooter" />
@@ -195,27 +203,25 @@ export default {
       showTier: true, // entscheidet ob Tier Vehicle als Marker dargestellt werden sollen
       display: false, // entscheidet um die infoCard angezeigt werden soll
       currentScooter: Object, // speichert das ausgewählte Vehicle für die infoCard
-      currentScooters: [] // speichert die gewünschten Vehicle, welche als GmapMarker angezeigt werden | z.B nur Rhino oder im Radius 500m
+      currentScooters: [], // speichert die gewünschten Vehicle, welche als GmapMarker angezeigt werden | z.B nur Rhino oder im Radius 500m
+      userPosition: {
+        lat: 0,
+        lng: 0
+      }
     };
   },
 
   methods: {
     panToCurrent() {
-      console.log("panTOCUrrent");
-      if (navigator.geolocation) {
-        let position = navigator.geolocation.getCurrentPosition(data => {
-          console.log("located");
-          console.log(data.coords.longitude);
-          console.log(data.coords.latitude);
-          let position = data;
-
-          this.$refs.mapRef.$mapPromise.then(map => {
-            map.panTo({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            });
-          });
-        });
+      this.$refs.mapRef.$mapPromise.then(map => {
+        map.panTo(this.userPosition);
+      });
+    },
+    
+    setMarkerPosition(position) {
+      userPosition = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
       }
     },
 
@@ -261,23 +267,31 @@ export default {
   created() {
     this.$nextTick(function() {
       console.log("locating ...");
-      if (navigator.geolocation) {
-        let position = navigator.geolocation.getCurrentPosition(data => {
-          console.log("located");
-          console.log(data.coords.longitude);
-          console.log(data.coords.latitude);
-          let position = data;
 
-          this.$refs.mapRef.$mapPromise.then(map => {
-            map.panTo({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            });
-          });
-        });
-      } else {
-        console.log("No geolocation");
-      }
+      let position = navigator.geolocation.watchPosition(
+        position => {
+          console.log("located");
+          console.log(position)
+          console.log('lat:', position.coords.latitude);
+          console.log('lng:', position.coords.longitude);
+          
+          this.userPosition = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          
+          this.panToCurrent();
+        }, 
+        positionError => {
+          console.log(positionError);
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 30000,
+          maximumAge: 15000
+        }
+      );
+    
     });
   },
 
@@ -290,22 +304,24 @@ export default {
       .catch(function() {
         console.log("errorNextBike");
       }),
-      fetchRhingo
-        .fetchRhingo()
-        .then(moped => {
-          this.rhingo = moped;
-        })
-        .catch(function() {
-          console.log("errorRhingo");
-        }),
-      fetchTier
-        .fetchTier()
-        .then(tierScooter => {
-          this.tier = tierScooter;
-        })
-        .catch(function() {
-          console.log("errorTier");
-        });
+
+    fetchRhingo
+      .fetchRhingo()
+      .then(moped => {
+        this.rhingo = moped;
+      })
+      .catch(function() {
+        console.log("errorRhingo");
+      }),
+
+    fetchTier
+      .fetchTier()
+      .then(tierScooter => {
+        this.tier = tierScooter;
+      })
+      .catch(function() {
+        console.log("errorTier");
+      });
   },
 
   watch: {
