@@ -20,7 +20,7 @@
       </v-chip>
     </div>
 
-    <v-card color="transparent" flat>
+    <v-card color="transparent" flat v-if="distanz">
       <v-container class="pa-2" fluid>
         <v-row>
           <v-col v-for="(item, i) in items" :key="i" class="flex-box">

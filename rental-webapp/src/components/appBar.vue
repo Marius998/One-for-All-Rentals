@@ -1,27 +1,19 @@
 <template>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span @click="panToCurrent">Rental App</span>
-      </v-toolbar-title>
-    </v-app-bar>
+  <v-app-bar app>
+    <v-toolbar-title class="headline text-uppercase">Rental App</v-toolbar-title>
+    <template v-slot:extension>
+      <v-tabs align-with-title background-color="transparent" color="red">
+        <v-tab v-for="(item, i) in items" :key="i" router :to="item.route">{{item.title}}</v-tab>
+      </v-tabs>
+    </template>
+  </v-app-bar>
 </template>
 
-<script>
 
+<script>
 export default {
-  name: 'App',
-  components: {
-    
-    
-  },
-  methods : {
-      panToCurrent () {
-          console.log("klick");
-          this.$refs.gmap.panToCurrent();
-      }
-  },
   data: () => ({
-    //
-  }),
+    items: [{ title: "Karte", route: "/" }, { title: "Route", route: "/route" }]
+  })
 };
 </script>
