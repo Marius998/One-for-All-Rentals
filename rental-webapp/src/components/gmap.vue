@@ -180,6 +180,7 @@ const fetch = require("node-fetch");
 import { RadialMenu, RadialMenuItem } from "vue-radial-menu";
 import InfoCard from "./infoCard";
 
+
 import * as fetchNextbike from "@/scripts/nextBike";
 import * as fetchRhingo from "@/scripts/rhingo";
 import * as fetchTier from "@/scripts/tier";
@@ -190,7 +191,8 @@ export default {
   components: {
     InfoCard,
     RadialMenu,
-    RadialMenuItem
+    RadialMenuItem,
+    
   },
 
   data() {

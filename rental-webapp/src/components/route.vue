@@ -1,7 +1,5 @@
 <template>
   <div>
-    <p>{{ liste }}</p>
-
     <div class="flex-box-input">
       <v-text-field
         class="inputDestination"
@@ -56,6 +54,7 @@
           </v-col>
         </v-row>
       </v-container>
+      
     </v-card>
   </div>
 </template>
@@ -69,7 +68,6 @@ var tier = 0.15;
 var rhingo = 0.23;
 var nextbike = 1;
 
-var start = "Widdersdorferstr" + "218";
 
 export default {
   data() {
@@ -78,6 +76,10 @@ export default {
       distanz: "",
       destination: "",
       start: "",
+      userPosition: {
+        lat: '',
+        lng: ''
+      }, 
       items: [
         {
           color: "#46DD00",
@@ -120,7 +122,7 @@ export default {
 
       var apiBike =
         "https://maps.googleapis.com/maps/api/directions/json?origin=" +
-        start +
+        this.userPosition.lat +"," + this.userPosition.lng +
         "&destination=" +
         this.destination +
         "&mode=bicycling&key=" +
@@ -219,7 +221,26 @@ export default {
       this.calculateTierCirc(this.routeData[0], this.routeData[1]);
       this.calculateNextBike(this.routeData[0], this.routeData[1]);
     }
+  },
+  mounted () {
+      let position = navigator.geolocation.getCurrentPosition( position => {
+          console.log(position)
+          console.log('lat:', position.coords.latitude);
+          console.log('lng:', position.coords.longitude);
+
+          this.userPosition.lat = position.coords.latitude
+          this.userPosition.lng = position.coords.longitude
+      })
   }
+//   created() {
+//       this.$nextTick(function() {
+//       let position = navigator.geolocation.getCurrentPosition( position => {
+//           console.log(position)
+//           console.log('lat:', position.coords.latitude);
+//           console.log('lng:', position.coords.longitude);
+//       })
+//   })
+//   }
 };
 </script>
 
