@@ -40,12 +40,12 @@
 <script>
 export default {
   components: {},
+
+  props: ['scooter'],
+
   data: () => ({
     drawer: false
-  }),
-  props: {
-    scooter: Object
-  }
+  })
 };
 </script>
 
