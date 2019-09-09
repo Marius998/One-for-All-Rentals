@@ -58,18 +58,18 @@
 <script>
 import { constants } from "crypto";
 
-var lime = 0.2;
-var tier = 0.15;
-var rhingo = 0.23;
-var nextbike = 1;
-
 export default {
 
   props: ['userPos', 'choosenProvider'],
 
   data() {
     return {
-      routeData: [],
+      routeData: {
+        bikeDistance: undefined,
+        bikeDuration: undefined,
+        moppedDistance: undefined,
+        moppedDuration: undefined
+      },
       distance: undefined,
 
       destination: undefined,
@@ -137,8 +137,8 @@ export default {
   },
 
   methods: {
-    getRoute: function() {
-      console.log("Route wird berechnet...");
+
+    getBikeRoute(){
 
       var key = "AIzaSyDP0J6PujCjhbuKcqJOfXvuiwgxyGYXKOc";
       var proxyUrl = "https://cors-anywhere.herokuapp.com/";
@@ -150,6 +150,24 @@ export default {
         this.destination +
         "&mode=bicycling&key=" +
         key;
+
+      return fetch(proxyUrl + apiBike)
+        .then(res => res.json())
+        .then(data => {
+          console.log('bikeFetched');
+          this.routeData.bikeDistance = data.routes[0].legs[0].distance.value;
+          this.routeData.bikeDuration = data.routes[0].legs[0].duration.value;
+        })
+        .catch(function() {
+          console.log("errorBikeFetch");
+        });
+    },
+
+    getMoppedRoute(){
+
+      var key = "AIzaSyDP0J6PujCjhbuKcqJOfXvuiwgxyGYXKOc";
+      var proxyUrl = "https://cors-anywhere.herokuapp.com/";
+
       var apiMoped =
         "https://maps.googleapis.com/maps/api/directions/json?origin=" +
         this.origin +
@@ -158,65 +176,44 @@ export default {
         "&mode=driving&avoid=highways&key=" +
         key;
 
-      var liste = [];
-
-      console.log(apiMoped);
-
-      //  fetch e-scooter/bike
-      return new Promise((resolve, reject) => {
-        fetch(proxyUrl + apiBike)
-          .then(res => res.json())
-          .then(data => {
-            console.log('bikeFetched');
-            var distance = data.routes[0].legs[0].distance.value;
-            var duration = data.routes[0].legs[0].duration.value;
-
-            liste.push(duration, distance);
-          })
-          .catch(function() {
-            console.log("errorBikeFetch");
-          });
-
-        // fetch Moped
-        fetch(proxyUrl + apiMoped)
-          .then(res => res.json())
-          .then(data => {
-            console.log('moppedFetched');
-            var distanceMoped = data.routes[0].legs[0].distance.value;
-            var durationMoped = data.routes[0].legs[0].duration.value;
-
-            liste.push(durationMoped, distanceMoped);
-          })
-          .catch(function() {
-            console.log("errorMopedFetch");
-          });
-
-        resolve(liste);
-      })
-
+      return fetch(proxyUrl + apiMoped)
+        .then(res => res.json())
         .then(data => {
-          this.routeData = data;
-          console.log(data);
+          console.log('moppedFetched');
+          this.routeData.moppedDistance = data.routes[0].legs[0].distance.value;
+          this.routeData.moppedDuration = data.routes[0].legs[0].duration.value;
         })
         .catch(function() {
-          console.log("Scheiße");
+          console.log("errorMopedFetch");
         });
+    },
+
+    getRoutes(){
+      return Promise.all([this.getBikeRoute(), this.getMoppedRoute()])
+    },
+
+    getRoute: function() {
+      console.log("Route wird berechnet...");
+
+      this.getRoutes()
+        .then(([bikes, moppeds]) => {
+          this.calculatePrice();
+      })
+      
     },
 
     calculatePrice(){
 
       this.provider.forEach(provider => {
 
-        console.log(provider);
-
         if(provider.bikeRoute){
-          provider.distance = Math.round(this.routeData[1]/1000);
+          provider.distance = Math.round(this.routeData.bikeDistance/1000);
           this.distance = provider.distance;
-          provider.duration = Math.round(this.routeData[0]/60);
+          provider.duration = Math.round(this.routeData.bikeDuration/60);
         }
         else{
-          provider.distance = Math.round(this.routeData[3]/1000);
-          provider.duration = Math.round(this.routeData[4]/60);
+          provider.distance = Math.round(this.routeData.moppedDistance/1000);
+          provider.duration = Math.round(this.routeData.moppedDuration/60);
         }
 
         if(provider.pricePerMinute) {
@@ -228,13 +225,7 @@ export default {
       })
 
     },
-    
-  },
 
-  watch: {
-    routeData: function() {
-      this.calculatePrice()
-    }
   }
 
 };
