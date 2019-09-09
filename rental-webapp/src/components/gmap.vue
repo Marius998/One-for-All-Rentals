@@ -414,7 +414,7 @@ export default {
   z-index: 5;
   position: fixed;
   right: 7vw;
-  top: 10vh;
+  top: 20vh;
 }
 </style>
 

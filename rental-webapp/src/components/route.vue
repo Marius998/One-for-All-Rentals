@@ -1,16 +1,26 @@
 <template>
   <div>
-    <div class="flex-box-input">
+
+    <div>
+      <v-btn color="white" class='showTextField' fab dark v-on:click="isTextField=!isTextField">
+        <v-icon color="black">attach_money</v-icon>
+      </v-btn>
+    </div>
+
+    <div :class="{ 'flex-box-input': isTextField }">
+
       <v-text-field
-        class="inputDestination"
+        :class="{ 'inputDestination': isTextField }"
         v-model="destination"
         solo
-        label="Ziel eingeben ..."
+        label= 'Ziel eingeben ...'
         clearable
+        :disabled="!isTextField"
         append-icon="directions"
+        v-show="isTextField"
       ></v-text-field>
 
-      <v-btn id="searchBtn" large v-on:click="getRoute">route berechnen</v-btn>
+      <v-btn id="searchBtn" large v-on:click="getRoute" v-show= isTextField>route berechnen</v-btn>
     </div>
 
     <div id="distance-chip" v-if="distance">
@@ -64,6 +74,8 @@ export default {
 
   data() {
     return {
+      isTextField: false,
+
       routeData: {
         bikeDistance: undefined,
         bikeDuration: undefined,
@@ -73,7 +85,6 @@ export default {
       distance: undefined,
 
       destination: undefined,
-      origin: this.userPos.lat + ',' + this.userPos.lng,
 
       provider: [
         {
@@ -142,10 +153,11 @@ export default {
 
       var key = "AIzaSyDP0J6PujCjhbuKcqJOfXvuiwgxyGYXKOc";
       var proxyUrl = "https://cors-anywhere.herokuapp.com/";
+      var origin = this.userPos.lat + ',' + this.userPos.lng;
 
       var apiBike =
         "https://maps.googleapis.com/maps/api/directions/json?origin=" +
-        this.origin +
+        origin +
         "&destination=" +
         this.destination +
         "&mode=bicycling&key=" +
@@ -167,10 +179,13 @@ export default {
 
       var key = "AIzaSyDP0J6PujCjhbuKcqJOfXvuiwgxyGYXKOc";
       var proxyUrl = "https://cors-anywhere.herokuapp.com/";
+      var origin = this.userPos.lat + ',' + this.userPos.lng;
+
+      console.log(origin);
 
       var apiMoped =
         "https://maps.googleapis.com/maps/api/directions/json?origin=" +
-        this.origin +
+        origin +
         "&destination=" +
         this.destination +
         "&mode=driving&avoid=highways&key=" +
@@ -234,15 +249,23 @@ export default {
 
 
 <style scoped>
-.inputDestination {
-  max-width: 85%;
+
+.showTextField {
+  z-index: 5;
+  position: fixed;
+  right: 7vw;
+  top: 10vh;
 }
 
 .flex-box-input {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  margin-top: 3vh;
+  z-index: 1;
+  position: fixed;
+  width: 85%;
+  right: 7vw;
+  top: 10vh;
 }
 
 .flex-box-item {
