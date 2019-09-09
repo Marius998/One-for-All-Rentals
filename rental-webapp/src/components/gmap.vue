@@ -217,8 +217,8 @@ export default {
       // speichert die gewünschten Vehicle, welche als GmapMarker angezeigt werden | z.B nur Rhino oder im Radius 500m
       currentScooters: [], 
       userPosition: {
-        lat: 0,
-        lng: 0
+        lat: 50.946256,
+        lng: 6.897077
       }
     };
   },
