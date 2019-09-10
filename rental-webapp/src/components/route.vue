@@ -2,16 +2,15 @@
   <div>
     <div>
       <v-btn color="white" class="showTextField" fab dark @click="overlay = !overlay">
-        <v-icon color="black">attach_money</v-icon>
+        <v-icon color="black">directions</v-icon>
       </v-btn>
     </div>
 
     <v-overlay :absolute="absolute" :value="overlay">
       <v-row align="center" justify="center">
-        <v-card width="100vw" height="35vh" class="background-card" color="white" tile>
-          <v-card-title>
+        <v-card width="100vw" height="30vh" class="background-card" color="white" tile>
+          <v-card-title class="card-search-bar">
             <v-text-field
-              class="flex-box-input"
               v-model="destination"
               solo
               label="Ziel eingeben ..."
@@ -20,7 +19,8 @@
             ></v-text-field>
           </v-card-title>
           <v-card-actions class="lol">
-            <v-btn id="searchBtn" large v-on:click="getRoute">route berechnen</v-btn>
+            <v-btn id="searchBtn" color="error" large v-on:click="getRoute">route berechnen</v-btn>
+
             <v-chip class="ma-3" color="white" text-color="black" large v-if="distance">
               <v-icon left>navigation</v-icon>
               {{ distance }} km
@@ -258,13 +258,13 @@ export default {
 <style scoped>
 .background-card {
   z-index: 5;
-  margin-bottom: 65vh;
+  margin-bottom: 73vh;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.8);
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.8);
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
 
 .lol {
@@ -272,6 +272,7 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10vh;
 }
 
 .container {
@@ -288,15 +289,15 @@ export default {
   top: 10vh;
 }
 
-.flex-box-input {
-  width: 80vw;
-  margin-top: 5vh;
+.card-search-bar {
+  width: 90vw;
+  margin-top: 2vh;
 }
 
 #searchBtn {
-  width: 80vw;
-  margin-top: -5vh;
-  margin-bottom: 2vh;
+  width: 83vw;
+  margin-top: -2.5vh;
+  margin-bottom: 2.5vh;
 }
 
 .flex-box-item {
@@ -309,11 +310,11 @@ export default {
   width: 40vw;
   display: flex;
   justify-content: space-around;
-  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.3);
 }
 
 .pa-2 {
-  margin-top: 35vh;
+  margin-top: 31vh;
 }
 
 .ma-2 {
