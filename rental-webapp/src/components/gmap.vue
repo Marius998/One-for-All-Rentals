@@ -2,6 +2,7 @@
   <div>
     <app-route :userPos="userPosition" :choosenProvider="choosenProvider"></app-route>
 
+
     <v-row justify="center">
       <radial-menu
         class="radial-menu"
@@ -411,7 +412,7 @@ export default {
 }
 
 .geolocation-btn {
-  z-index: 5;
+  z-index: 3;
   position: fixed;
   right: 7vw;
   top: 20vh;
