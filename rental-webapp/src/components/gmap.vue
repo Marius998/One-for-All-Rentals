@@ -1,210 +1,213 @@
 <template>
-  <div>
-    <app-route :userPos="userPosition"></app-route>
+	<div>
+		<app-route :userPos="userPosition"></app-route>
 
 
-    <v-row justify="center">
-      <radial-menu
-        class="radial-menu"
-        style="background-color: white"
-        :itemSize="50"
-        :radius="120"
-        :angle-restriction="180"
-      >
-        <radial-menu-item>
-          <!-- Ringo -->
-          <img
-            @click="showRhingo=!showRhingo"
-            class="radialImg"
-            v-bind:class="{ activeModul: showRhingo}"
-            src="https://lh3.googleusercontent.com/g8npIP3QyCPMq4SN3cTXhnlRAg6F75qVFphxrosqmca372eTjFmPavfRCJDF6aMu9SdweC4B4EnK-CzCTYKicy-6Zfpq7ABognRKmC5UBqAOJdOOPzdN3h4iN_gfIB7Yiwm76DUWheMreKsjKOn7a8dWRf778HERlZ6BcDH4Gd2F2E3XJlB9ks2-X9KaB_-i7f77mFITWstUnydCx0awWLkphsSkmOi0IH9-4wwX4UVfTXBr5zMxBHm4vtKppBL6Rk6AeZ7OtJ_GNB4YWxpA2ePBaZP-hzCAm26BUxdDBBt5FAJ0Jf55QuRA8LQQPEgYXWA9_t19U6JarWcdOkywICbdEnLApYmK89GlVDwH6TpaRoGQhvbKow9_01lYQyEIkopkaLLBKA8kkSPdsStuMuYSIc3sPsPumcVIMHSGEX7ALZl1p5_CCZv3yFF6gW-BdXssg-WofEwHWla0aTRynoOmE9a58TpmfJMA19VISun5tFKVvd_C7QwRm6EHGt89g7vRUo8OSEJzBkJw7pvM5yVR8_gx_wueRchfDkCTnl_T2RGk4eAFuA2pBSjOrdlithjBSfWjkeYgY4UopccXI5Fmax-943a61F2FlNI_kYosEWzaoDg8Lkb_bsL9sOiKMAKxiTooV9QezFN4O9APxmocNfaQF5Gb19Xt502uZ9hV1NutvVJUPQ=s100-no"
-            alt
-            srcset
-          />
-        </radial-menu-item>
-
-        <radial-menu-item>
-          <!-- Tier -->
-          <img
-            @click="showTier=!showTier"
-            class="radialImg"
-            v-bind:class="{ activeModul: showTier}"
-            src="https://lh3.googleusercontent.com/FRm5mDsAk822-3Zmi-NmG_shq0jyiaqgh81gNEjsoy7nrC6ZmevioEtWSqN4Ca8Vqnpp8XhOcJmp9mp7Z66AUpLP6lWAr-4m2Si8hQHmmCzTcfGl_be61n5iWdzNjdHjGbgjryrgnyOYwK3IRLhlOmE4wdAKq0bu4gvDMuzcw_QHiZwCEFWHyALS07tUTQQ6oQUzXy3bAFPwjoGPscoDZKqD7ej7KViMJqBy0CqdlkQKZp-5KJtBR_Y8KOXO8I4brj3jbfIBp2PHjnUsdvEeVMMkOpJaP8576Ceahiatr6-jIlvRfRNfrKUuav3WlzlPkMmhk0GcWQFkul0AoatC48sGC6idSmFvtpVnUMUPnj_8xlSQWD3ZVXnGysbjOviqZP3edNc30df7F4guU-mZYEeJW4HTJ7G47S9bASbUN9Qii23ZOEYlvgizrBn7XLuxImX0ozV5hbea7pABAehxdcArixaUqfp0hYQr5D5PI3WOJmzDVuJIc6HJ1EfmqZ4T-0q5W8omQMYgoADlSvp9xMuyA2mAWb1S8V8jAYsay0blPQTNDZ9E_-F9WO6ad0DC7aK7caG5Ue_ilrYpM9n1tAKO6knxarXK07sy8fvn4kfShQrLllEAOObudFJe_rVUBY9LGHDQlD9FoU8a9c_Iuvk9JkZRXMmBxGf7Ae51Ejj6CNYVFEvEeg=s492-no"
-            alt
-          />
-        </radial-menu-item>
-
-        <radial-menu-item>
-          <!-- Nextbike -->
-          <img
-            @click="showNextBikes=!showNextBikes"
-            class="radialImg"
-            v-bind:class="{ activeModul: showNextBikes}"
-            src="https://lh3.googleusercontent.com/YmXUsCJPHTC_SBZLVfnlVXNvoq4I-2_x6FN5hPa-l1et1cKW82wzGU7K6L6sAxWrt2J4X97B7Cvk7OKVxSv_-ahAygLqTeqgQqS7rFpAAi50Ab1JFkBcxBoV_Od29Dj9aBhlQQdXuenMYTpvKkbcorZAQeDhbAvU7B5q_21iKfzzaNgenhb-1i9dn3W56EG-r5anawdg4pyzJPHXFmOMZIb0zlxMhSfGxWE2-Ws0VwvNI1so2FJPhgfyQxMFWOeY_zEUc6KrEQkCkxNq-3qDtDNT7YrFaGQH5xCX8t22Z3aUpQWyesUyXJDIH_nbVvX49NGbmJ5OrJAEcDSu5YJb6zanQBdoQUquLNehgmRs7QJnkQAScy_f1mA1VPKSZjoU8YqJRVT6QQ6ynnIwOC8QWRQ1zchGrAvbI1FVpNfnCtaZ8T2Qh9nJoTiO4UAxAhwYAJRTBDJ8fvNPP2MOJJxE_OejHlBVIN0w3kwlpmKrOUFgcvPODUbwLSdx95zuwb9fK9nC60LlMs4Yu-FhQkdNmmi9P816QtM_FI7ZdlAOdCcgrGJzyX1cebXw1icebCL0YpB1gnqO2mqByLLEgUIJ2HCk7K3i2Bo6fE22-nny7byJR3mpBttpWbB7je5VqKxEtRNPDN8b31oPTjALkxMeOXZE6u5YfBM0hWNnZ2aCyTt8cHEXPup2wQ=s100-no"
-            alt
-          />
-        </radial-menu-item>
-      </radial-menu>
-    </v-row>
-
-    <div @click="panToCurrent">
-      <v-btn color="white" class="geolocation-btn" fab dark>
-        <v-icon color="black">location_searching</v-icon>
-      </v-btn>
-    </div>
-
-    <GmapMap
-      ref="mapRef"
-      class="gmap"
-      :center="{lat:50.946256, lng:6.897077}"
-      :zoom="16"
-      @click="display = false"
-      :class="{blurred : display}"
-      map-type-id="roadmap"
-      :options="{
-      gestureHandling : 'greedy',
-      disableDefaultUI : true,
-      styles: [
-            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
-            {
-              featureType: 'administrative.locality',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
-            },
-            {
-              featureType: 'poi',
-              elementType: 'labels.text',
-              stylers: [{visibility: 'off'}]
-            },
-            {
-              featureType: 'poi',
-              elementType: 'labels.icon',
-              stylers: [{visibility: 'off'}]
-            },
-            {
-              featureType: 'poi.park',
-              elementType: 'geometry',
-              stylers: [{color: '#315943'}]
-            },
-            {
-              featureType: 'road',
-              elementType: 'geometry',
-              stylers: [{color: '#265c63'}]
-            },
-            {
-              featureType: 'road',
-              elementType: 'geometry.stroke',
-              stylers: [{color: '#212a37'}]
-            },
-            {
-              featureType: 'road',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#9ca5b3'}]
-            },
-            {
-              featureType: 'road.highway',
-              elementType: 'geometry',
-              stylers: [{color: '#746855'}]
-            },
-            {
-              featureType: 'road.highway',
-              elementType: 'geometry.stroke',
-              stylers: [{color: '#1f2835'}]
-            },
-            {
-              featureType: 'road.highway',
-              elementType: 'labels.icon',
-              stylers: [{visibility: 'off'}]
-            },
-            {
-              featureType: 'road.highway',
-              elementType: 'labels.text.fill',
-              stylers: [{visibility: 'off'}]
-            },
-            {
-              featureType: 'transit',
-              elementType: 'geometry',
-              stylers: [{color: '#2f3948'}]
-            },
-            {
-              featureType: 'transit.station',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
-            },
-            {
-              featureType: 'water',
-              elementType: 'geometry',
-              stylers: [{color: '#17263c'}]
-            },
-            {
-              featureType: 'water',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#515c6d'}]
-            },
-            {
-              featureType: 'water',
-              elementType: 'labels.text.stroke',
-              stylers: [{color: '#17263c'}]
-            }
-          ]
-        }"
-    >
-        <!-- Nextbikes Marker -->
-        <div v-if="showNextBikes" class="showWrapper">
-      <GmapMarker
-        :key="index"
-        v-for="(m, index) in nextBikes"
-        :position="{lat : m.lat, lng : m.lng}"
-        :clickable="true"
-        :draggable="false"
-        :icon="m.icon"
-        @click="currentScooter = nextBikes[index];display=!display"
-      />
-        </div>
-
-        <!-- Rhingo Marker -->
-        <div v-if="showRhingo" class="showWrapper">
-      <GmapMarker
-        :key="index"
-        v-for="(m, index) in rhingo"
-        :position="{lat : m.lat, lng : m.lng}"
-        :clickable="true"
-        :draggable="false"
-        :icon="m.icon"
-        @click="currentScooter = rhingo[index];display=!display"
-      />
-        </div>
+		<providerFilter @provider="updateProvider"> </providerFilter>
 
 
-        <!-- Tier Marker -->
-        <div v-if="showTier" class="showWrapper">    
-      <GmapMarker
-        :key="index"
-        v-for="(m, index) in tier"
-        :position="{lat : m.lat, lng : m.lng}"
-        :clickable="true"
-        :draggable="false"
-        :icon="m.icon"
-        @click="currentScooter = tier[index];display=!display"
-        
-      />
-          </div>  
+		<v-row justify="center">
+			<radial-menu
+				class="radial-menu"
+				style="background-color: white"
+				:itemSize="50"
+				:radius="120"
+				:angle-restriction="180"
+			>
+				<radial-menu-item>
+					<!-- Ringo -->
+					<img
+						@click="showRhingo=!showRhingo"
+						class="radialImg"
+						v-bind:class="{ activeModul: showRhingo}"
+						src="https://lh3.googleusercontent.com/g8npIP3QyCPMq4SN3cTXhnlRAg6F75qVFphxrosqmca372eTjFmPavfRCJDF6aMu9SdweC4B4EnK-CzCTYKicy-6Zfpq7ABognRKmC5UBqAOJdOOPzdN3h4iN_gfIB7Yiwm76DUWheMreKsjKOn7a8dWRf778HERlZ6BcDH4Gd2F2E3XJlB9ks2-X9KaB_-i7f77mFITWstUnydCx0awWLkphsSkmOi0IH9-4wwX4UVfTXBr5zMxBHm4vtKppBL6Rk6AeZ7OtJ_GNB4YWxpA2ePBaZP-hzCAm26BUxdDBBt5FAJ0Jf55QuRA8LQQPEgYXWA9_t19U6JarWcdOkywICbdEnLApYmK89GlVDwH6TpaRoGQhvbKow9_01lYQyEIkopkaLLBKA8kkSPdsStuMuYSIc3sPsPumcVIMHSGEX7ALZl1p5_CCZv3yFF6gW-BdXssg-WofEwHWla0aTRynoOmE9a58TpmfJMA19VISun5tFKVvd_C7QwRm6EHGt89g7vRUo8OSEJzBkJw7pvM5yVR8_gx_wueRchfDkCTnl_T2RGk4eAFuA2pBSjOrdlithjBSfWjkeYgY4UopccXI5Fmax-943a61F2FlNI_kYosEWzaoDg8Lkb_bsL9sOiKMAKxiTooV9QezFN4O9APxmocNfaQF5Gb19Xt502uZ9hV1NutvVJUPQ=s100-no"
+						alt
+						srcset
+					/>
+				</radial-menu-item>
+
+				<radial-menu-item>
+					<!-- Tier -->
+					<img
+						@click="showTier=!showTier"
+						class="radialImg"
+						v-bind:class="{ activeModul: showTier}"
+						src="https://lh3.googleusercontent.com/FRm5mDsAk822-3Zmi-NmG_shq0jyiaqgh81gNEjsoy7nrC6ZmevioEtWSqN4Ca8Vqnpp8XhOcJmp9mp7Z66AUpLP6lWAr-4m2Si8hQHmmCzTcfGl_be61n5iWdzNjdHjGbgjryrgnyOYwK3IRLhlOmE4wdAKq0bu4gvDMuzcw_QHiZwCEFWHyALS07tUTQQ6oQUzXy3bAFPwjoGPscoDZKqD7ej7KViMJqBy0CqdlkQKZp-5KJtBR_Y8KOXO8I4brj3jbfIBp2PHjnUsdvEeVMMkOpJaP8576Ceahiatr6-jIlvRfRNfrKUuav3WlzlPkMmhk0GcWQFkul0AoatC48sGC6idSmFvtpVnUMUPnj_8xlSQWD3ZVXnGysbjOviqZP3edNc30df7F4guU-mZYEeJW4HTJ7G47S9bASbUN9Qii23ZOEYlvgizrBn7XLuxImX0ozV5hbea7pABAehxdcArixaUqfp0hYQr5D5PI3WOJmzDVuJIc6HJ1EfmqZ4T-0q5W8omQMYgoADlSvp9xMuyA2mAWb1S8V8jAYsay0blPQTNDZ9E_-F9WO6ad0DC7aK7caG5Ue_ilrYpM9n1tAKO6knxarXK07sy8fvn4kfShQrLllEAOObudFJe_rVUBY9LGHDQlD9FoU8a9c_Iuvk9JkZRXMmBxGf7Ae51Ejj6CNYVFEvEeg=s492-no"
+						alt
+					/>
+				</radial-menu-item>
+
+				<radial-menu-item>
+					<!-- Nextbike -->
+					<img
+						@click="showNextBikes=!showNextBikes"
+						class="radialImg"
+						v-bind:class="{ activeModul: showNextBikes}"
+						src="https://lh3.googleusercontent.com/YmXUsCJPHTC_SBZLVfnlVXNvoq4I-2_x6FN5hPa-l1et1cKW82wzGU7K6L6sAxWrt2J4X97B7Cvk7OKVxSv_-ahAygLqTeqgQqS7rFpAAi50Ab1JFkBcxBoV_Od29Dj9aBhlQQdXuenMYTpvKkbcorZAQeDhbAvU7B5q_21iKfzzaNgenhb-1i9dn3W56EG-r5anawdg4pyzJPHXFmOMZIb0zlxMhSfGxWE2-Ws0VwvNI1so2FJPhgfyQxMFWOeY_zEUc6KrEQkCkxNq-3qDtDNT7YrFaGQH5xCX8t22Z3aUpQWyesUyXJDIH_nbVvX49NGbmJ5OrJAEcDSu5YJb6zanQBdoQUquLNehgmRs7QJnkQAScy_f1mA1VPKSZjoU8YqJRVT6QQ6ynnIwOC8QWRQ1zchGrAvbI1FVpNfnCtaZ8T2Qh9nJoTiO4UAxAhwYAJRTBDJ8fvNPP2MOJJxE_OejHlBVIN0w3kwlpmKrOUFgcvPODUbwLSdx95zuwb9fK9nC60LlMs4Yu-FhQkdNmmi9P816QtM_FI7ZdlAOdCcgrGJzyX1cebXw1icebCL0YpB1gnqO2mqByLLEgUIJ2HCk7K3i2Bo6fE22-nny7byJR3mpBttpWbB7je5VqKxEtRNPDN8b31oPTjALkxMeOXZE6u5YfBM0hWNnZ2aCyTt8cHEXPup2wQ=s100-no"
+						alt
+					/>
+				</radial-menu-item>
+			</radial-menu>
+		</v-row>
+
+		<div @click="panToCurrent">
+			<v-btn color="white" class="geolocation-btn" fab dark>
+				<v-icon color="black">location_searching</v-icon>
+			</v-btn>
+		</div>
+
+		<GmapMap
+			ref="mapRef"
+			class="gmap"
+			:center="{lat:50.946256, lng:6.897077}"
+			:zoom="16"
+			@click="display = false"
+			:class="{blurred : display}"
+			map-type-id="roadmap"
+			:options="{
+			gestureHandling : 'greedy',
+			disableDefaultUI : true,
+			styles: [
+						{elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+						{elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+						{elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+						{
+							featureType: 'administrative.locality',
+							elementType: 'labels.text.fill',
+							stylers: [{color: '#d59563'}]
+						},
+						{
+							featureType: 'poi',
+							elementType: 'labels.text',
+							stylers: [{visibility: 'off'}]
+						},
+						{
+							featureType: 'poi',
+							elementType: 'labels.icon',
+							stylers: [{visibility: 'off'}]
+						},
+						{
+							featureType: 'poi.park',
+							elementType: 'geometry',
+							stylers: [{color: '#315943'}]
+						},
+						{
+							featureType: 'road',
+							elementType: 'geometry',
+							stylers: [{color: '#265c63'}]
+						},
+						{
+							featureType: 'road',
+							elementType: 'geometry.stroke',
+							stylers: [{color: '#212a37'}]
+						},
+						{
+							featureType: 'road',
+							elementType: 'labels.text.fill',
+							stylers: [{color: '#9ca5b3'}]
+						},
+						{
+							featureType: 'road.highway',
+							elementType: 'geometry',
+							stylers: [{color: '#746855'}]
+						},
+						{
+							featureType: 'road.highway',
+							elementType: 'geometry.stroke',
+							stylers: [{color: '#1f2835'}]
+						},
+						{
+							featureType: 'road.highway',
+							elementType: 'labels.icon',
+							stylers: [{visibility: 'off'}]
+						},
+						{
+							featureType: 'road.highway',
+							elementType: 'labels.text.fill',
+							stylers: [{visibility: 'off'}]
+						},
+						{
+							featureType: 'transit',
+							elementType: 'geometry',
+							stylers: [{color: '#2f3948'}]
+						},
+						{
+							featureType: 'transit.station',
+							elementType: 'labels.text.fill',
+							stylers: [{color: '#d59563'}]
+						},
+						{
+							featureType: 'water',
+							elementType: 'geometry',
+							stylers: [{color: '#17263c'}]
+						},
+						{
+							featureType: 'water',
+							elementType: 'labels.text.fill',
+							stylers: [{color: '#515c6d'}]
+						},
+						{
+							featureType: 'water',
+							elementType: 'labels.text.stroke',
+							stylers: [{color: '#17263c'}]
+						}
+					]
+				}"
+		>
+				<!-- Nextbikes Marker -->
+				<div v-if="showNextBike" class="showWrapper">
+			<GmapMarker
+				:key="index"
+				v-for="(m, index) in nextBikes"
+				:position="{lat : m.lat, lng : m.lng}"
+				:clickable="true"
+				:draggable="false"
+				:icon="m.icon"
+				@click="currentScooter = nextBikes[index];display=!display"
+			/>
+				</div>
+
+				<!-- Rhingo Marker -->
+				<div v-if="showRhingo" class="showWrapper">
+			<GmapMarker
+				:key="index"
+				v-for="(m, index) in rhingo"
+				:position="{lat : m.lat, lng : m.lng}"
+				:clickable="true"
+				:draggable="false"
+				:icon="m.icon"
+				@click="currentScooter = rhingo[index];display=!display"
+			/>
+				</div>
 
 
-      <GmapMarker
-        titel = 'userPosition'
-        :position="userPosition"
-        :clickable="false"
-        :draggable="false"
-        watch = true
-        icon = 'https://img.icons8.com/color/48/000000/street-view.png'
-      />
-    </GmapMap>
+				<!-- Tier Marker -->
+				<div v-if="showTier" class="showWrapper">    
+			<GmapMarker
+				:key="index"
+				v-for="(m, index) in tier"
+				:position="{lat : m.lat, lng : m.lng}"
+				:clickable="true"
+				:draggable="false"
+				:icon="m.icon"
+				@click="currentScooter = tier[index];display=!display"
+				
+			/>
+					</div>  
 
-    <InfoCard v-show="display" :scooter="currentScooter" />
-  </div>
+
+			<GmapMarker
+				titel = 'userPosition'
+				:position="userPosition"
+				:clickable="false"
+				:draggable="false"
+				watch = true
+				icon = 'https://img.icons8.com/color/48/000000/street-view.png'
+			/>
+		</GmapMap>
+
+		<InfoCard v-show="display" :scooter="currentScooter" />
+	</div>
 </template>
 
 
@@ -216,6 +219,7 @@ const fetch = require("node-fetch");
 import { RadialMenu, RadialMenuItem } from "vue-radial-menu";
 import InfoCard from "./infoCard";
 import route from "./route";
+import providerFilter from "./filter"
 
 
 import * as fetchNextbike from "@/scripts/nextBike";
@@ -224,153 +228,162 @@ import * as fetchTier from "@/scripts/tier";
 import { constants } from "crypto";
 
 export default {
-  name: "gmap",
-  components: {
-    'app-route':route,
-    InfoCard,
-    RadialMenu,
-    RadialMenuItem,
-    
-  },
+	name: "gmap",
+	components: {
+		'app-route':route,
+		InfoCard,
+		RadialMenu,
+		RadialMenuItem,
+		providerFilter
+		
+	},
 
-  data() {
-    return {
-      // speichert welche Anbieter ausgewählt wurden und als Marker dargestellt werden
-      
-        showNextBikes: true,
-        showRhingo: true,
-        showTier: true,
-      nextBikes: [], // speichert die nextBikes
-      rhingo: [], // speichert die Rhingo Vehicle
-      tier: [], // speichert die Tier Vehicle
+	data() {
+		return {
+			// speichert welche Anbieter ausgewählt wurden und als Marker dargestellt werden
+		
+				showNextBike: Boolean,
+				showRhingo: Boolean,
+				showTier: Boolean,
+			nextBikes: [], // speichert die nextBikes
+			rhingo: [], // speichert die Rhingo Vehicle
+			tier: [], // speichert die Tier Vehicle
+			
 
-      display: false, // entscheidet um die infoCard angezeigt werden soll
-      currentScooter: Object, // speichert das ausgewählte Vehicle für die infoCard
+			display: false, // entscheidet um die infoCard angezeigt werden soll
+			currentScooter: Object, // speichert das ausgewählte Vehicle für die infoCard
 
-      // speichert die gewünschten Vehicle, welche als GmapMarker angezeigt werden | z.B nur Rhino oder im Radius 500m
-      currentScooters: [], 
-      userPosition: {
-        lat: 50.946256,
-        lng: 6.897077
-      }
-    };
-  },
+			// speichert die gewünschten Vehicle, welche als GmapMarker angezeigt werden | z.B nur Rhino oder im Radius 500m
+			currentScooters: [], 
+			userPosition: {
+				lat: 50.946256,
+				lng: 6.897077
+			}
+		};
+	},
 
-  methods: {
-    panToCurrent() {
-      this.$refs.mapRef.$mapPromise.then(map => {
-        map.panTo(this.userPosition);
-      });
-    },
-    
-    setMarkerPosition(position) {
-      userPosition = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      }
-    },
+	methods: {
+		updateProvider(e) {
+	 this.showNextBike = e[0]
+	 this.showRhingo = e[1]
+	 this.showTier = e[2]
+	 
+	
+}, 
+		panToCurrent() {
+			this.$refs.mapRef.$mapPromise.then(map => {
+				map.panTo(this.userPosition);
+			});
+		},
+		
+		setMarkerPosition(position) {
+			userPosition = {
+				lat: position.coords.latitude,
+				lng: position.coords.longitude
+			}
+		},
 
-    addMarker: function(vehicleList) {
-      console.log("vehicleList");
-      console.log(vehicleList);
+		addMarker: function(vehicleList) {
+			console.log("vehicleList");
+			console.log(vehicleList);
 
-      var vehicleCounter = 0;
+			var vehicleCounter = 0;
 
-      while (vehicleList[vehicleCounter] != undefined) {
-        const marker = {
-          lat: vehicleList[vehicleCounter].lat,
-          lng: vehicleList[vehicleCounter].lng
-        };
+			while (vehicleList[vehicleCounter] != undefined) {
+				const marker = {
+					lat: vehicleList[vehicleCounter].lat,
+					lng: vehicleList[vehicleCounter].lng
+				};
 
-        this.currentScooters.push({
-          position: marker,
-          icon: vehicleList[vehicleCounter].icon,
-          vehicle: vehicleList[vehicleCounter],
-          provider: vehicleList[vehicleCounter].provider
-        });
-        vehicleCounter++;
-      }
+				this.currentScooters.push({
+					position: marker,
+					icon: vehicleList[vehicleCounter].icon,
+					vehicle: vehicleList[vehicleCounter],
+					provider: vehicleList[vehicleCounter].provider
+				});
+				vehicleCounter++;
+			}
 
-      console.log(vehicleCounter);
-    },
+			console.log(vehicleCounter);
+		},
 
-    openInfoCard: function(key) {
+		openInfoCard: function(key) {
 
-      console.log(key);
-      this.display = !this.display;
-      this.currentScooter = this.currentScooters[key];
-      console.log(this.currentScooters[key]);
-    },
+			console.log(key);
+			this.display = !this.display;
+			this.currentScooter = this.currentScooters[key];
+			console.log(this.currentScooters[key]);
+		},
 
-    removeMarker: function(provider) {
-      console.log("remove Marker");
-      this.currentScooters = this.currentScooters.filter(function(obj) {
-        return obj.provider != provider;
-      });
-    }
-  },
+		removeMarker: function(provider) {
+			console.log("remove Marker");
+			this.currentScooters = this.currentScooters.filter(function(obj) {
+				return obj.provider != provider;
+			});
+		}
+	},
 
-  created() {
-    this.$nextTick(function() {
-      console.log("locating ...");
+	created() {
+		this.$nextTick(function() {
+			console.log("locating ...");
 
-      let position = navigator.geolocation.watchPosition(
-        position => {
-          console.log("located");
-          console.log(position)
-          console.log('lat:', position.coords.latitude);
-          console.log('lng:', position.coords.longitude);
-          
-          this.userPosition = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-          
-          this.panToCurrent();
-        }, 
-        positionError => {
-          console.log(positionError);
-        },
-        {
-          enableHighAccuracy: false,
-          timeout: 30000,
-          maximumAge: 15000
-        }
-      );
-    
-    });
-  },
+			let position = navigator.geolocation.watchPosition(
+				position => {
+					console.log("located");
+					console.log(position)
+					console.log('lat:', position.coords.latitude);
+					console.log('lng:', position.coords.longitude);
+					
+					this.userPosition = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+					
+					this.panToCurrent();
+				}, 
+				positionError => {
+					console.log(positionError);
+				},
+				{
+					enableHighAccuracy: false,
+					timeout: 30000,
+					maximumAge: 15000
+				}
+			);
+		
+		});
+	},
 
-  mounted() {
-    fetchNextbike
-      .fetchNextbike()
-      .then(bikes => {
-        this.nextBikes = bikes;
-      })
-      .catch(function() {
-        console.log("errorNextBike");
-      }),
+	mounted() {
+		fetchNextbike
+			.fetchNextbike()
+			.then(bikes => {
+				this.nextBikes = bikes;
+			})
+			.catch(function() {
+				console.log("errorNextBike");
+			}),
 
-    fetchRhingo
-      .fetchRhingo()
-      .then(moped => {
-        this.rhingo = moped;
-      })
-      .catch(function() {
-        console.log("errorRhingo");
-      }),
+		fetchRhingo
+			.fetchRhingo()
+			.then(moped => {
+				this.rhingo = moped;
+			})
+			.catch(function() {
+				console.log("errorRhingo");
+			}),
 
-    fetchTier
-      .fetchTier()
-      .then(tierScooter => {
-        this.tier = tierScooter;
-      })
-      .catch(function() {
-        console.log("errorTier");
-      });
-  },  
+		fetchTier
+			.fetchTier()
+			.then(tierScooter => {
+				this.tier = tierScooter;
+			})
+			.catch(function() {
+				console.log("errorTier");
+			});
+	},  
 
-  computed: {}
+	computed: {}
 };
 </script>
 
@@ -378,36 +391,36 @@ export default {
 
 <style scoped>
 .gmap {
-  width: 100vw;
-  height: 100vh;
+	width: 100vw;
+	height: 100vh;
 }
 
 .radial-menu {
-  z-index: 2;
-  position: fixed;
-  bottom: 50px;
+	z-index: 2;
+	position: fixed;
+	bottom: 50px;
 }
 
 .radialImg {
-  width: 80px;
-  border-radius: 80px;
+	width: 80px;
+	border-radius: 80px;
 }
 
 .activeModul {
-  border: 3.5px solid #3cd500;
-  padding: 6px;
-  border-radius: 80px;
+	border: 3.5px solid #3cd500;
+	padding: 6px;
+	border-radius: 80px;
 }
 
 .blurred {
-  filter: blur(6px);
+	filter: blur(6px);
 }
 
 .geolocation-btn {
-  z-index: 3;
-  position: fixed;
-  right: 7vw;
-  top: 20vh;
+	z-index: 3;
+	position: fixed;
+	right: 7vw;
+	top: 20vh;
 }
 </style>
 
