@@ -334,6 +334,7 @@ export default {
   height: 100vh;
 }
 
+
 .blurred {
   filter: blur(6px);
 }
