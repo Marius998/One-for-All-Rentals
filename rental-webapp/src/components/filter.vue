@@ -1,15 +1,14 @@
 <template>
   <div>
-    <div class="filterCard">
       <v-card class="card" width="100vw" height="60vh">
         <v-toolbar flat color="transparent">
           <v-toolbar-title>Filter</v-toolbar-title>
           <div class="flex-grow-1"></div>
         </v-toolbar>
 
-        <v-container class="py-0">
+        <v-container class="container">
           <v-row align="center" justify="start">
-            <v-col v-for="(selection, i) in selections" :key="selection.text">
+            <ul v-for="(selection, i) in selections" :key="selection.text">
               <v-chip
                 class="chip"
                 @click:close="selected.splice(i, 1)"
@@ -23,7 +22,7 @@
 
                 <span>{{selection.text}}</span>
               </v-chip>
-            </v-col>
+            </ul>
           </v-row>
         </v-container>
 
@@ -112,7 +111,6 @@
         </v-card-actions>
       </v-card>
     </div>
-  </div>
 </template>
 
 <script>
@@ -127,6 +125,13 @@ export default {
         bike: true,
         avatar:
           "https://lh3.googleusercontent.com/YmXUsCJPHTC_SBZLVfnlVXNvoq4I-2_x6FN5hPa-l1et1cKW82wzGU7K6L6sAxWrt2J4X97B7Cvk7OKVxSv_-ahAygLqTeqgQqS7rFpAAi50Ab1JFkBcxBoV_Od29Dj9aBhlQQdXuenMYTpvKkbcorZAQeDhbAvU7B5q_21iKfzzaNgenhb-1i9dn3W56EG-r5anawdg4pyzJPHXFmOMZIb0zlxMhSfGxWE2-Ws0VwvNI1so2FJPhgfyQxMFWOeY_zEUc6KrEQkCkxNq-3qDtDNT7YrFaGQH5xCX8t22Z3aUpQWyesUyXJDIH_nbVvX49NGbmJ5OrJAEcDSu5YJb6zanQBdoQUquLNehgmRs7QJnkQAScy_f1mA1VPKSZjoU8YqJRVT6QQ6ynnIwOC8QWRQ1zchGrAvbI1FVpNfnCtaZ8T2Qh9nJoTiO4UAxAhwYAJRTBDJ8fvNPP2MOJJxE_OejHlBVIN0w3kwlpmKrOUFgcvPODUbwLSdx95zuwb9fK9nC60LlMs4Yu-FhQkdNmmi9P816QtM_FI7ZdlAOdCcgrGJzyX1cebXw1icebCL0YpB1gnqO2mqByLLEgUIJ2HCk7K3i2Bo6fE22-nny7byJR3mpBttpWbB7je5VqKxEtRNPDN8b31oPTjALkxMeOXZE6u5YfBM0hWNnZ2aCyTt8cHEXPup2wQ=s100-no"
+      },
+      {
+        text: "Fordbike",
+        color: "#EC1614",
+        bike: true,
+        avatar:
+          "https://lh3.googleusercontent.com/FRm5mDsAk822-3Zmi-NmG_shq0jyiaqgh81gNEjsoy7nrC6ZmevioEtWSqN4Ca8Vqnpp8XhOcJmp9mp7Z66AUpLP6lWAr-4m2Si8hQHmmCzTcfGl_be61n5iWdzNjdHjGbgjryrgnyOYwK3IRLhlOmE4wdAKq0bu4gvDMuzcw_QHiZwCEFWHyALS07tUTQQ6oQUzXy3bAFPwjoGPscoDZKqD7ej7KViMJqBy0CqdlkQKZp-5KJtBR_Y8KOXO8I4brj3jbfIBp2PHjnUsdvEeVMMkOpJaP8576Ceahiatr6-jIlvRfRNfrKUuav3WlzlPkMmhk0GcWQFkul0AoatC48sGC6idSmFvtpVnUMUPnj_8xlSQWD3ZVXnGysbjOviqZP3edNc30df7F4guU-mZYEeJW4HTJ7G47S9bASbUN9Qii23ZOEYlvgizrBn7XLuxImX0ozV5hbea7pABAehxdcArixaUqfp0hYQr5D5PI3WOJmzDVuJIc6HJ1EfmqZ4T-0q5W8omQMYgoADlSvp9xMuyA2mAWb1S8V8jAYsay0blPQTNDZ9E_-F9WO6ad0DC7aK7caG5Ue_ilrYpM9n1tAKO6knxarXK07sy8fvn4kfShQrLllEAOObudFJe_rVUBY9LGHDQlD9FoU8a9c_Iuvk9JkZRXMmBxGf7Ae51Ejj6CNYVFEvEeg=s492-no"
       },
       {
         text: "Rhingo",
@@ -148,18 +153,11 @@ export default {
         bike: false,
         avatar:
           "https://lh3.googleusercontent.com/FRm5mDsAk822-3Zmi-NmG_shq0jyiaqgh81gNEjsoy7nrC6ZmevioEtWSqN4Ca8Vqnpp8XhOcJmp9mp7Z66AUpLP6lWAr-4m2Si8hQHmmCzTcfGl_be61n5iWdzNjdHjGbgjryrgnyOYwK3IRLhlOmE4wdAKq0bu4gvDMuzcw_QHiZwCEFWHyALS07tUTQQ6oQUzXy3bAFPwjoGPscoDZKqD7ej7KViMJqBy0CqdlkQKZp-5KJtBR_Y8KOXO8I4brj3jbfIBp2PHjnUsdvEeVMMkOpJaP8576Ceahiatr6-jIlvRfRNfrKUuav3WlzlPkMmhk0GcWQFkul0AoatC48sGC6idSmFvtpVnUMUPnj_8xlSQWD3ZVXnGysbjOviqZP3edNc30df7F4guU-mZYEeJW4HTJ7G47S9bASbUN9Qii23ZOEYlvgizrBn7XLuxImX0ozV5hbea7pABAehxdcArixaUqfp0hYQr5D5PI3WOJmzDVuJIc6HJ1EfmqZ4T-0q5W8omQMYgoADlSvp9xMuyA2mAWb1S8V8jAYsay0blPQTNDZ9E_-F9WO6ad0DC7aK7caG5Ue_ilrYpM9n1tAKO6knxarXK07sy8fvn4kfShQrLllEAOObudFJe_rVUBY9LGHDQlD9FoU8a9c_Iuvk9JkZRXMmBxGf7Ae51Ejj6CNYVFEvEeg=s492-no"
-      },
-      {
-        text: "Fordbike",
-        color: "#EC1614",
-        bike: false,
-        avatar:
-          "https://lh3.googleusercontent.com/FRm5mDsAk822-3Zmi-NmG_shq0jyiaqgh81gNEjsoy7nrC6ZmevioEtWSqN4Ca8Vqnpp8XhOcJmp9mp7Z66AUpLP6lWAr-4m2Si8hQHmmCzTcfGl_be61n5iWdzNjdHjGbgjryrgnyOYwK3IRLhlOmE4wdAKq0bu4gvDMuzcw_QHiZwCEFWHyALS07tUTQQ6oQUzXy3bAFPwjoGPscoDZKqD7ej7KViMJqBy0CqdlkQKZp-5KJtBR_Y8KOXO8I4brj3jbfIBp2PHjnUsdvEeVMMkOpJaP8576Ceahiatr6-jIlvRfRNfrKUuav3WlzlPkMmhk0GcWQFkul0AoatC48sGC6idSmFvtpVnUMUPnj_8xlSQWD3ZVXnGysbjOviqZP3edNc30df7F4guU-mZYEeJW4HTJ7G47S9bASbUN9Qii23ZOEYlvgizrBn7XLuxImX0ozV5hbea7pABAehxdcArixaUqfp0hYQr5D5PI3WOJmzDVuJIc6HJ1EfmqZ4T-0q5W8omQMYgoADlSvp9xMuyA2mAWb1S8V8jAYsay0blPQTNDZ9E_-F9WO6ad0DC7aK7caG5Ue_ilrYpM9n1tAKO6knxarXK07sy8fvn4kfShQrLllEAOObudFJe_rVUBY9LGHDQlD9FoU8a9c_Iuvk9JkZRXMmBxGf7Ae51Ejj6CNYVFEvEeg=s492-no"
       }
     ],
     loading: false,
     loading_deselect: false,
-    selected: [0,1,2],
+    selected: [0,2,3],
 
     showNextBikes: this,
     showRhingo: true,
@@ -201,12 +199,12 @@ export default {
 
     // Entscheidet, ob die v-list-group Motorisierte Fahrzeuge angezeigt wird
     showMotorizedGroup() {
-      return !this.selected.includes(1) || !this.selected.includes(2) || !this.selected.includes(3) || !this.selected.includes(4);
+      return !this.selected.includes(2) || !this.selected.includes(3) || !this.selected.includes(4);
     },
 
     // Entscheidet, ob die v-list-group Fahrräder angezeigt wird
     showBikeGroup() {
-      return !this.selected.includes(0);
+      return !this.selected.includes(0) || !this.selected.includes(1);
     },
 
     selections() {
@@ -224,8 +222,8 @@ export default {
     selected: function reloadProvider(){
 
       this.showNextBikes = this.selected.includes(0);
-      this.showRhingo = this.selected.includes(1);
-      this.showTier = this.selected.includes(2);
+      this.showRhingo = this.selected.includes(2);
+      this.showTier = this.selected.includes(3);
 
       this.sendData();
     }
@@ -234,18 +232,16 @@ export default {
 </script>
 
 <style scoped>
-.filterCard {
-  width: 100vw;
-  position: absolute;
-  bottom: 0;
-  z-index: 100;
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
-  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.8);
-}
-
 .chip{
   color: white;
+  margin-bottom: 10px;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.container{
+  padding: 0;
+  padding-right: 17px;
 }
 
 .card {
@@ -258,12 +254,4 @@ export default {
   z-index: 5;
 }
 
-.chip-container {
-  margin-top: 10px;
-  background-color: white;
-  height: 15vh;
-  border-radius: 8px;
-  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-}
 </style>
