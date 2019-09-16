@@ -1,22 +1,46 @@
 <template>
   <div>
-    <app-route :userPos="userPosition"></app-route>
+    <app-route :userPos="userPosition" :overlay="overlay_route"></app-route>
 
     <providerFilter v-show="display_filter" @provider="updateProvider"></providerFilter>
 
-    <div @click="panToCurrent">
-      <v-btn color="white" class="geolocation-btn" fab dark>
+    <v-speed-dial
+      class="btn"
+      v-model="fab"
+      top
+      right
+      open-on-hover
+      direction="bottom"
+      transition="slide-y-reverse-transition"
+    >
+      <template v-slot:activator>
+        <v-btn v-model="fab" color="white" fab dark>
+          <v-icon color="black" v-if="fab">mdi-close</v-icon>
+          <v-icon color="black" v-else>add</v-icon>
+        </v-btn>
+      </template>
+
+      <v-btn fab dark small color="white" @click="panToCurrent">
         <v-icon color="black">location_searching</v-icon>
       </v-btn>
-    </div>
+
+      <v-btn fab dark small color="white" @click="display_filter=!display_filter">
+        <v-icon color="black">filter_list</v-icon>
+      </v-btn>
+
+      <v-btn fab dark small color="white" @click="overlay_route=!overlay_route">
+        <v-icon color="black">directions</v-icon>
+      </v-btn>
+    </v-speed-dial>
 
     <v-btn
-      color="white"
-      class="geolocation-btn filter-btn"
+      :class="{close_btn_pos1 : overlay_route, close_btn_pos2 : display_filter || display_infocard}"
       fab
-      @click="display_filter=!display_filter"
+      color="white"
+      v-show="overlay_route || display_infocard || display_filter"
+      @click="overlay_route=false; display_filter=false; display_infocard=false"
     >
-      <v-icon color="black">filter_list</v-icon>
+      <v-icon color="black">close</v-icon>
     </v-btn>
 
     <GmapMap
@@ -24,7 +48,7 @@
       class="gmap"
       :center="{lat:50.946256, lng:6.897077}"
       :zoom="16"
-      @click="display_infocard = false, display_filter = false"
+      @click="display_infocard = false; display_filter = false"
       :class="{blurred : display_infocard || display_filter}"
       map-type-id="roadmap"
       :options="{
@@ -126,7 +150,7 @@
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
-          @click="currentScooter = nextBikes[index]; display_infocard=!display_infocard"
+          @click="currentScooter = nextBikes[index]; display_infocard=!display_infocard; display_filter=false"
         />
       </div>
 
@@ -195,8 +219,10 @@ export default {
 
   data() {
     return {
-      // speichert welche Anbieter ausgewählt wurden und als Marker dargestellt werden
+      overlay_route: false, //steuert das Anzeigen der route component
+      fab: false, //kontroliert das Speed-dial Icon
 
+      // speichert welche Anbieter ausgewählt wurden und als Marker dargestellt werden
       showNextBike: Boolean,
       showRhingo: Boolean,
       showTier: Boolean,
@@ -341,15 +367,25 @@ export default {
   filter: blur(6px);
 }
 
-.geolocation-btn {
-  z-index: 3;
+.btn {
+  z-index: 2;
   position: fixed;
-  right: 7vw;
-  top: 20vh;
+  right: 5vw;
+  top: 10vh;
 }
 
-.filter-btn {
-  top: 30vh;
+.close_btn_pos1 {
+  z-index: 100;
+  position: fixed;
+  bottom: 2vh;
+  right: 2vw;
+}
+
+.close_btn_pos2 {
+  z-index: 100;
+  position: fixed;
+  right: 5vw;
+  top: 10vh;
 }
 </style>
 
