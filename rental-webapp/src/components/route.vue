@@ -1,11 +1,5 @@
 <template>
   <div>
-    <div>
-      <v-btn color="white" class="showTextField" fab dark @click="overlay = !overlay">
-        <v-icon color="black">directions</v-icon>
-      </v-btn>
-    </div>
-
     <v-overlay :absolute="absolute" :value="overlay">
       <v-row align="center" justify="center">
         <v-card width="100vw" height="30vh" class="background-card" color="white" tile>
@@ -61,10 +55,6 @@
             </v-container>
           </v-card>
         </div>
-
-        <v-btn class="mx-2" fab color="white" @click="overlay = false">
-          <v-icon color="black">close</v-icon>
-        </v-btn>
       </v-row>
     </v-overlay>
   </div>
@@ -75,12 +65,11 @@
 import { constants } from "crypto";
 
 export default {
-  props: ["userPos", "choosenProvider"],
+  props: ["userPos", "overlay"],
 
   data() {
     return {
       absolute: true,
-      overlay: false,
       isTextField: false,
       display: false,
 
@@ -282,13 +271,6 @@ export default {
   height: 100vh;
 }
 
-.showTextField {
-  z-index: 3;
-  position: fixed;
-  right: 7vw;
-  top: 10vh;
-}
-
 .card-search-bar {
   width: 90vw;
   margin-top: 2vh;
@@ -334,12 +316,6 @@ export default {
   display: none;
 }
 
-.mx-2 {
-  z-index: 100;
-  position: fixed;
-  bottom: 2vh;
-  right: 2vw;
-}
 </style>
 
 
