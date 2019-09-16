@@ -2,7 +2,7 @@
   <div>
     <app-route :userPos="userPosition"></app-route>
 
-    <providerFilter @provider="updateProvider"></providerFilter>
+    <providerFilter v-show="display_filter" @provider="updateProvider"></providerFilter>
 
     <div @click="panToCurrent">
       <v-btn color="white" class="geolocation-btn" fab dark>
@@ -10,13 +10,22 @@
       </v-btn>
     </div>
 
+    <v-btn
+      color="white"
+      class="geolocation-btn filter-btn"
+      fab
+      @click="display_filter=!display_filter"
+    >
+      <v-icon color="black">filter_list</v-icon>
+    </v-btn>
+
     <GmapMap
       ref="mapRef"
       class="gmap"
       :center="{lat:50.946256, lng:6.897077}"
       :zoom="16"
-      @click="display = false"
-      :class="{blurred : display}"
+      @click="display_infocard = false, display_filter = false"
+      :class="{blurred : display_infocard || display_filter}"
       map-type-id="roadmap"
       :options="{
 			gestureHandling : 'greedy',
@@ -117,7 +126,7 @@
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
-          @click="currentScooter = nextBikes[index];display=!display"
+          @click="currentScooter = nextBikes[index]; display_infocard=!display_infocard"
         />
       </div>
 
@@ -130,7 +139,7 @@
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
-          @click="currentScooter = rhingo[index];display=!display"
+          @click="currentScooter = rhingo[index]; display_infocard=!display_infocard"
         />
       </div>
 
@@ -143,7 +152,7 @@
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
-          @click="currentScooter = tier[index];display=!display"
+          @click="currentScooter = tier[index]; display_infocard=!display_infocard"
         />
       </div>
 
@@ -157,7 +166,7 @@
       />
     </GmapMap>
 
-    <InfoCard v-show="display" :scooter="currentScooter" />
+    <InfoCard v-show="display_infocard" :scooter="currentScooter" />
   </div>
 </template>
 
@@ -195,7 +204,8 @@ export default {
       rhingo: [], // speichert die Rhingo Vehicle
       tier: [], // speichert die Tier Vehicle
 
-      display: false, // entscheidet um die infoCard angezeigt werden soll
+      display_infocard: false, // entscheidet um die infoCard angezeigt werden soll
+      display_filter: false,
       currentScooter: Object, // speichert das ausgewählte Vehicle für die infoCard
 
       // speichert die gewünschten Vehicle, welche als GmapMarker angezeigt werden | z.B nur Rhino oder im Radius 500m
@@ -248,13 +258,6 @@ export default {
       }
 
       console.log(vehicleCounter);
-    },
-
-    openInfoCard: function(key) {
-      console.log(key);
-      this.display = !this.display;
-      this.currentScooter = this.currentScooters[key];
-      console.log(this.currentScooters[key]);
     },
 
     removeMarker: function(provider) {
@@ -334,7 +337,6 @@ export default {
   height: 100vh;
 }
 
-
 .blurred {
   filter: blur(6px);
 }
@@ -344,6 +346,10 @@ export default {
   position: fixed;
   right: 7vw;
   top: 20vh;
+}
+
+.filter-btn {
+  top: 30vh;
 }
 </style>
 
