@@ -180,6 +180,19 @@
         />
       </div>
 
+      <!-- Fordbike Marker -->
+      <div v-if="showFordBike" class="showWrapper">
+        <GmapMarker
+          :key="index"
+          v-for="(m, index) in fordBikes"
+          :position="{lat : m.lat, lng : m.lng}"
+          :clickable="true"
+          :draggable="false"
+          :icon="m.icon"
+          @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard"
+        />
+      </div>
+
       <GmapMarker
         titel="userPosition"
         :position="userPosition"
@@ -207,6 +220,8 @@ import providerFilter from "./filter";
 import * as fetchNextbike from "@/scripts/nextBike";
 import * as fetchRhingo from "@/scripts/rhingo";
 import * as fetchTier from "@/scripts/tier";
+import * as fetchFordbike from "@/scripts/fordbike";
+// import * as fetchFordbike from "@/scripts/fordbike";
 import { constants } from "crypto";
 
 export default {
@@ -226,9 +241,11 @@ export default {
       showNextBike: Boolean,
       showRhingo: Boolean,
       showTier: Boolean,
+      showFordBike: Boolean,
       nextBikes: [], // speichert die nextBikes
       rhingo: [], // speichert die Rhingo Vehicle
       tier: [], // speichert die Tier Vehicle
+      fordBikes: [], // speichert die Fordbikes
 
       display_infocard: false, // entscheidet um die infoCard angezeigt werden soll
       display_filter: false,
@@ -348,7 +365,15 @@ export default {
         })
         .catch(function() {
           console.log("errorTier");
-        });
+        }),
+      fetchFordbike
+        .fetchFordbike()
+        .then(ford => {
+          this.fordBikes = ford;
+        })
+        .catch(function() {
+          console.log("errorFordbike");
+        })
   },
 
   computed: {}

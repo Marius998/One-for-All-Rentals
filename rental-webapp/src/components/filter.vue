@@ -161,7 +161,8 @@ export default {
 
     showNextBikes: this,
     showRhingo: true,
-    showTier: true
+    showTier: true,
+    showFordBike: true
   }),
 
   methods: {
@@ -169,7 +170,8 @@ export default {
       this.$emit("provider", [
         this.showNextBikes,
         this.showRhingo,
-        this.showTier
+        this.showTier,
+        this.showFordBike
       ]);
     },
 
