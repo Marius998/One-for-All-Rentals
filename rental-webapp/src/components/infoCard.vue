@@ -44,22 +44,24 @@ export default {
   props: ['scooter'],
 
   data: () => ({
-    drawer: false
+    //
   })
 };
 </script>
 
 
 <style scoped>
+
 .infoCard {
   width: 100vw;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   z-index: 100;
   background-image: linear-gradient(135deg, #fff720 10%, #3cd500 100%);
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
   box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.8);
+  
 }
 
 .flex-box {
