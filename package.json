@@ -1,0 +1,19 @@
+{
+  "name": "all-for-one-rentals",
+  "version": "1.0.0",
+  "description": "https://github.com/xkjyeah/vue-google-maps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marius998/All-for-One-Rentals.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Marius998/All-for-One-Rentals/issues"
+  },
+  "homepage": "https://github.com/Marius998/All-for-One-Rentals#readme"
+}

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-overlay :absolute="absolute" :value="overlay">
       <v-row align="center" justify="center">
         <v-card width="100vw" height="30vh" class="background-card" color="white" tile>
           <v-card-title class="card-search-bar">
@@ -56,7 +55,6 @@
           </v-card>
         </div>
       </v-row>
-    </v-overlay>
   </div>
 </template>
 

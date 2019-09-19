@@ -1,6 +1,6 @@
 <template>
   <div>
-    <app-route :userPos="userPosition" :overlay="overlay_route"></app-route>
+    <app-route class="routeMenu" :userPos="userPosition" v-show="overlay_route"></app-route>
 
     <providerFilter v-show="display_filter" @provider="updateProvider"></providerFilter>
 
@@ -358,6 +358,7 @@ export default {
 
 
 <style scoped>
+
 .gmap {
   width: 100vw;
   height: 100vh;

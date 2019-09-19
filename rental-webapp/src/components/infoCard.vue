@@ -1,4 +1,7 @@
 <template>
+<transition
+    enter-active-class="animated bounceInLeft"
+    leave-active-class="animated bounceOutRight">
   <div>
     <div class="infoCard">
       <v-card-title class="title">
@@ -34,6 +37,8 @@
       </v-card-actions>
     </div>
   </div>
+</transition>
+
 </template>
 
 
