@@ -159,10 +159,11 @@ export default {
     loading_deselect: false,
     selected: [0,2,3],
 
-    showNextBikes: this,
-    showRhingo: true,
-    showTier: true
+    // showNextBikes: this,
+    // showRhingo: true,
+    // showTier: true    
   }),
+  props : ['showNextBikes','showRhingo','showTier'],
 
   methods: {
     sendData: function() {

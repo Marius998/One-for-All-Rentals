@@ -2,7 +2,7 @@
   <div>
     <app-route class="routeMenu" :userPos="userPosition" v-show="overlay_route"></app-route>
 
-    <providerFilter v-show="display_filter" @provider="updateProvider"></providerFilter>
+    <providerFilter v-show="display_filter" @provider="updateProvider" :showNextBikes="showNextBike" :showRhingo="showRhingo" :showTier="showTier"></providerFilter>
 
     <v-speed-dial
       class="btn"
@@ -306,10 +306,11 @@ export default {
 
       // Filter bei Start mit LokelenDaten synchronisieren
       this.store = window.localStorage;
-      this.showNextBike = this.store.setItem('Nextbike');
-      this.showRhingo = this.store.setItem('Rhingo');
-      this.showTier = this.store.setItem('Tier');
-
+      console.log("asdasdasdasds");
+      
+      this.showNextBike = this.store.getItem('Nextbike');
+      this.showRhingo = this.store.getItem('Rhingo');
+      this.showTier = this.store.getItem('Tier');
 
       
       let position = navigator.geolocation.watchPosition(
