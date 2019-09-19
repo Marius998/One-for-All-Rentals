@@ -207,6 +207,7 @@ import providerFilter from "./filter";
 import * as fetchNextbike from "@/scripts/nextBike";
 import * as fetchRhingo from "@/scripts/rhingo";
 import * as fetchTier from "@/scripts/tier";
+import * as Storage from "@/scripts/Storage";
 import { constants } from "crypto";
 
 export default {
@@ -219,6 +220,7 @@ export default {
 
   data() {
     return {
+      store : Object,
       overlay_route: false, //steuert das Anzeigen der route component
       fab: false, //kontroliert das Speed-dial Icon
 
@@ -245,9 +247,14 @@ export default {
 
   methods: {
     updateProvider(e) {
+      console.log("update provider");
       this.showNextBike = e[0];
       this.showRhingo = e[1];
       this.showTier = e[2];
+
+      this.store.setItem('Nextbike',this.showNextBike);
+      this.store.setItem('Rhingo',this.showRhingo);
+      this.store.setItem('Tier',this.showTier);
     },
     panToCurrent() {
       this.$refs.mapRef.$mapPromise.then(map => {
@@ -296,8 +303,15 @@ export default {
 
   created() {
     this.$nextTick(function() {
-      console.log("locating ...");
 
+      // Filter bei Start mit LokelenDaten synchronisieren
+      this.store = window.localStorage;
+      this.showNextBike = this.store.setItem('Nextbike');
+      this.showRhingo = this.store.setItem('Rhingo');
+      this.showTier = this.store.setItem('Tier');
+
+
+      
       let position = navigator.geolocation.watchPosition(
         position => {
           console.log("located");
