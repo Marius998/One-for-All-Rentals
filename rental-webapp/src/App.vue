@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="app">
     <appBar />
 
     <v-content>
@@ -21,3 +21,10 @@ export default {
   })
 };
 </script>
+
+<style scoped>
+.app {
+  overflow: hidden;
+  position: fixed;
+}
+</style>
