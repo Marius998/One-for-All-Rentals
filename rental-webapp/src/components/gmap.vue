@@ -1,10 +1,10 @@
 <template>
   <div>
-    <app-route class="routeMenu" :userPos="userPosition" v-show="overlay_route"></app-route>
+    <app-route class="routeMenu" :userPos="userPosition" v-show="display_route"></app-route>
 
     <providerFilter v-show="display_filter" @provider="updateProvider"></providerFilter>
 
-    <v-speed-dial
+    <v-speed-dial v-show="!display_route"
       class="btn"
       v-model="fab"
       top
@@ -28,17 +28,17 @@
         <v-icon color="black">filter_list</v-icon>
       </v-btn>
 
-      <v-btn fab dark small color="white" @click="overlay_route=!overlay_route">
-        <v-icon color="black">directions</v-icon>
+      <v-btn fab dark small color="white" @click="display_route=!display_route">
+        <v-icon color="black">attach_money</v-icon>
       </v-btn>
     </v-speed-dial>
 
     <v-btn
-      :class="{close_btn_pos1 : overlay_route, close_btn_pos2 : display_filter || display_infocard}"
+      :class="{close_btn_pos1 : display_route, close_btn_pos2 : display_filter || display_infocard}"
       fab
       color="white"
-      v-show="overlay_route || display_infocard || display_filter"
-      @click="overlay_route=false; display_filter=false; display_infocard=false"
+      v-show="display_route || display_infocard || display_filter"
+      @click="display_route=false; display_filter=false; display_infocard=false"
     >
       <v-icon color="black">close</v-icon>
     </v-btn>
@@ -48,8 +48,8 @@
       class="gmap"
       :center="{lat:50.946256, lng:6.897077}"
       :zoom="16"
-      @click="display_infocard = false; display_filter = false"
-      :class="{blurred : display_infocard || display_filter}"
+      @click="display_infocard = false; display_filter = false; display_route = false"
+      :class="{blurred : display_infocard || display_filter || display_route}"
       map-type-id="roadmap"
       :options="{
 			gestureHandling : 'greedy',
@@ -150,7 +150,7 @@
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
-          @click="currentScooter = nextBikes[index]; display_infocard=!display_infocard; display_filter=false"
+          @click="currentScooter = nextBikes[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
         />
       </div>
 
@@ -163,7 +163,7 @@
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
-          @click="currentScooter = rhingo[index]; display_infocard=!display_infocard"
+          @click="currentScooter = rhingo[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
         />
       </div>
 
@@ -176,7 +176,7 @@
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
-          @click="currentScooter = tier[index]; display_infocard=!display_infocard"
+          @click="currentScooter = tier[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
         />
       </div>
 
@@ -219,7 +219,7 @@ export default {
 
   data() {
     return {
-      overlay_route: false, //steuert das Anzeigen der route component
+      display_route: false, //steuert das Anzeigen der route component
       fab: false, //kontroliert das Speed-dial Icon
 
       // speichert welche Anbieter ausgewählt wurden und als Marker dargestellt werden
@@ -358,7 +358,6 @@ export default {
 
 
 <style scoped>
-
 .gmap {
   width: 100vw;
   height: 100vh;
@@ -379,7 +378,7 @@ export default {
   z-index: 100;
   position: fixed;
   bottom: 2vh;
-  right: 2vw;
+  right: 5vw;
 }
 
 .close_btn_pos2 {
