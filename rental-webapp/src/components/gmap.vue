@@ -265,6 +265,7 @@ export default {
       this.showNextBike = e[0];
       this.showRhingo = e[1];
       this.showTier = e[2];
+      
     },
     panToCurrent() {
       this.$refs.mapRef.$mapPromise.then(map => {
