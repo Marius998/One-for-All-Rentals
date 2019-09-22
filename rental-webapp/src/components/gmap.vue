@@ -2,7 +2,11 @@
   <div>
     <app-route class="routeMenu" :userPos="userPosition" v-show="overlay_route"></app-route>
 
-    <providerFilter v-show="display_filter" @provider="updateProvider"></providerFilter>
+    <providerFilter v-show="display_filter" @provider="updateProvider"
+     :showNextBike="showNextBike"
+     :showRhingo="showRhingo"
+     :showTier="showTier"
+     :showLime="showLime"></providerFilter>
 
     <v-speed-dial
       class="btn"
@@ -207,6 +211,7 @@ import providerFilter from "./filter";
 import * as fetchNextbike from "@/scripts/nextBike";
 import * as fetchRhingo from "@/scripts/rhingo";
 import * as fetchTier from "@/scripts/tier";
+import * as fetchLime from "@/scripts/lime";
 import { constants } from "crypto";
 
 export default {
@@ -226,9 +231,11 @@ export default {
       showNextBike: Boolean,
       showRhingo: Boolean,
       showTier: Boolean,
+      shotLime: Boolean,
       nextBikes: [], // speichert die nextBikes
       rhingo: [], // speichert die Rhingo Vehicle
       tier: [], // speichert die Tier Vehicle
+      lime: [], // speichert die Lime Vehicle
 
       display_infocard: false, // entscheidet um die infoCard angezeigt werden soll
       display_filter: false,
@@ -248,6 +255,7 @@ export default {
       this.showNextBike = e[0];
       this.showRhingo = e[1];
       this.showTier = e[2];
+      this.showLime = e[3];
     },
     panToCurrent() {
       this.$refs.mapRef.$mapPromise.then(map => {
@@ -345,6 +353,14 @@ export default {
         .fetchTier()
         .then(tierScooter => {
           this.tier = tierScooter;
+        })
+        .catch(function() {
+          console.log("errorTier");
+        }),
+        fetchLime
+        .fetchLime()
+        .then(limeScooter => {
+          this.lime = limeScooter;
         })
         .catch(function() {
           console.log("errorTier");
