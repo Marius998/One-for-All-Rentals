@@ -157,10 +157,11 @@ export default {
     ],
     loading: false,
     loading_deselect: false,
-    selected: [0,2,3]    
+    selected: [0,2,3]      
   }),
 
   props : ['showNextBikes','showRhingo','showTier','showLime'],
+  
   methods: {
     sendData: function() {
       this.$emit("provider", [

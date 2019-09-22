@@ -6,7 +6,8 @@
      :showNextBike="showNextBike"
      :showRhingo="showRhingo"
      :showTier="showTier"
-     :showLime="showLime"></providerFilter>
+     :showLime="showLime"></providerFilter>  
+
 
     <v-speed-dial
       class="btn"
@@ -184,6 +185,21 @@
         />
       </div>
 
+        <!-- Lime Marker -->
+      <div v-if="showLime" class="showWrapper">
+        <GmapMarker
+          :key="index"
+          v-for="(m, index) in lime"
+          :position="{lat : m.lat, lng : m.lng}"
+          :clickable="true"
+          :draggable="false"
+          :icon="m.icon"
+          @click="currentScooter = lime[index]; display_infocard=!display_infocard"
+        />
+      </div>
+
+
+        <!-- User Marker -->
       <GmapMarker
         titel="userPosition"
         :position="userPosition"
@@ -212,6 +228,7 @@ import * as fetchNextbike from "@/scripts/nextBike";
 import * as fetchRhingo from "@/scripts/rhingo";
 import * as fetchTier from "@/scripts/tier";
 import * as fetchLime from "@/scripts/lime";
+import * as Storage from "@/scripts/Storage";
 import { constants } from "crypto";
 
 export default {
@@ -224,6 +241,7 @@ export default {
 
   data() {
     return {
+      store : Object,
       overlay_route: false, //steuert das Anzeigen der route component
       fab: false, //kontroliert das Speed-dial Icon
 
@@ -231,7 +249,8 @@ export default {
       showNextBike: Boolean,
       showRhingo: Boolean,
       showTier: Boolean,
-      shotLime: Boolean,
+      showLime: Boolean,
+
       nextBikes: [], // speichert die nextBikes
       rhingo: [], // speichert die Rhingo Vehicle
       tier: [], // speichert die Tier Vehicle
@@ -252,10 +271,16 @@ export default {
 
   methods: {
     updateProvider(e) {
+      console.log("update provider");
       this.showNextBike = e[0];
       this.showRhingo = e[1];
       this.showTier = e[2];
       this.showLime = e[3];
+
+      this.store.setItem('Nextbike',this.showNextBike);
+      this.store.setItem('Rhingo',this.showRhingo);
+      this.store.setItem('Tier',this.showTier);
+      this.store.setItem('Lime',this.showLime);
     },
     panToCurrent() {
       this.$refs.mapRef.$mapPromise.then(map => {
@@ -304,8 +329,17 @@ export default {
 
   created() {
     this.$nextTick(function() {
-      console.log("locating ...");
 
+      // Filter bei Start mit LokelenDaten synchronisieren
+      this.store = window.localStorage;
+      console.log("store created");
+      
+      this.showNextBike = this.store.getItem('Nextbike');
+      this.showRhingo = this.store.getItem('Rhingo');
+      this.showTier = this.store.getItem('Tier');
+      this.showLime = this.store.getItem('Lime');
+
+      
       let position = navigator.geolocation.watchPosition(
         position => {
           console.log("located");
