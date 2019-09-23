@@ -115,82 +115,88 @@
 					]
 				}"
     >
-      <!-- Nextbikes Marker -->
-      <div v-if="showNextBike" class="showWrapper">
+      <GmapCluster
+        zoomOnClick = true
+        :maxZoom="14"
+        :minimumClusterSize="4"
+      >
+        <!-- Nextbikes Marker -->
+        <div v-if="showNextBike" class="showWrapper">
+          <GmapMarker
+            :key="index"
+            v-for="(m, index) in nextBikes"
+            :position="{lat : m.lat, lng : m.lng}"
+            :clickable="true"
+            :draggable="false"
+            :icon="m.icon"
+            @click="currentScooter = nextBikes[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
+          />
+        </div>
+
+        <!-- Rhingo Marker -->
+        <div v-if="showRhingo" class="showWrapper">
+          <GmapMarker
+            :key="index"
+            v-for="(m, index) in rhingo"
+            :position="{lat : m.lat, lng : m.lng}"
+            :clickable="true"
+            :draggable="false"
+            :icon="m.icon"
+            @click="currentScooter = rhingo[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
+          />
+        </div>
+
+        <!-- Tier Marker -->
+        <div v-if="showTier" class="showWrapper">
+          <GmapMarker
+            :key="index"
+            v-for="(m, index) in tier"
+            :position="{lat : m.lat, lng : m.lng}"
+            :clickable="true"
+            :draggable="false"
+            :icon="m.icon"
+            @click="currentScooter = tier[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
+          />
+        </div>
+
+        <!-- Fordbike Marker -->
+        <div v-if="showFordBike" class="showWrapper">
+          <GmapMarker
+            :key="index"
+            v-for="(m, index) in fordBikes"
+            :position="{lat : m.lat, lng : m.lng}"
+            :clickable="true"
+            :draggable="false"
+            :icon="m.icon"
+            @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard"
+          />
+        </div>
+
+        <!-- Lime Marker -->
+        <div v-if="showLime" class="showWrapper">
+          <GmapMarker
+            :key="index"
+            v-for="(m, index) in lime"
+            :position="{lat : m.lat, lng : m.lng}"
+            :clickable="true"
+            :draggable="false"
+            :icon="m.icon"
+            @click="currentScooter = lime[index]; display_infocard=!display_infocard"
+            repeat="20px"
+          />
+        </div>
+
+        <!-- User Marker -->
+
         <GmapMarker
-          :key="index"
-          v-for="(m, index) in nextBikes"
-          :position="{lat : m.lat, lng : m.lng}"
-          :clickable="true"
+          titel="userPosition"
+          :position="userPosition"
+          :clickable="false"
           :draggable="false"
-          :icon="m.icon"
-          @click="currentScooter = nextBikes[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
+          watch="true"
+          icon="https://img.icons8.com/color/48/000000/street-view.png"
         />
-      </div>
-
-      <!-- Rhingo Marker -->
-      <div v-if="showRhingo" class="showWrapper">
-        <GmapMarker
-          :key="index"
-          v-for="(m, index) in rhingo"
-          :position="{lat : m.lat, lng : m.lng}"
-          :clickable="true"
-          :draggable="false"
-          :icon="m.icon"
-          @click="currentScooter = rhingo[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
-        />
-      </div>
-
-      <!-- Tier Marker -->
-      <div v-if="showTier" class="showWrapper">
-        <GmapMarker
-          :key="index"
-          v-for="(m, index) in tier"
-          :position="{lat : m.lat, lng : m.lng}"
-          :clickable="true"
-          :draggable="false"
-          :icon="m.icon"
-          @click="currentScooter = tier[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
-        />
-      </div>
-
-      <!-- Fordbike Marker -->
-      <div v-if="showFordBike" class="showWrapper">
-        <GmapMarker
-          :key="index"
-          v-for="(m, index) in fordBikes"
-          :position="{lat : m.lat, lng : m.lng}"
-          :clickable="true"
-          :draggable="false"
-          :icon="m.icon"
-          @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard"
-        />
-      </div>
-
-      <!-- Lime Marker -->
-      <div v-if="showLime" class="showWrapper">
-        <GmapMarker
-          :key="index"
-          v-for="(m, index) in lime"
-          :position="{lat : m.lat, lng : m.lng}"
-          :clickable="true"
-          :draggable="false"
-          :icon="m.icon"
-          @click="currentScooter = lime[index]; display_infocard=!display_infocard"
-          repeat="20px"
-        />
-      </div>
-
-      <!-- User Marker -->
-
-      <GmapMarker
-        titel="userPosition"
-        :position="userPosition"
-        :clickable="false"
-        :draggable="false"
-        watch="true"
-        icon="https://img.icons8.com/color/48/000000/street-view.png"
-      />
+      </GmapCluster>
     </GmapMap>
 
     <InfoCard v-show="display_infocard" :scooter="currentScooter" />
@@ -201,6 +207,9 @@
 <script>
 import Vue from "vue";
 import * as VueGoogleMaps from "vue2-google-maps";
+import GmapCluster from "vue2-google-maps/dist/components/cluster";
+Vue.component("GmapCluster", GmapCluster);
+
 const fetch = require("node-fetch");
 
 import InfoCard from "./infoCard";
@@ -333,7 +342,6 @@ export default {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-
         },
         positionError => {
           console.log(positionError);
@@ -345,17 +353,14 @@ export default {
         }
       );
 
-      navigator.geolocation.getCurrentPosition(position =>{
-
+      navigator.geolocation.getCurrentPosition(position => {
         this.userPosition = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
 
         this.panToCurrent();
-      })
-
-
+      });
     });
   },
 
