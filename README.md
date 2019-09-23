@@ -18,3 +18,7 @@ npm run build
 
 ### More Infos for configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+© Carlos Bystron, Felix Günthner, Marius Hammer - 
+_Projekt im Rahmen des Kurses Webdevelopment an der Technischen Hochschule Köln - 2019_
