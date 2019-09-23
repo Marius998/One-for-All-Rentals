@@ -2,7 +2,13 @@
   <div>
     <app-route class="routeMenu" :userPos="userPosition" v-show="display_route"></app-route>
 
-    <providerFilter v-show="display_filter" @provider="updateProvider"></providerFilter>
+    <providerFilter v-show="display_filter" @provider="updateProvider"
+    :showLime="showLime"
+    :showRhingo="showRhingo"
+    :showTier="showTier"
+    :showNextBikes="showNextBike"
+        ></providerFilter>  
+
 
     <v-speed-dial v-show="!display_route"
       class="btn"
@@ -180,6 +186,22 @@
         />
       </div>
 
+        <!-- Lime Marker -->
+      <div v-if="showLime" class="showWrapper">
+        <GmapMarker
+          :key="index"
+          v-for="(m, index) in lime"
+          :position="{lat : m.lat, lng : m.lng}"
+          :clickable="true"
+          :draggable="false"
+          :icon="m.icon"
+          @click="currentScooter = lime[index]; display_infocard=!display_infocard"
+          repeat = "20px"
+        />
+      </div>
+
+
+        <!-- User Marker -->
       <GmapMarker
         titel="userPosition"
         :position="userPosition"
@@ -207,6 +229,8 @@ import providerFilter from "./filter";
 import * as fetchNextbike from "@/scripts/nextBike";
 import * as fetchRhingo from "@/scripts/rhingo";
 import * as fetchTier from "@/scripts/tier";
+import * as fetchLime from "@/scripts/lime";
+import * as Storage from "@/scripts/Storage";
 import { constants } from "crypto";
 
 export default {
@@ -219,16 +243,23 @@ export default {
 
   data() {
     return {
+
+      store : Object,
+      
       display_route: false, //steuert das Anzeigen der route component
+
       fab: false, //kontroliert das Speed-dial Icon
 
       // speichert welche Anbieter ausgewählt wurden und als Marker dargestellt werden
       showNextBike: Boolean,
       showRhingo: Boolean,
       showTier: Boolean,
+      showLime: Boolean,
+
       nextBikes: [], // speichert die nextBikes
       rhingo: [], // speichert die Rhingo Vehicle
       tier: [], // speichert die Tier Vehicle
+      lime: [], // speichert die Lime Vehicle
 
       display_infocard: false, // entscheidet um die infoCard angezeigt werden soll
       display_filter: false,
@@ -245,9 +276,19 @@ export default {
 
   methods: {
     updateProvider(e) {
+      console.log("update provider");
       this.showNextBike = e[0];
       this.showRhingo = e[1];
       this.showTier = e[2];
+      this.showLime = e[3];
+
+      console.log(e);
+
+      this.store.setItem('Nextbike',this.showNextBike);
+      this.store.setItem('Rhingo',this.showRhingo);
+      this.store.setItem('Tier',this.showTier);
+      this.store.setItem('Lime',this.showLime);
+      console.log("asd");
     },
     panToCurrent() {
       this.$refs.mapRef.$mapPromise.then(map => {
@@ -296,8 +337,17 @@ export default {
 
   created() {
     this.$nextTick(function() {
-      console.log("locating ...");
 
+      // Filter bei Start mit LokelenDaten synchronisieren
+      this.store = window.localStorage;
+      console.log("store created");
+      
+      this.showNextBike = this.store.getItem('Nextbike');
+      this.showRhingo = this.store.getItem('Rhingo') ;
+      this.showTier = this.store.getItem('Tier') ;
+      this.showLime = this.store.getItem('Lime');
+
+      
       let position = navigator.geolocation.watchPosition(
         position => {
           console.log("located");
@@ -345,6 +395,14 @@ export default {
         .fetchTier()
         .then(tierScooter => {
           this.tier = tierScooter;
+        })
+        .catch(function() {
+          console.log("errorTier");
+        }),
+        fetchLime
+        .fetchLime()
+        .then(limeScooter => {
+          this.lime = limeScooter;
         })
         .catch(function() {
           console.log("errorTier");
