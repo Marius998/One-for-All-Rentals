@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "marker-clusterer-plus": "^2.1.4",
     "node-fetch": "^2.6.0",
     "vue": "^2.6.10",
     "vue-radial-menu": "^1.1.1",

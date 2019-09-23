@@ -56,168 +56,147 @@
 			gestureHandling : 'greedy',
 			disableDefaultUI : true,
 			styles: [
-						{elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-						{elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-						{elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
 						{
-							featureType: 'administrative.locality',
-							elementType: 'labels.text.fill',
-							stylers: [{color: '#d59563'}]
+              elementType: 'geometry',
+              stylers: [{color: '#011b26'}]
+              },
+						{
+              elementType: 'labels.icon',
+              stylers: [{visibility: 'off'}]
+            },
+            {
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#021a26'},{lightness: -5},{visibility: 'on'}]
+            },
+						{
+              elementType: 'labels.text.stroke',
+              stylers: [{weight: 1.5}]
+            },
+						{
+							featureType: 'administrative',
+							elementType: 'geometry',
+							stylers: [{color: '#757575'}]
 						},
 						{
-							featureType: 'poi',
-							elementType: 'labels.text',
-							stylers: [{visibility: 'off'}]
-						},
-						{
-							featureType: 'poi',
-							elementType: 'labels.icon',
+							featureType: 'administrative.land_parcel',
+							elementType: 'geometry',
 							stylers: [{visibility: 'off'}]
 						},
 						{
 							featureType: 'poi.park',
-							elementType: 'geometry',
-							stylers: [{color: '#315943'}]
+							elementType: 'geometry.fill',
+							stylers: [{color: '#002226'}]
 						},
 						{
 							featureType: 'road',
-							elementType: 'geometry',
-							stylers: [{color: '#265c63'}]
-						},
-						{
-							featureType: 'road',
-							elementType: 'geometry.stroke',
-							stylers: [{color: '#212a37'}]
-						},
-						{
-							featureType: 'road',
-							elementType: 'labels.text.fill',
-							stylers: [{color: '#9ca5b3'}]
-						},
-						{
-							featureType: 'road.highway',
-							elementType: 'geometry',
-							stylers: [{color: '#746855'}]
-						},
-						{
-							featureType: 'road.highway',
-							elementType: 'geometry.stroke',
-							stylers: [{color: '#1f2835'}]
-						},
-						{
-							featureType: 'road.highway',
-							elementType: 'labels.icon',
-							stylers: [{visibility: 'off'}]
-						},
-						{
-							featureType: 'road.highway',
-							elementType: 'labels.text.fill',
-							stylers: [{visibility: 'off'}]
+							elementType: 'geometry.fill',
+							stylers: [{color: '#496773'}]
 						},
 						{
 							featureType: 'transit',
+							elementType: 'geometry.fill',
+							stylers: [{color: '#2f4d59'}]
+						},
+						{
+              featureType: 'transit.station.bus',
+              elementType: 'labels.icon',
+              stylers: [{saturation: -60},{visibility: 'on'}]
+            },
+						{
+              featureType: 'transit.station.rail',
+              elementType: 'labels.icon',
+              stylers: [{saturation: -60},{visibility: 'on'}]
+            },
+						{
+							featureType: 'water',
 							elementType: 'geometry',
-							stylers: [{color: '#2f3948'}]
-						},
-						{
-							featureType: 'transit.station',
-							elementType: 'labels.text.fill',
-							stylers: [{color: '#d59563'}]
-						},
-						{
-							featureType: 'water',
-							elementType: 'geometry',
-							stylers: [{color: '#17263c'}]
-						},
-						{
-							featureType: 'water',
-							elementType: 'labels.text.fill',
-							stylers: [{color: '#515c6d'}]
-						},
-						{
-							featureType: 'water',
-							elementType: 'labels.text.stroke',
-							stylers: [{color: '#17263c'}]
+							stylers: [{color: '#01111e'}]
 						}
 					]
 				}"
     >
-      <!-- Nextbikes Marker -->
-      <div v-if="showNextBike" class="showWrapper">
+      <GmapCluster
+        :zoomOnClick="true"
+        :maxZoom="15"
+        :minimumClusterSize="4"
+      >
+        <!-- Nextbikes Marker -->
+        <div v-if="showNextBike" class="showWrapper">
+          <GmapMarker
+            :key="index"
+            v-for="(m, index) in nextBikes"
+            :position="{lat : m.lat, lng : m.lng}"
+            :clickable="true"
+            :draggable="false"
+            :icon="m.icon"
+            @click="currentScooter = nextBikes[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
+          />
+        </div>
+
+        <!-- Rhingo Marker -->
+        <div v-if="showRhingo" class="showWrapper">
+          <GmapMarker
+            :key="index"
+            v-for="(m, index) in rhingo"
+            :position="{lat : m.lat, lng : m.lng}"
+            :clickable="true"
+            :draggable="false"
+            :icon="m.icon"
+            @click="currentScooter = rhingo[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
+          />
+        </div>
+
+        <!-- Tier Marker -->
+        <div v-if="showTier" class="showWrapper">
+          <GmapMarker
+            :key="index"
+            v-for="(m, index) in tier"
+            :position="{lat : m.lat, lng : m.lng}"
+            :clickable="true"
+            :draggable="false"
+            :icon="m.icon"
+            @click="currentScooter = tier[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
+          />
+        </div>
+
+        <!-- Fordbike Marker -->
+        <div v-if="showFordBike" class="showWrapper">
+          <GmapMarker
+            :key="index"
+            v-for="(m, index) in fordBikes"
+            :position="{lat : m.lat, lng : m.lng}"
+            :clickable="true"
+            :draggable="false"
+            :icon="m.icon"
+            @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard"
+          />
+        </div>
+
+        <!-- Lime Marker -->
+        <div v-if="showLime" class="showWrapper">
+          <GmapMarker
+            :key="index"
+            v-for="(m, index) in lime"
+            :position="{lat : m.lat, lng : m.lng}"
+            :clickable="true"
+            :draggable="false"
+            :icon="m.icon"
+            @click="currentScooter = lime[index]; display_infocard=!display_infocard"
+            repeat="20px"
+          />
+        </div>
+
+        <!-- User Marker -->
+
         <GmapMarker
-          :key="index"
-          v-for="(m, index) in nextBikes"
-          :position="{lat : m.lat, lng : m.lng}"
-          :clickable="true"
+          titel="userPosition"
+          :position="userPosition"
+          :clickable="false"
           :draggable="false"
-          :icon="m.icon"
-          @click="currentScooter = nextBikes[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
+          watch="true"
+          icon="https://img.icons8.com/color/48/000000/street-view.png"
         />
-      </div>
-
-      <!-- Rhingo Marker -->
-      <div v-if="showRhingo" class="showWrapper">
-        <GmapMarker
-          :key="index"
-          v-for="(m, index) in rhingo"
-          :position="{lat : m.lat, lng : m.lng}"
-          :clickable="true"
-          :draggable="false"
-          :icon="m.icon"
-          @click="currentScooter = rhingo[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
-        />
-      </div>
-
-      <!-- Tier Marker -->
-      <div v-if="showTier" class="showWrapper">
-        <GmapMarker
-          :key="index"
-          v-for="(m, index) in tier"
-          :position="{lat : m.lat, lng : m.lng}"
-          :clickable="true"
-          :draggable="false"
-          :icon="m.icon"
-          @click="currentScooter = tier[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
-        />
-      </div>
-
-      <!-- Fordbike Marker -->
-      <div v-if="showFordBike" class="showWrapper">
-        <GmapMarker
-          :key="index"
-          v-for="(m, index) in fordBikes"
-          :position="{lat : m.lat, lng : m.lng}"
-          :clickable="true"
-          :draggable="false"
-          :icon="m.icon"
-          @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard"
-        />
-      </div>
-
-      <!-- Lime Marker -->
-      <div v-if="showLime" class="showWrapper">
-        <GmapMarker
-          :key="index"
-          v-for="(m, index) in lime"
-          :position="{lat : m.lat, lng : m.lng}"
-          :clickable="true"
-          :draggable="false"
-          :icon="m.icon"
-          @click="currentScooter = lime[index]; display_infocard=!display_infocard"
-          repeat="20px"
-        />
-      </div>
-
-      <!-- User Marker -->
-
-      <GmapMarker
-        titel="userPosition"
-        :position="userPosition"
-        :clickable="false"
-        :draggable="false"
-        watch="true"
-        icon="https://img.icons8.com/color/48/000000/street-view.png"
-      />
+      </GmapCluster>
     </GmapMap>
 
     <InfoCard v-show="display_infocard" :scooter="currentScooter" />
@@ -228,6 +207,9 @@
 <script>
 import Vue from "vue";
 import * as VueGoogleMaps from "vue2-google-maps";
+import GmapCluster from "vue2-google-maps/dist/components/cluster";
+Vue.component("GmapCluster", GmapCluster);
+
 const fetch = require("node-fetch");
 
 import InfoCard from "./infoCard";
@@ -305,6 +287,7 @@ export default {
     panToCurrent() {
       this.$refs.mapRef.$mapPromise.then(map => {
         map.panTo(this.userPosition);
+        map.setZoom(16);
       });
     },
 
@@ -360,7 +343,6 @@ export default {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-
         },
         positionError => {
           console.log(positionError);
@@ -372,17 +354,14 @@ export default {
         }
       );
 
-      navigator.geolocation.getCurrentPosition(position =>{
-
+      navigator.geolocation.getCurrentPosition(position => {
         this.userPosition = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
 
         this.panToCurrent();
-      })
-
-
+      });
     });
   },
 
