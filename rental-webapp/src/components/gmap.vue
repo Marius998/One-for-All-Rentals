@@ -361,7 +361,6 @@ export default {
             lng: position.coords.longitude
           };
 
-          this.panToCurrent();
         },
         positionError => {
           console.log(positionError);
@@ -372,6 +371,18 @@ export default {
           maximumAge: 15000
         }
       );
+
+      navigator.geolocation.getCurrentPosition(position =>{
+
+        this.userPosition = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+        this.panToCurrent();
+      })
+
+
     });
   },
 

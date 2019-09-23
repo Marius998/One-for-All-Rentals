@@ -40,7 +40,7 @@ export function fetchLime() {
               'lat' : scooter.attributes.latitude,
               'lng' : scooter.attributes.longitude,
               'color' : '#69D2AA',
-              'pricePerUnit' : "0.20 € / Min. + 1€ Entsperren", 
+              'pricePerUnit' : "0.20 € / Min.", 
               'website' :"https://www.li.me/de/startseite",
               'deeplink' : 'https://limebike.app.link'
             });
