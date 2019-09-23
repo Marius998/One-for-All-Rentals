@@ -1,13 +1,13 @@
 <template>
-<transition
-    enter-active-class="animated bounceInLeft"
-    leave-active-class="animated bounceOutRight">
-  <div>
-    <v-card class="infoCard" height="60vh" :color="scooter.color">
+  <transition
+    enter-active-class="animated slideInUp fast"
+    leave-active-class="animated slideOutDown fast"
+  >
+    <v-card class="infoCard" :color="scooter.color">
       <v-card-title class="display-2 white--text">
         {{scooter.provider }}
-        <v-avatar>
-          <img class="providerLogo" :src="scooter.logo" alt="providerLogo" />
+        <v-avatar right>
+          <img class="providerLogo" :src="scooter.logo" />
         </v-avatar>
       </v-card-title>
       <v-card-text class="flex-box-infoCard">
@@ -51,9 +51,7 @@
         <v-btn :href="scooter.deeplink" large class="rent-btn">Ausleihen</v-btn>
       </v-card-actions>
     </v-card>
-  </div>
-</transition>
-
+  </transition>
 </template>
 
 
@@ -77,12 +75,13 @@ export default {
 }
 
 .providerLogo {
-  margin-left: 25px;
   border: 2px solid white;
+  margin-left: 2.5vw;
 }
 
 .infoCard {
   width: 100vw;
+  height: 60vh;
   position: fixed;
   bottom: 0;
   z-index: 100;
@@ -135,5 +134,22 @@ export default {
   bottom: 3vh;
   background-color: white;
   text-transform: uppercase;
+}
+
+@media only screen and (min-width: 799px) {
+  .infoCard {
+    width: 100vw;
+    height: 80vh;
+  }
+  .info-chip {
+    width: 25vw;
+  }
+  .vehicle-img {
+    width: 30%;
+    margin-top: -20px;
+  }
+  .rent-btn {
+    width: 90%;
+  }
 }
 </style>

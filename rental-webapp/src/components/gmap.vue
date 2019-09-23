@@ -405,7 +405,7 @@ export default {
         this.lime = limeScooter;
       })
       .catch(function() {
-        console.log("errorTier");
+        console.log("errorLime");
       });
   },
 
