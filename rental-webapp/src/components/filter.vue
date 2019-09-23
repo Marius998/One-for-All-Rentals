@@ -177,12 +177,12 @@ export default {
 
   created() {
     if (
-      localStorage.getItem("Nextbike") == "true" ||
-      localStorage.getItem("Nextbike") == null
+      localStorage.getItem("NextBike") == "true" ||
+      localStorage.getItem("NextBike") == null
     ) {
       this.selected.push(0);
     }
-    if (localStorage.getItem("Fordbike") == "true") {
+    if (localStorage.getItem("FordBike") == "true") {
       this.selected.push(1);
     }
     if (
@@ -234,8 +234,8 @@ export default {
 
   watch: {
     selected: function reloadProvider() {
-      localStorage.setItem("Nextbike", this.selected.includes(0));
-      localStorage.setItem("Fordbike", this.selected.includes(1));
+      localStorage.setItem("NextBike", this.selected.includes(0));
+      localStorage.setItem("FordBike", this.selected.includes(1));
       localStorage.setItem("Rhingo", this.selected.includes(2));
       localStorage.setItem("Tier", this.selected.includes(3));
       localStorage.setItem("Lime", this.selected.includes(4));

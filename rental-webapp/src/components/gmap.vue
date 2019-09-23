@@ -277,8 +277,8 @@ export default {
     updateProvider() {
       console.log("update provider");
 
-      this.showNextBike = localStorage.getItem("Nextbike") == "true";
-      this.showFordBike = localStorage.getItem("Fordbike") == "true";
+      this.showNextBike = localStorage.getItem("NextBike") == "true";
+      this.showFordBike = localStorage.getItem("FordBike") == "true";
       this.showRhingo = localStorage.getItem("Rhingo") == "true";
       this.showTier = localStorage.getItem("Tier") == "true";
       this.showLime = localStorage.getItem("Lime") == "true";

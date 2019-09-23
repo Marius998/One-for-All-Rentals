@@ -38,22 +38,15 @@ export function fetchLime() {
                 'id': parseInt(scooter.id),
                 'battery': true,
                 'batteryLevel': scooter.attributes.battery_level,
-                'icon' : { 
-
-                url: require('../assets/icons/Lime.png'),
-                size: new google.maps.Size(100, 150),
-                scaledSize: new google.maps.Size(36, 51),
-                origin: new google.maps.Point(0, 0), // origin
-                anchor: new google.maps.Point(18, 45) // anchor
-              },
-                'logo': 
-                  require('../assets/images/lime-logo.png')
-                ,
-                'vehicleImg': 
-                  require('../assets/images/lime.png')
-                ,
-
-                
+                'icon' : {
+                  url: require('../assets/icons/Lime.png'),
+                  size: new google.maps.Size(100, 150),
+                  scaledSize: new google.maps.Size(36, 51),
+                  origin: new google.maps.Point(0, 0), // origin
+                  anchor: new google.maps.Point(18, 45) // anchor
+                },
+                'logo': require('../assets/images/lime-logo.png'),
+                'vehicleImg': require('../assets/images/lime.png'),
                 'lat': scooter.attributes.latitude,
                 'lng': scooter.attributes.longitude,
                 'color': '#69D2AA',

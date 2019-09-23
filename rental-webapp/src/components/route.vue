@@ -30,31 +30,33 @@
 
           <v-container fluid>
             <v-row>
-              <v-col v-for="(provider, i) in provider" :key="i" class="flex-box">
-                <v-card v-show="provider.choosen" :color="provider.color" dark>
-                  <v-list-item three-line>
-                    <v-list-item-content class="align-self-start">
-                      <v-list-item-title class="headline mb-2" v-text="provider.name"></v-list-item-title>
+              <template v-for="(provider, i) in provider">
+                <v-col v-if="provider.choosen" :key="i" class="flex-box">
+                  <v-card :color="provider.color" dark>
+                    <v-list-item three-line>
+                      <v-list-item-content class="align-self-start">
+                        <v-list-item-title class="headline mb-2" v-text="provider.name"></v-list-item-title>
 
-                      <v-list-item-subtitle v-text="provider.type"></v-list-item-subtitle>
+                        <v-list-item-subtitle v-text="provider.type"></v-list-item-subtitle>
 
-                      <div class="flex-box-item">
-                        <v-chip class="ma-2" color="white" text-color="black">
-                          <v-icon small left>query_builder</v-icon>
-                          {{ provider.duration}} Minuten
-                        </v-chip>
+                        <div class="flex-box-item">
+                          <v-chip class="ma-2" color="white" text-color="black">
+                            <v-icon small left>query_builder</v-icon>
+                            {{ provider.duration}} Minuten
+                          </v-chip>
 
-                        <v-chip class="ma-2" color="white" text-color="black">
-                          <v-icon small left>euro</v-icon>
-                          {{ provider.priceCurrentRide }}
-                        </v-chip>
-                      </div>
-                    </v-list-item-content>
+                          <v-chip class="ma-2" color="white" text-color="black">
+                            <v-icon small left>euro</v-icon>
+                            {{ provider.priceCurrentRide }}
+                          </v-chip>
+                        </div>
+                      </v-list-item-content>
 
-                    <v-img :src="provider.src" max-width="40vw"></v-img>
-                  </v-list-item>
-                </v-card>
-              </v-col>
+                      <v-img :src="provider.src" max-width="40vw"></v-img>
+                    </v-list-item>
+                  </v-card>
+                </v-col>
+              </template>
             </v-row>
           </v-container>
         </div>
@@ -92,7 +94,7 @@ export default {
           pricePerUnit: 0.23,
           startPrice: 0,
           bikeRoute: false,
-          choosen: localStorage.getItem('Rhingo') == 'true',
+          choosen: true,
           color: "#E30614",
           src: require("../assets/images/rhingo.png"),
           type: "Motorroller",
@@ -102,7 +104,7 @@ export default {
         },
         {
           name: "NextBike",
-          choosen: localStorage.getItem('Nextbike') == 'true',
+          choosen: true,
           pricePerMinute: false,
           pricePerUnit: 1,
           startPrice: 0,
@@ -116,7 +118,7 @@ export default {
         },
         {
           name: "FordBike",
-          choosen: localStorage.getItem('Fordbike') == 'true',
+          choosen: true,
           pricePerMinute: false,
           pricePerUnit: 1,
           startPrice: 0,
@@ -130,7 +132,7 @@ export default {
         },
         {
           name: "Tier",
-          choosen: localStorage.getItem('Tier') == 'true',
+          choosen: true,
           pricePerMinute: true,
           pricePerUnit: 0.15,
           startPrice: 1,
@@ -144,7 +146,7 @@ export default {
         },
         {
           name: "Lime",
-          choosen: localStorage.getItem('Lime') == 'true',
+          choosen: true,
           pricePerMinute: true,
           pricePerUnit: 0.2,
           startPrice: 1,
@@ -261,6 +263,15 @@ export default {
       } else {
         return false;
       }
+    }
+  },
+
+  watch: {
+    searchStarted: function reloadProvider() {
+      this.provider.forEach(
+        provider =>
+          (provider.choosen = localStorage.getItem(provider.name) == "true")
+      );
     }
   }
 };
