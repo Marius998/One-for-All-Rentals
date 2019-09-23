@@ -31,7 +31,7 @@
           <v-container fluid>
             <v-row>
               <v-col v-for="(provider, i) in provider" :key="i" class="flex-box">
-                <v-card :color="provider.color" dark>
+                <v-card v-show="provider.choosen" :color="provider.color" dark>
                   <v-list-item three-line>
                     <v-list-item-content class="align-self-start">
                       <v-list-item-title class="headline mb-2" v-text="provider.name"></v-list-item-title>
@@ -92,7 +92,7 @@ export default {
           pricePerUnit: 0.23,
           startPrice: 0,
           bikeRoute: false,
-          choosen: true,
+          choosen: localStorage.getItem('Rhingo') == 'true',
           color: "#E30614",
           src:
             "https://lh3.googleusercontent.com/YCKOqHnqQrDq9gydSW2dDHiasP6UcZr00gi8AOEPU6p1KTqGtnKfAlZ0aISSk8YJzYwtwtiQjYHfJqZfRfN4M8zz0EV8dv_TmYkFn0lZ-QNs2tKD54Zt3CDeKGi4w89rmdOWvz24oXNFn3bbFwe2QWzPxBR4qKnXdJZo0xTeA_qD5g4BSZ8u0_8_Ef3TG_suxNkBlPADmvBqh48U1uvkxGO8DyQLiJQH76fRE6B8xOSu3lje23QhgguJqdZxChS0PCd44UPp1deJdbyNDMOyU3hlbp4YKEq-hzU1H7MONys9KG3670n3uJHnH7YH15x4DAqbcQ_dS8jB0SlC8mH_tR6RMmUZlK5JfQzPA1PIhwqkV8nD4okBXnctJwA28FG-KYnhzBvxfi2s5Iq9uPC7WSkSwfetYnj-Up6e27TEBLCDSg19ejzkPA8XIcwxWDIhZrAFlmHgp6ZQGQMxnQ580vzuqPsPskaeV_yMSxRXDC6iGeayKxA6OVg0PisJD5qKbCVr7zs9XpZx9-bg-UcuqUkp027y5oH3AUTrA5EMMWQ1n4XXP_YJ66SzaMqY4nKVXZgE17luFLuQhXpP384qVAa8_Pe5it7OCNZdsIFUJYIyfxQCUBUEjTlZL5X-arqD3TKgF2O8x9ZX1LaCkEHHo5Bebd1WN9IEmPsqVN1cZdnxKUrP9bZzKg=w705-h581-no",
@@ -103,7 +103,7 @@ export default {
         },
         {
           name: "NextBike",
-          choosen: true,
+          choosen: localStorage.getItem('Nextbike') == 'true',
           pricePerMinute: false,
           pricePerUnit: 1,
           startPrice: 0,
@@ -118,7 +118,7 @@ export default {
         },
         {
           name: "FordBike",
-          choosen: true,
+          choosen: localStorage.getItem('Fordbike') == 'true',
           pricePerMinute: false,
           pricePerUnit: 1,
           startPrice: 0,
@@ -133,7 +133,7 @@ export default {
         },
         {
           name: "Tier",
-          choosen: true,
+          choosen: localStorage.getItem('Tier') == 'true',
           pricePerMinute: true,
           pricePerUnit: 0.15,
           startPrice: 1,
@@ -148,7 +148,7 @@ export default {
         },
         {
           name: "Lime",
-          choosen: true,
+          choosen: localStorage.getItem('Lime') == 'true',
           pricePerMinute: true,
           pricePerUnit: 0.2,
           startPrice: 1,

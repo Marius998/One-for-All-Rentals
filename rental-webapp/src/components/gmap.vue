@@ -168,7 +168,7 @@
             :clickable="true"
             :draggable="false"
             :icon="m.icon"
-            @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard"
+            @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
           />
         </div>
 
@@ -181,7 +181,7 @@
             :clickable="true"
             :draggable="false"
             :icon="m.icon"
-            @click="currentScooter = lime[index]; display_infocard=!display_infocard"
+            @click="currentScooter = lime[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
             repeat="20px"
           />
         </div>
