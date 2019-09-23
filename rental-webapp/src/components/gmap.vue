@@ -2,10 +2,10 @@
   <div>
     <app-route class="routeMenu" :userPos="userPosition" v-show="display_route"></app-route>
 
-    <providerFilter v-show="display_filter" @provider="updateProvider"></providerFilter>  
+    <providerFilter v-show="display_filter" @provider="updateProvider"></providerFilter>
 
-
-    <v-speed-dial v-show="!display_route"
+    <v-speed-dial
+      v-show="!display_route"
       class="btn"
       v-model="fab"
       top
@@ -181,45 +181,34 @@
         />
       </div>
 
-
       <!-- Fordbike Marker -->
       <div v-if="showFordBike" class="showWrapper">
         <GmapMarker
           :key="index"
           v-for="(m, index) in fordBikes"
-
           :position="{lat : m.lat, lng : m.lng}"
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
-
-
           @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard"
-            />
+        />
       </div>
 
-
-        <!-- Lime Marker -->
+      <!-- Lime Marker -->
       <div v-if="showLime" class="showWrapper">
         <GmapMarker
           :key="index"
           v-for="(m, index) in lime"
-
           :position="{lat : m.lat, lng : m.lng}"
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
-           @click="currentScooter = lime[index]; display_infocard=!display_infocard"
-          repeat = "20px"
+          @click="currentScooter = lime[index]; display_infocard=!display_infocard"
+          repeat="20px"
         />
       </div>
 
-
-         
-      
-
-
-        <!-- User Marker -->
+      <!-- User Marker -->
 
       <GmapMarker
         titel="userPosition"
@@ -267,7 +256,6 @@ export default {
 
   data() {
     return {
-
       display_route: false, //steuert das Anzeigen der route component
 
       fab: false, //kontroliert das Speed-dial Icon
@@ -276,8 +264,8 @@ export default {
       showNextBike: Boolean,
       showRhingo: Boolean,
       showTier: Boolean,
-
       showFordBike: Boolean,
+
       nextBikes: [], // speichert die nextBikes
       rhingo: [], // speichert die Rhingo Vehicle
       tier: [], // speichert die Tier Vehicle
@@ -289,7 +277,6 @@ export default {
       rhingo: [], // speichert die Rhingo Vehicle
       tier: [], // speichert die Tier Vehicle
       lime: [], // speichert die Lime Vehicle
-
 
       display_infocard: false, // entscheidet um die infoCard angezeigt werden soll
       display_filter: false,
@@ -308,10 +295,11 @@ export default {
     updateProvider() {
       console.log("update provider");
 
-      this.showNextBike = localStorage.getItem('Nextbike') == 'true';
-      this.showRhingo = localStorage.getItem('Rhingo') == 'true';
-      this.showTier = localStorage.getItem('Tier') == 'true';
-      this.showLime = localStorage.getItem('Lime') == 'true';
+      this.showNextBike = localStorage.getItem("Nextbike") == "true";
+      this.showFordBike = localStorage.getItem("Fordbike") == "true";
+      this.showRhingo = localStorage.getItem("Rhingo") == "true";
+      this.showTier = localStorage.getItem("Tier") == "true";
+      this.showLime = localStorage.getItem("Lime") == "true";
     },
 
     panToCurrent() {
@@ -361,7 +349,6 @@ export default {
 
   created() {
     this.$nextTick(function() {
-      
       let position = navigator.geolocation.watchPosition(
         position => {
           console.log("located");
@@ -413,7 +400,6 @@ export default {
         .catch(function() {
           console.log("errorTier");
         }),
-
       fetchFordbike
         .fetchFordbike()
         .then(ford => {
@@ -421,17 +407,16 @@ export default {
         })
         .catch(function() {
           console.log("errorFordbike");
-        })
-
-        fetchLime
-        .fetchLime()
-        .then(limeScooter => {
-          this.lime = limeScooter;
-        })
-        .catch(function() {
-          console.log("errorTier");
         });
 
+    fetchLime
+      .fetchLime()
+      .then(limeScooter => {
+        this.lime = limeScooter;
+      })
+      .catch(function() {
+        console.log("errorTier");
+      });
   },
 
   computed: {}

@@ -187,10 +187,11 @@ export default {
   },
 
   created() {
-    if (localStorage.getItem('Nextbike') == 'true' || localStorage.getItem('Nextbike') == null) {this.selected.push(0);}
-    if (localStorage.getItem('Rhingo') == 'true' || localStorage.getItem('Rhingo') == null) {this.selected.push(2);}
-    if (localStorage.getItem('Tier') == 'true' || localStorage.getItem('Tier') == null) {this.selected.push(3);}
-    if (localStorage.getItem('Lime') == 'true') {this.selected.push(4);}
+    if (localStorage.getItem('Nextbike') == 'true' || localStorage.getItem('Nextbike') == null) {this.selected.push(0);};
+    if (localStorage.getItem('Fordbike') == 'true') {this.selected.push(1);};
+    if (localStorage.getItem('Rhingo') == 'true' || localStorage.getItem('Rhingo') == null) {this.selected.push(2);};
+    if (localStorage.getItem('Tier') == 'true' || localStorage.getItem('Tier') == null) {this.selected.push(3);};
+    if (localStorage.getItem('Lime') == 'true') {this.selected.push(4);};
   },
 
   computed: {
@@ -223,6 +224,7 @@ export default {
     selected: function reloadProvider(){
 
       localStorage.setItem('Nextbike', this.selected.includes(0));
+      localStorage.setItem('Fordbike', this.selected.includes(1));
       localStorage.setItem('Rhingo', this.selected.includes(2));
       localStorage.setItem('Tier', this.selected.includes(3));
       localStorage.setItem('Lime', this.selected.includes(4));
@@ -230,26 +232,6 @@ export default {
       this.updateProvider();
 
     }
-  },
-  created() {
-
-    console.log("Filter created");
-    this.store = window.localStorage;
-    console.log(this.store.getItem('Nextbike'));
-    
-      if(this.store.getItem('Nextbike') == 'true'){
-          this.selected.push(0);
-      }
-
-       if(this.store.getItem('Rhingo') == 'true'){
-          this.selected.push(2);
-      }
-       if(this.store.getItem('Tier') == 'true'){
-          this.selected.push(3);
-      }
-       if(this.store.getItem('Lime') == 'true'){
-          this.selected.push(4);
-      }      
   }
 };
 </script>
