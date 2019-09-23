@@ -230,6 +230,26 @@ export default {
       this.updateProvider();
 
     }
+  },
+  created() {
+
+    console.log("Filter created");
+    this.store = window.localStorage;
+    console.log(this.store.getItem('Nextbike'));
+    
+      if(this.store.getItem('Nextbike') == 'true'){
+          this.selected.push(0);
+      }
+
+       if(this.store.getItem('Rhingo') == 'true'){
+          this.selected.push(2);
+      }
+       if(this.store.getItem('Tier') == 'true'){
+          this.selected.push(3);
+      }
+       if(this.store.getItem('Lime') == 'true'){
+          this.selected.push(4);
+      }      
   }
 };
 </script>
