@@ -94,8 +94,7 @@ export default {
           bikeRoute: false,
           choosen: true,
           color: "#E30614",
-          src:
-            "https://lh3.googleusercontent.com/YCKOqHnqQrDq9gydSW2dDHiasP6UcZr00gi8AOEPU6p1KTqGtnKfAlZ0aISSk8YJzYwtwtiQjYHfJqZfRfN4M8zz0EV8dv_TmYkFn0lZ-QNs2tKD54Zt3CDeKGi4w89rmdOWvz24oXNFn3bbFwe2QWzPxBR4qKnXdJZo0xTeA_qD5g4BSZ8u0_8_Ef3TG_suxNkBlPADmvBqh48U1uvkxGO8DyQLiJQH76fRE6B8xOSu3lje23QhgguJqdZxChS0PCd44UPp1deJdbyNDMOyU3hlbp4YKEq-hzU1H7MONys9KG3670n3uJHnH7YH15x4DAqbcQ_dS8jB0SlC8mH_tR6RMmUZlK5JfQzPA1PIhwqkV8nD4okBXnctJwA28FG-KYnhzBvxfi2s5Iq9uPC7WSkSwfetYnj-Up6e27TEBLCDSg19ejzkPA8XIcwxWDIhZrAFlmHgp6ZQGQMxnQ580vzuqPsPskaeV_yMSxRXDC6iGeayKxA6OVg0PisJD5qKbCVr7zs9XpZx9-bg-UcuqUkp027y5oH3AUTrA5EMMWQ1n4XXP_YJ66SzaMqY4nKVXZgE17luFLuQhXpP384qVAa8_Pe5it7OCNZdsIFUJYIyfxQCUBUEjTlZL5X-arqD3TKgF2O8x9ZX1LaCkEHHo5Bebd1WN9IEmPsqVN1cZdnxKUrP9bZzKg=w705-h581-no",
+          src: require("../assets/images/rhingo.png"),
           type: "Motorroller",
           duration: undefined,
           priceCurrentRide: undefined,
@@ -109,8 +108,7 @@ export default {
           startPrice: 0,
           bikeRoute: true,
           color: "#194A97",
-          src:
-            "https://lh3.googleusercontent.com/s2kHd4YvwnnIG-scJcp8gmVJzRmMRB_bSkAiUfAlphtSJVnx2TdJRZoyLMq3QS7r7M4vGjn1kDETXFdio4IF05Di8bngwjVf7Ss_JF1O-d7FdScQd8w2fosyoIIpDGmvrFROVxdBSte0Ai_UztTIYhJx7dPcWOW-ZcUhm2GkmJ60Up237ngjmHxAVErM0gHTVjsvtdumFgJeBy1BYJnqTm96q0m9xGSCZ2NM1zQ5KaY9eMBWif6WlnpNpIhkLZxoyZD0uJ-ZoaKcIn3xhKg9VKALiRZ5p6ohbf5XUQyOhOYnY0th7mztJwclEMpgHOvrK8NstZIukDlDlsRyK_XP9Tu8QP_OzYclHSQywWqI1eaZhzvHWlHrxrucxoufWA5YwxMUoReHPs0npn_BYS8M3GLx3HVekqPS2beii16afz6-u7VnN87VRSatchXU7rRxmvMl8Xa7zbagO0lZZR20Xk6tKJestMt8DLySAvB-dVAxvjZ0JDw9BdzGQZckN_1fEscCLly2KQN4rrvVZe8hrdtr07mJZ4WTZUIrXa_1TI7H4EUimRVaFKWUFM5IBzM8rAtAdJoXZw-Nc0bhpQKtG5QbiWGWwFqorE0uEU1s-XqCqINpuIep3kscZ3RnFf1IoyfFxVuNOWiqtr3JfDYuVJjrgLkN9U5Fp138dSdF_73s6uH-5RcbiA=w1190-h770-no",
+          src: require("../assets/images/nextbike.png"),
           type: "Fahrrad",
           duration: undefined,
           priceCurrentRide: undefined,
@@ -124,8 +122,7 @@ export default {
           startPrice: 0,
           bikeRoute: true,
           color: "#3D8999",
-          src:
-            "https://lh3.googleusercontent.com/-2IDvBYdlMjjFKKdXI-tiNbUA_tUmtjD0Wj0P1CLk1cKQCil9ZnlQjm8UI-rldElzcQEM-WJwo8oq7bRHyUn0l2NYG4Q6reNMUD6Y8FoTlxkrOkSXVNY2UkuvJ8Dr4xTbuv11WrJA4N3hv49j4yCUh1OEfPR8MRKrKeNDvekOwUMUwMGGc766uFdsRA4UDImKPKV1ObcXHwYmLzuPDiZ5GU6f70VO0HP8793u17gVhfyUS2PttV4ipt-oFc0f0u0uhyCt0XwwvQ6mYGi9K8T9-z-1SpvBMEHvAxeDFBlTQjoWJqGVK5OPGs0l7tn3U3moIGwRoHObr52SFHJ_8IS8IV_8Uc7Krdz9b93cJmUjqNZFZXvRaW_i0lR4MTiDY9bgXmNNa9fYnSVBtYWor8Q7Bld5DKuwkY55tYioilcNK8_PjOrHAcRDqxY3912EkOlGGH_XVT3TZD8N3ptzK2UpuUHhviZ5oFZFyxbPJwWUCgLwia5ZpDCRyP9C_CNepWKIO3awoly1x49UCvQlESSE1uq-6mQ9iCR8kzIuSbMbx0xCqoT3-Gpf4Va2fj5b0mLHtY83fq3zHBcKNlbAnTzQzKmYMPRNtzY9kFasZq5nUUyo478dEpt8xVTUO3TbofBsX_jNkoX5bXAa_RLkbpL0msT0cM-LRQLLFNREVFlG2F5taMC_I7Hnw=w1092-h880-no",
+          src: require("../assets/images/fordbike.png"),
           type: "Fahrrad",
           duration: undefined,
           priceCurrentRide: undefined,
@@ -139,8 +136,7 @@ export default {
           startPrice: 1,
           bikeRoute: true,
           color: "#69D2AA",
-          src:
-            "https://lh3.googleusercontent.com/pIqWwk66A0zV6ibbFNCpI4bsrsuPnPYFOo2cQa-FEK4PE0BUF5Q5SNkxjxss5bp0rqdIg7M9Hq3fE3QcQaJoV1GUyezaTQgjlVBDVr80fSoiVjj5OURHVeYwyaBYUvXh_bMk7n7g63532xeLqNKjHX2Yr5K_B2Vu7_ngxfO54fll8kIWVA22RovKAycd7sJcUWklBSJHHJcEsogJqR3Hj35Rs5EKGMwY2gvllAWhsczudvuiRmsTB3KTFeDMcETxx3w9_S6Bb9RnHP-gGX1TFu8fLYPf-299T9_AYZDqd_BetXqnaguK55afE0F3zRj6dezMSFN8I9UAsMctUnOzJ3unmsmzMHQkfSpTJzsT9k1k7itCOJ1gck_5TfCuzxWpaaEXHmGHuAN5Z8-Z9P0l2M04oguodmM-5PNlLKaHfU0KK57m6ASCIc8Mh9fnLDsxXk9QW7KEgevZQnkLKiA0W2z1Grvhjd6C5fiN4J4vluONo3GfxQUg5dsGV5CUVrpmlQgkKGzrF-0IsQWQ7cPxMAb7enkm7sqbYEtG1E0tUDNDXSyvTQlpnzTQKt7YVbsqA-vc8H5tEhuQpEg86DuffeS-VCIykVsQ7XrptoIkrxReNdaTTVNE2N31piIWs8CMCRcVjgPd9l85yQlrBqbhC5B55sU3Nl3cnUPAjOoZ7y7LwQmFC9JhlA=w1280-h1253-no",
+          src: require("../assets/images/tier.png"),
           type: "E-Scooter",
           duration: undefined,
           priceCurrentRide: undefined,
@@ -154,8 +150,7 @@ export default {
           startPrice: 1,
           bikeRoute: true,
           color: "#46DD00",
-          src:
-            "https://lh3.googleusercontent.com/5d2bIdVfIXw__CZCH7-g9vrhZDaRq_XN9cNu3Wc4xhgKXofP2Joxoo3LTaFSnexZ8n05OHEmTa9t5v9P4w=w328-h315-no",
+          src: require("../assets/images/lime.png"),
           type: "E-Scooter",
           duration: undefined,
           priceCurrentRide: undefined,
