@@ -158,22 +158,13 @@ export default {
     loading: false,
     loading_deselect: false,
 
-    selected : [],
-    store : Object
-
+    selected: []
   }),
-
-  props : ['showNextBikes','showRhingo','showTier','showLime'],
   
   methods: {
-    sendData: function() {
-      this.$emit("provider", [
-        this.showNextBikes,
-        this.showRhingo,
-        this.showTier,
-        this.showFordBike,
-        this.showLime
-      ]);
+
+    updateProvider() {
+      this.$emit("provider");
     },
 
     selectNone() {
@@ -193,6 +184,13 @@ export default {
         this.loading = false;
       }, 200);
     }
+  },
+
+  created() {
+    if (localStorage.getItem('Nextbike') == 'true' || localStorage.getItem('Nextbike') == null) {this.selected.push(0);}
+    if (localStorage.getItem('Rhingo') == 'true' || localStorage.getItem('Rhingo') == null) {this.selected.push(2);}
+    if (localStorage.getItem('Tier') == 'true' || localStorage.getItem('Tier') == null) {this.selected.push(3);}
+    if (localStorage.getItem('Lime') == 'true') {this.selected.push(4);}
   },
 
   computed: {
@@ -224,12 +222,13 @@ export default {
   watch: {
     selected: function reloadProvider(){
 
-      this.showNextBikes = this.selected.includes(0);
-      this.showRhingo = this.selected.includes(2);
-      this.showTier = this.selected.includes(3);
-      this.showLime = this.selected.includes(4);
+      localStorage.setItem('Nextbike', this.selected.includes(0));
+      localStorage.setItem('Rhingo', this.selected.includes(2));
+      localStorage.setItem('Tier', this.selected.includes(3));
+      localStorage.setItem('Lime', this.selected.includes(4));
 
-      this.sendData();
+      this.updateProvider();
+
     }
   },
   created() {

@@ -2,12 +2,7 @@
   <div>
     <app-route class="routeMenu" :userPos="userPosition" v-show="display_route"></app-route>
 
-    <providerFilter v-show="display_filter" @provider="updateProvider"
-    :showLime="showLime"
-    :showRhingo="showRhingo"
-    :showTier="showTier"
-    :showNextBikes="showNextBike"
-        ></providerFilter>  
+    <providerFilter v-show="display_filter" @provider="updateProvider"></providerFilter>  
 
 
     <v-speed-dial v-show="!display_route"
@@ -264,8 +259,6 @@ export default {
   data() {
     return {
 
-      store : Object,
-      
       display_route: false, //steuert das Anzeigen der route component
 
       fab: false, //kontroliert das Speed-dial Icon
@@ -303,23 +296,15 @@ export default {
   },
 
   methods: {
-    updateProvider(e) {
+    updateProvider() {
       console.log("update provider");
-      this.showNextBike = e[0];
-      this.showRhingo = e[1];
-      this.showTier = e[2];   
 
-      this.showLime = e[3];
-
-      console.log(e);
-
-      this.store.setItem('Nextbike',this.showNextBike);
-      this.store.setItem('Rhingo',this.showRhingo);
-      this.store.setItem('Tier',this.showTier);
-      this.store.setItem('Lime',this.showLime);
-      console.log("asd");
-
+      this.showNextBike = localStorage.getItem('Nextbike') == 'true';
+      this.showRhingo = localStorage.getItem('Rhingo') == 'true';
+      this.showTier = localStorage.getItem('Tier') == 'true';
+      this.showLime = localStorage.getItem('Lime') == 'true';
     },
+
     panToCurrent() {
       this.$refs.mapRef.$mapPromise.then(map => {
         map.panTo(this.userPosition);
@@ -367,16 +352,6 @@ export default {
 
   created() {
     this.$nextTick(function() {
-
-      // Filter bei Start mit LokelenDaten synchronisieren
-      this.store = window.localStorage;
-      console.log("store created");
-      
-      this.showNextBike = this.store.getItem('Nextbike');
-      this.showRhingo = this.store.getItem('Rhingo') ;
-      this.showTier = this.store.getItem('Tier') ;
-      this.showLime = this.store.getItem('Lime');
-
       
       let position = navigator.geolocation.watchPosition(
         position => {
