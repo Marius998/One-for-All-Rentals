@@ -287,6 +287,7 @@ export default {
     panToCurrent() {
       this.$refs.mapRef.$mapPromise.then(map => {
         map.panTo(this.userPosition);
+        map.setZoom(16);
       });
     },
 
