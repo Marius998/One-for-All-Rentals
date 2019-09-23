@@ -116,8 +116,8 @@
 				}"
     >
       <GmapCluster
-        zoomOnClick = true
-        :maxZoom="14"
+        :zoomOnClick="true"
+        :maxZoom="15"
         :minimumClusterSize="4"
       >
         <!-- Nextbikes Marker -->
