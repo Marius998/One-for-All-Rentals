@@ -7,6 +7,7 @@
     :showRhingo="showRhingo"
     :showTier="showTier"
     :showNextBikes="showNextBike"
+    :showFordBike="showFordBike"
         ></providerFilter>  
 
 
@@ -193,6 +194,16 @@
           :key="index"
           v-for="(m, index) in fordBikes"
 
+          :position="{lat : m.lat, lng : m.lng}"
+          :clickable="true"
+          :draggable="false"
+          :icon="m.icon"      
+
+           @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard"
+        />
+      </div>
+          
+
         <!-- Lime Marker -->
       <div v-if="showLime" class="showWrapper">
         <GmapMarker
@@ -202,11 +213,7 @@
           :position="{lat : m.lat, lng : m.lng}"
           :clickable="true"
           :draggable="false"
-          :icon="m.icon"
-
-          @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard"
-        />
-      </div>
+          :icon="m.icon"        
 
 
           @click="currentScooter = lime[index]; display_infocard=!display_infocard"
@@ -306,10 +313,10 @@ export default {
     updateProvider(e) {
       console.log("update provider");
       this.showNextBike = e[0];
-      this.showRhingo = e[1];
-      this.showTier = e[2];   
-
-      this.showLime = e[3];
+      this.showFordBike = e[1];   
+      this.showRhingo = e[2];
+      this.showTier = e[3];   
+      this.showLime = e[4];
 
       console.log(e);
 
@@ -317,6 +324,7 @@ export default {
       this.store.setItem('Rhingo',this.showRhingo);
       this.store.setItem('Tier',this.showTier);
       this.store.setItem('Lime',this.showLime);
+      this.store.setItem('Fordbike',this.showFordBike);
       console.log("asd");
 
     },
@@ -376,6 +384,7 @@ export default {
       this.showRhingo = this.store.getItem('Rhingo') ;
       this.showTier = this.store.getItem('Tier') ;
       this.showLime = this.store.getItem('Lime');
+      this.showFordBike = this.store.getItem('Fordbike');
 
       
       let position = navigator.geolocation.watchPosition(

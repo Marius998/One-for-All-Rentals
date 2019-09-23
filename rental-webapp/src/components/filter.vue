@@ -163,15 +163,15 @@ export default {
 
   }),
 
-  props : ['showNextBikes','showRhingo','showTier','showLime'],
+  props : ['showNextBikes','showRhingo','showTier','showLime','showFordBike'],
   
   methods: {
     sendData: function() {
       this.$emit("provider", [
         this.showNextBikes,
+        this.showFordBike,
         this.showRhingo,
         this.showTier,
-        this.showFordBike,
         this.showLime
       ]);
     },
@@ -225,6 +225,7 @@ export default {
     selected: function reloadProvider(){
 
       this.showNextBikes = this.selected.includes(0);
+      this.showFordBike = this.selected.includes(1);
       this.showRhingo = this.selected.includes(2);
       this.showTier = this.selected.includes(3);
       this.showLime = this.selected.includes(4);
@@ -240,6 +241,10 @@ export default {
     
       if(this.store.getItem('Nextbike') == 'true'){
           this.selected.push(0);
+      }
+
+       if(this.store.getItem('Fordbike') == 'true'){
+          this.selected.push(1);
       }
 
        if(this.store.getItem('Rhingo') == 'true'){
