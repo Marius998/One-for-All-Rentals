@@ -1,122 +1,115 @@
 <template>
   <transition
     enter-active-class="animated slideInUp fast"
-    leave-active-class="animated slideOutDown fast">
-      <v-card class="card" width="100vw" height="60vh">
-        <v-toolbar flat color="transparent">
-          <v-toolbar-title>Filter</v-toolbar-title>
-          <div class="flex-grow-1"></div>
-        </v-toolbar>
+    leave-active-class="animated slideOutDown fast"
+  >
+    <v-card class="card" width="100vw" height="60vh">
+      <v-toolbar flat color="transparent">
+        <v-toolbar-title>Filter</v-toolbar-title>
+        <div class="flex-grow-1"></div>
+      </v-toolbar>
 
-        <v-container class="container">
-          <v-row align="center" justify="start">
-            <ul v-for="(selection, i) in selections" :key="selection.text">
-              <v-chip
-                class="chip"
-                @click:close="selected.splice(i, 1)"
-                :color="selection.color"
-                pill
-                close
-              >
-                <v-avatar left>
-                  <v-img :src="selection.avatar"></v-img>
-                </v-avatar>
+      <v-container class="container">
+        <v-row align="center" justify="start">
+          <ul v-for="(selection, i) in selections" :key="selection.text">
+            <v-chip
+              class="chip"
+              @click:close="selected.splice(i, 1)"
+              :color="selection.color"
+              pill
+              close
+            >
+              <v-avatar left>
+                <v-img :src="selection.avatar"></v-img>
+              </v-avatar>
 
-                <span>{{selection.text}}</span>
-              </v-chip>
-            </ul>
-          </v-row>
-        </v-container>
+              <span>{{selection.text}}</span>
+            </v-chip>
+          </ul>
+        </v-row>
+      </v-container>
 
-        <v-divider v-if="!allSelected"></v-divider>
+      <v-divider v-if="!allSelected"></v-divider>
 
-        <v-list>
-          <v-list-group prepend-icon="mdi-bike" :value="false" v-if="showBikeGroup">
-            <template v-slot:activator>
-              <v-list-item-title>Fahrräder</v-list-item-title>
+      <v-list>
+        <v-list-group prepend-icon="mdi-bike" :value="false" v-if="showBikeGroup">
+          <template v-slot:activator>
+            <v-list-item-title>Fahrräder</v-list-item-title>
+          </template>
+
+          <ul v-for="(item, i) in items" :key="i">
+            <template v-if="item.bike">
+              <v-list-item v-if="!selected.includes(i)" @click="selected.push(i)" color="black">
+                <v-list-item-avatar>
+                  <v-img :src="item.avatar"></v-img>
+                </v-list-item-avatar>
+
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                </v-list-item-content>
+
+                <v-list-item-avatar>
+                  <v-icon right>add</v-icon>
+                </v-list-item-avatar>
+              </v-list-item>
             </template>
+          </ul>
+        </v-list-group>
 
-            <ul v-for="(item, i) in items" :key="i">
-              <template v-if="item.bike">
-                <v-list-item
-                  v-if="!selected.includes(i)"
-                  @click="selected.push(i)"
-                  color="black"
-                >
-                  <v-list-item-avatar>
-                    <v-img :src="item.avatar"></v-img>
-                  </v-list-item-avatar>
+        <v-list-group prepend-icon="battery_charging_full" :value="false" v-if="showMotorizedGroup">
+          <template v-slot:activator>
+            <v-list-item-title>Motorisierte Fahrzeuge</v-list-item-title>
+          </template>
 
-                  <v-list-item-content>
-                    <v-list-item-title v-text="item.text"></v-list-item-title>
-                  </v-list-item-content>
+          <ul v-for="(item, i) in items" :key="i">
+            <template v-if="!item.bike">
+              <v-list-item v-if="!selected.includes(i)" @click="selected.push(i)" color="black">
+                <v-list-item-avatar>
+                  <v-img :src="item.avatar"></v-img>
+                </v-list-item-avatar>
 
-                  <v-list-item-avatar>
-                    <v-icon right>add</v-icon>
-                  </v-list-item-avatar>
-                </v-list-item>
-              </template>
-            </ul>
-          </v-list-group>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                </v-list-item-content>
 
-          <v-list-group prepend-icon="battery_charging_full" :value="false" v-if="showMotorizedGroup">
-            <template v-slot:activator>
-              <v-list-item-title>Motorisierte Fahrzeuge</v-list-item-title>
+                <v-list-item-avatar>
+                  <v-icon right>add</v-icon>
+                </v-list-item-avatar>
+              </v-list-item>
             </template>
+          </ul>
+        </v-list-group>
+      </v-list>
 
-            <ul v-for="(item, i) in items" :key="i">
-              <template v-if="!item.bike">
-                <v-list-item
-                  v-if="!selected.includes(i)"
-                  @click="selected.push(i)"
-                  color="black"
-                >
-                  <v-list-item-avatar>
-                    <v-img :src="item.avatar" ></v-img>
-                  </v-list-item-avatar>
+      <v-divider></v-divider>
 
-                  <v-list-item-content>
-                    <v-list-item-title v-text="item.text"></v-list-item-title>
-                  </v-list-item-content>
+      <v-card-actions>
+        <div class="flex-grow-1"></div>
+        <v-btn
+          :disabled="!selected.length"
+          :loading="loading_deselect"
+          color="purple"
+          text
+          @click="selectNone"
+        >Auswahl aufheben</v-btn>
+      </v-card-actions>
 
-                  <v-list-item-avatar>
-                    <v-icon right>add</v-icon>
-                  </v-list-item-avatar>
-                </v-list-item>
-              </template>
-            </ul>
-          </v-list-group>
-        </v-list>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <div class="flex-grow-1"></div>
-          <v-btn
-            :disabled="!selected.length"
-            :loading="loading_deselect"
-            color="purple"
-            text
-            @click="selectNone"
-          >Auswahl aufheben</v-btn>
-        </v-card-actions>
-
-        <v-card-actions>
-          <div class="flex-grow-1"></div>
-          <v-btn
-            :disabled="allSelected"
-            :loading="loading"
-            color="purple"
-            text
-            @click="selectAll"
-          >Alle Auswählen</v-btn>
-        </v-card-actions>
-      </v-card>
+      <v-card-actions>
+        <div class="flex-grow-1"></div>
+        <v-btn
+          :disabled="allSelected"
+          :loading="loading"
+          color="purple"
+          text
+          @click="selectAll"
+        >Alle Auswählen</v-btn>
+      </v-card-actions>
+    </v-card>
   </transition>
 </template>
 
 <script>
-import { nextTick } from 'q';
+import { nextTick } from "q";
 export default {
   data: () => ({
     //Reihenfolge in Items darf nicht geändert werden!!!
@@ -125,36 +118,31 @@ export default {
         text: "Nextbike",
         color: "#194A97",
         bike: true,
-        avatar:
-          "https://lh3.googleusercontent.com/YmXUsCJPHTC_SBZLVfnlVXNvoq4I-2_x6FN5hPa-l1et1cKW82wzGU7K6L6sAxWrt2J4X97B7Cvk7OKVxSv_-ahAygLqTeqgQqS7rFpAAi50Ab1JFkBcxBoV_Od29Dj9aBhlQQdXuenMYTpvKkbcorZAQeDhbAvU7B5q_21iKfzzaNgenhb-1i9dn3W56EG-r5anawdg4pyzJPHXFmOMZIb0zlxMhSfGxWE2-Ws0VwvNI1so2FJPhgfyQxMFWOeY_zEUc6KrEQkCkxNq-3qDtDNT7YrFaGQH5xCX8t22Z3aUpQWyesUyXJDIH_nbVvX49NGbmJ5OrJAEcDSu5YJb6zanQBdoQUquLNehgmRs7QJnkQAScy_f1mA1VPKSZjoU8YqJRVT6QQ6ynnIwOC8QWRQ1zchGrAvbI1FVpNfnCtaZ8T2Qh9nJoTiO4UAxAhwYAJRTBDJ8fvNPP2MOJJxE_OejHlBVIN0w3kwlpmKrOUFgcvPODUbwLSdx95zuwb9fK9nC60LlMs4Yu-FhQkdNmmi9P816QtM_FI7ZdlAOdCcgrGJzyX1cebXw1icebCL0YpB1gnqO2mqByLLEgUIJ2HCk7K3i2Bo6fE22-nny7byJR3mpBttpWbB7je5VqKxEtRNPDN8b31oPTjALkxMeOXZE6u5YfBM0hWNnZ2aCyTt8cHEXPup2wQ=s100-no"
+        avatar: require("../assets/images/nextbike-logo.png")
       },
       {
         text: "Fordbike",
         color: "#EC1614",
         bike: true,
-        avatar:
-          "https://lh3.googleusercontent.com/qFEZN-tkIl3LREYN2DgDcdHDBhUBjcKXpexBsQUG6M695BWpjsysQM_icPCBRdMZMJ81XdM1tMVOpHWs8kUkIPlezpGIVzrPgxk-IWv8lRG68064ZEoO3OpYSM4Vd4Iuv2T_vuGbOurkg3q2g1wjSfs_BfG-wdAo4Q8_9mdsowmZBcMFlF-x5nx8_nJzXsO8nH1eucgGuKygpYUSZ1V05F-DaqKA9G2tRt2dQkU5U6y0A4KcxPUdzoFqxTEJCJjnazUgYdBJcSAuJmLDneuVeIn3iEfzm2iILQxWZ_16BOfELn6QtfqeoVdGSQRnIGy2m79S2dZdUwvh7vnCTqfX1oHty_rUOg08ZudR-yeQR-ibxYP8qtdAascw_mm4u2MRqahLSqofMRW4uQcnRTT_w-eQZkHSQlZm3sYtiPwvrAm0LaJQg2B9LFyo48g169UJ_ylNyVrxHT_Ym38R_ZPLVqkLY05P4KLjQY9qByVvE0Nkj8ltBV23eWZlEDKZSxHJg_7DjUo7mI5PEfBkmPWrgemF_m-0lQzu081JnDrjnbBxaI_WsWNqiBO5JEzFou_aHLj6jC4et65KPhxZCKIDfUz7iFORE6mJfYSThvJcaxBtBtW1HyH1PFRxZhgqdsetFlpv_qxBGPJLpbHSXtz8Lh-_OL-6Dyx6QhHUQgFC_AlHpxcSgGuqnQ=w510-h507-no"
+        avatar: require("../assets/images/fordbike-logo.png")
       },
       {
         text: "Rhingo",
         color: "#E30614",
         bike: false,
-        avatar:
-          "https://lh3.googleusercontent.com/g8npIP3QyCPMq4SN3cTXhnlRAg6F75qVFphxrosqmca372eTjFmPavfRCJDF6aMu9SdweC4B4EnK-CzCTYKicy-6Zfpq7ABognRKmC5UBqAOJdOOPzdN3h4iN_gfIB7Yiwm76DUWheMreKsjKOn7a8dWRf778HERlZ6BcDH4Gd2F2E3XJlB9ks2-X9KaB_-i7f77mFITWstUnydCx0awWLkphsSkmOi0IH9-4wwX4UVfTXBr5zMxBHm4vtKppBL6Rk6AeZ7OtJ_GNB4YWxpA2ePBaZP-hzCAm26BUxdDBBt5FAJ0Jf55QuRA8LQQPEgYXWA9_t19U6JarWcdOkywICbdEnLApYmK89GlVDwH6TpaRoGQhvbKow9_01lYQyEIkopkaLLBKA8kkSPdsStuMuYSIc3sPsPumcVIMHSGEX7ALZl1p5_CCZv3yFF6gW-BdXssg-WofEwHWla0aTRynoOmE9a58TpmfJMA19VISun5tFKVvd_C7QwRm6EHGt89g7vRUo8OSEJzBkJw7pvM5yVR8_gx_wueRchfDkCTnl_T2RGk4eAFuA2pBSjOrdlithjBSfWjkeYgY4UopccXI5Fmax-943a61F2FlNI_kYosEWzaoDg8Lkb_bsL9sOiKMAKxiTooV9QezFN4O9APxmocNfaQF5Gb19Xt502uZ9hV1NutvVJUPQ=s100-no"
+        avatar: require("../assets/images/rhingo-logo.png")
       },
       {
         text: "Tier",
         color: "#69D2AA",
         bike: false,
-        avatar:
-          "https://lh3.googleusercontent.com/FRm5mDsAk822-3Zmi-NmG_shq0jyiaqgh81gNEjsoy7nrC6ZmevioEtWSqN4Ca8Vqnpp8XhOcJmp9mp7Z66AUpLP6lWAr-4m2Si8hQHmmCzTcfGl_be61n5iWdzNjdHjGbgjryrgnyOYwK3IRLhlOmE4wdAKq0bu4gvDMuzcw_QHiZwCEFWHyALS07tUTQQ6oQUzXy3bAFPwjoGPscoDZKqD7ej7KViMJqBy0CqdlkQKZp-5KJtBR_Y8KOXO8I4brj3jbfIBp2PHjnUsdvEeVMMkOpJaP8576Ceahiatr6-jIlvRfRNfrKUuav3WlzlPkMmhk0GcWQFkul0AoatC48sGC6idSmFvtpVnUMUPnj_8xlSQWD3ZVXnGysbjOviqZP3edNc30df7F4guU-mZYEeJW4HTJ7G47S9bASbUN9Qii23ZOEYlvgizrBn7XLuxImX0ozV5hbea7pABAehxdcArixaUqfp0hYQr5D5PI3WOJmzDVuJIc6HJ1EfmqZ4T-0q5W8omQMYgoADlSvp9xMuyA2mAWb1S8V8jAYsay0blPQTNDZ9E_-F9WO6ad0DC7aK7caG5Ue_ilrYpM9n1tAKO6knxarXK07sy8fvn4kfShQrLllEAOObudFJe_rVUBY9LGHDQlD9FoU8a9c_Iuvk9JkZRXMmBxGf7Ae51Ejj6CNYVFEvEeg=s492-no"
+        avatar: require("../assets/images/tier-logo.png")
       },
       {
         text: "Lime",
         color: "#46DD00",
         bike: false,
-        avatar:
-          "https://lh3.googleusercontent.com/iLn5nb6rai-f0GspwuWhO22yM8ZESKuERCRYD4hzBWoijYhN0VsCa8MImZxMHjgTyVtlUkzFHK0FyaTHnxprZm6c3DJI28MGupulZfZwWrXkgjeA0MndunoTYbDFVHNtB7nQRzdCgIJNN8p8jIiPCbvQQkKHxgWrQXNsOu5tEoOgVOBfV2HXph-cUAI-u5JHnXxn1eDaG2CwwTOgG8GQKGLgfUoKnN0qwA7OPhAvyPdGAOGvfQHIRZGJpiEWg1dgDI9b2TeYKblUrG1ksQBt96dE1BZItXhkbbIwpbisjfb_3Xm_JUyEp6TGu6nBPxYF5M7yhcpfwiKFnQJevHTv_uwL6qdogCuf18qENA8cPGz9e4t_-ECKOl9zzfDUxrN8B9KQv9ef-vxhTNe5V7-wM-V6GQgtsP4w6srPK--wCiTykXfDqGKbjBSTf4Vr54zERxpb8fRYC-De6SAfOc8iKqwhPl1A5R25JtaKqmj9AjQ3i_5TTHpoCy0p3sQvkepOtfpKRINw99j-44OMa4EQTWo3UyB6QHGmnpjV0jFsmveX_mQfXkluofPcLmIxygkmzablhrxUvCxRgc4-EFyuLN6LaO9Jd7VsewwysLJ2ZMzKibgbin6th_EjPsbPQakyIAzkxpy-XCNc98ESIQ_4jwOFbcCTRlH12KS9ZYa7fW3RJTXlH4rVzQ=s452-no"
+        avatar: require("../assets/images/lime-logo.png")
       }
     ],
     loading: false,
@@ -162,9 +150,8 @@ export default {
 
     selected: []
   }),
-  
-  methods: {
 
+  methods: {
     updateProvider() {
       this.$emit("provider");
     },
@@ -182,18 +169,37 @@ export default {
       this.loading = true;
 
       setTimeout(() => {
-        this.selected = [0,1,2,3,4];
+        this.selected = [0, 1, 2, 3, 4];
         this.loading = false;
       }, 200);
     }
   },
 
   created() {
-    if (localStorage.getItem('Nextbike') == 'true' || localStorage.getItem('Nextbike') == null) {this.selected.push(0);};
-    if (localStorage.getItem('Fordbike') == 'true') {this.selected.push(1);};
-    if (localStorage.getItem('Rhingo') == 'true' || localStorage.getItem('Rhingo') == null) {this.selected.push(2);};
-    if (localStorage.getItem('Tier') == 'true' || localStorage.getItem('Tier') == null) {this.selected.push(3);};
-    if (localStorage.getItem('Lime') == 'true') {this.selected.push(4);};
+    if (
+      localStorage.getItem("Nextbike") == "true" ||
+      localStorage.getItem("Nextbike") == null
+    ) {
+      this.selected.push(0);
+    }
+    if (localStorage.getItem("Fordbike") == "true") {
+      this.selected.push(1);
+    }
+    if (
+      localStorage.getItem("Rhingo") == "true" ||
+      localStorage.getItem("Rhingo") == null
+    ) {
+      this.selected.push(2);
+    }
+    if (
+      localStorage.getItem("Tier") == "true" ||
+      localStorage.getItem("Tier") == null
+    ) {
+      this.selected.push(3);
+    }
+    if (localStorage.getItem("Lime") == "true") {
+      this.selected.push(4);
+    }
   },
 
   computed: {
@@ -203,7 +209,11 @@ export default {
 
     // Entscheidet, ob die v-list-group Motorisierte Fahrzeuge angezeigt wird
     showMotorizedGroup() {
-      return !this.selected.includes(2) || !this.selected.includes(3) || !this.selected.includes(4);
+      return (
+        !this.selected.includes(2) ||
+        !this.selected.includes(3) ||
+        !this.selected.includes(4)
+      );
     },
 
     // Entscheidet, ob die v-list-group Fahrräder angezeigt wird
@@ -223,30 +233,28 @@ export default {
   },
 
   watch: {
-    selected: function reloadProvider(){
-
-      localStorage.setItem('Nextbike', this.selected.includes(0));
-      localStorage.setItem('Fordbike', this.selected.includes(1));
-      localStorage.setItem('Rhingo', this.selected.includes(2));
-      localStorage.setItem('Tier', this.selected.includes(3));
-      localStorage.setItem('Lime', this.selected.includes(4));
+    selected: function reloadProvider() {
+      localStorage.setItem("Nextbike", this.selected.includes(0));
+      localStorage.setItem("Fordbike", this.selected.includes(1));
+      localStorage.setItem("Rhingo", this.selected.includes(2));
+      localStorage.setItem("Tier", this.selected.includes(3));
+      localStorage.setItem("Lime", this.selected.includes(4));
 
       this.updateProvider();
-
     }
   }
 };
 </script>
 
 <style scoped>
-.chip{
+.chip {
   color: white;
   margin-bottom: 10px;
   margin-right: 0px;
   margin-left: 0px;
 }
 
-.container{
+.container {
   padding: 0;
   padding-right: 17px;
 }
@@ -260,5 +268,4 @@ export default {
   box-shadow: 0 20px 20px -20px rgba(0, 0, 0, 0.8);
   z-index: 5;
 }
-
 </style>

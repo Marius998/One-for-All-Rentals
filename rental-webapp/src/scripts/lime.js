@@ -39,14 +39,21 @@ export function fetchLime() {
                 'battery': true,
                 'batteryLevel': scooter.attributes.battery_level,
                 'icon' : { 
-                  url: require('../assets/icons/Lime.png'),
-                  size: new google.maps.Size(100, 150),
-                  scaledSize: new google.maps.Size(36, 51),
-                  origin: new google.maps.Point(0, 0), // origin
-                  anchor: new google.maps.Point(18, 45) // anchor
-                },
-                'logo': 'https://lh3.googleusercontent.com/iLn5nb6rai-f0GspwuWhO22yM8ZESKuERCRYD4hzBWoijYhN0VsCa8MImZxMHjgTyVtlUkzFHK0FyaTHnxprZm6c3DJI28MGupulZfZwWrXkgjeA0MndunoTYbDFVHNtB7nQRzdCgIJNN8p8jIiPCbvQQkKHxgWrQXNsOu5tEoOgVOBfV2HXph-cUAI-u5JHnXxn1eDaG2CwwTOgG8GQKGLgfUoKnN0qwA7OPhAvyPdGAOGvfQHIRZGJpiEWg1dgDI9b2TeYKblUrG1ksQBt96dE1BZItXhkbbIwpbisjfb_3Xm_JUyEp6TGu6nBPxYF5M7yhcpfwiKFnQJevHTv_uwL6qdogCuf18qENA8cPGz9e4t_-ECKOl9zzfDUxrN8B9KQv9ef-vxhTNe5V7-wM-V6GQgtsP4w6srPK--wCiTykXfDqGKbjBSTf4Vr54zERxpb8fRYC-De6SAfOc8iKqwhPl1A5R25JtaKqmj9AjQ3i_5TTHpoCy0p3sQvkepOtfpKRINw99j-44OMa4EQTWo3UyB6QHGmnpjV0jFsmveX_mQfXkluofPcLmIxygkmzablhrxUvCxRgc4-EFyuLN6LaO9Jd7VsewwysLJ2ZMzKibgbin6th_EjPsbPQakyIAzkxpy-XCNc98ESIQ_4jwOFbcCTRlH12KS9ZYa7fW3RJTXlH4rVzQ=s452-no',
-                'vehicleImg': 'https://lh3.googleusercontent.com/5d2bIdVfIXw__CZCH7-g9vrhZDaRq_XN9cNu3Wc4xhgKXofP2Joxoo3LTaFSnexZ8n05OHEmTa9t5v9P4w=w328-h315-no',
+
+                url: require('../assets/icons/Lime.png'),
+                size: new google.maps.Size(100, 150),
+                scaledSize: new google.maps.Size(36, 51),
+                origin: new google.maps.Point(0, 0), // origin
+                anchor: new google.maps.Point(18, 45) // anchor
+              },
+                'logo': 
+                  require('../assets/images/lime-logo.png')
+                ,
+                'vehicleImg': 
+                  require('../assets/images/lime.png')
+                ,
+
+                
                 'lat': scooter.attributes.latitude,
                 'lng': scooter.attributes.longitude,
                 'color': '#69D2AA',
