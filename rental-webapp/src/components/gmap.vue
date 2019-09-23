@@ -196,6 +196,7 @@
           :draggable="false"
           :icon="m.icon"
           @click="currentScooter = lime[index]; display_infocard=!display_infocard"
+          repeat = "20px"
         />
       </div>
 
@@ -338,7 +339,7 @@ export default {
       this.store = window.localStorage;
       console.log("store created");
       
-      this.showNextBike = this.store.getItem('Nextbike') ;
+      this.showNextBike = this.store.getItem('Nextbike');
       this.showRhingo = this.store.getItem('Rhingo') ;
       this.showTier = this.store.getItem('Tier') ;
       this.showLime = this.store.getItem('Lime');
