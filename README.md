@@ -3,7 +3,7 @@
 
 ## Project setup
 ```
-npm install in rental-webApp Folder
+npm install in rental-webapp folder
 ```
 
 ### Compiles and hot-reloads for development
