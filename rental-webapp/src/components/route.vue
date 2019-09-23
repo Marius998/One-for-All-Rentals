@@ -31,7 +31,7 @@
           <v-container fluid>
             <v-row>
               <v-col v-for="(provider, i) in provider" :key="i" class="flex-box">
-                <v-card :color="provider.color" dark>
+                <v-card v-show="provider.choosen" :color="provider.color" dark>
                   <v-list-item three-line>
                     <v-list-item-content class="align-self-start">
                       <v-list-item-title class="headline mb-2" v-text="provider.name"></v-list-item-title>
@@ -92,7 +92,7 @@ export default {
           pricePerUnit: 0.23,
           startPrice: 0,
           bikeRoute: false,
-          choosen: true,
+          choosen: localStorage.getItem('Rhingo') == 'true',
           color: "#E30614",
           src: require("../assets/images/rhingo.png"),
           type: "Motorroller",
@@ -102,7 +102,7 @@ export default {
         },
         {
           name: "NextBike",
-          choosen: true,
+          choosen: localStorage.getItem('Nextbike') == 'true',
           pricePerMinute: false,
           pricePerUnit: 1,
           startPrice: 0,
@@ -116,7 +116,7 @@ export default {
         },
         {
           name: "FordBike",
-          choosen: true,
+          choosen: localStorage.getItem('Fordbike') == 'true',
           pricePerMinute: false,
           pricePerUnit: 1,
           startPrice: 0,
@@ -130,7 +130,7 @@ export default {
         },
         {
           name: "Tier",
-          choosen: true,
+          choosen: localStorage.getItem('Tier') == 'true',
           pricePerMinute: true,
           pricePerUnit: 0.15,
           startPrice: 1,
@@ -144,7 +144,7 @@ export default {
         },
         {
           name: "Lime",
-          choosen: true,
+          choosen: localStorage.getItem('Lime') == 'true',
           pricePerMinute: true,
           pricePerUnit: 0.2,
           startPrice: 1,

@@ -8,9 +8,8 @@ export function fetchLime() {
       var lat = position.coords.latitude
       var lng = position.coords.longitude
 
-      var cityID = "COLOGNE";
       var url = 'https://web-production.lime.bike/api/rider/v1/views/map';
-      var api = "?ne_lat=52&ne_lng=7.4&sw_lat=50&sw_lng=6.2&user_latitude=" + lat + "&user_longitude=" + lng + "&zoom=160";
+      var api = "?ne_lat="+ lat +"&ne_lng="+ lng +"&sw_lat="+ lat +"&sw_lng="+ lng +"&user_latitude=" + lat + "&user_longitude=" + lng + "&zoom=60";
       var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 
 
@@ -40,6 +39,7 @@ export function fetchLime() {
                 'battery': true,
                 'batteryLevel': scooter.attributes.battery_level,
                 'icon' : { 
+
                 url: require('../assets/icons/Lime.png'),
                 size: new google.maps.Size(100, 150),
                 scaledSize: new google.maps.Size(36, 51),
@@ -52,6 +52,8 @@ export function fetchLime() {
                 'vehicleImg': 
                   require('../assets/images/lime.png')
                 ,
+
+                
                 'lat': scooter.attributes.latitude,
                 'lng': scooter.attributes.longitude,
                 'color': '#69D2AA',

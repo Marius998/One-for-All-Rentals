@@ -39,11 +39,25 @@
         <img class="vehicle-img" :src="scooter.vehicleImg" />
       </v-card-text>
 
-      <v-row style="margin-top: 5px;" class="flex-box-battery" v-if="scooter.battery">
+      <v-row style="margin-top: 5px;" class="flex-box-battery" v-if="scooter.battery && typeof(scooter.batteryLevel) != 'string'">
         <v-progress-linear class="battery" :value="scooter.batteryLevel" height="20" color="white"></v-progress-linear>
         <v-chip class="battery-chip" color="white" text-color="black" large>
           <v-icon left>battery_charging_full</v-icon>
           {{scooter.batteryLevel}}%
+        </v-chip>
+      </v-row>
+
+      <v-row style="margin-top: 5px;" class="flex-box-battery" v-if="scooter.battery && typeof(scooter.batteryLevel) == 'string'">
+        <v-progress-linear v-if="scooter.batteryLevel == 'high'" class="battery" :value="100" height="20" color="white"></v-progress-linear>
+        <v-progress-linear v-if="scooter.batteryLevel == 'medium'" class="battery" :value="50" height="20" color="white"></v-progress-linear>
+        <v-progress-linear v-if="scooter.batteryLevel == 'low'" class="battery" :value="10" height="20" color="white"></v-progress-linear>
+        <v-chip v-if="scooter.batteryLevel != 'medium'" class="battery-chip" color="white" text-color="black" large>
+          <v-icon left>battery_charging_full</v-icon>
+          {{scooter.batteryLevel.charAt(0).toUpperCase() + scooter.batteryLevel.slice(1)}}
+        </v-chip>
+        <v-chip v-if="scooter.batteryLevel == 'medium'" class="battery-chip" color="white" text-color="black" large>
+          <v-icon left>battery_charging_full</v-icon>
+          Med.
         </v-chip>
       </v-row>
 
