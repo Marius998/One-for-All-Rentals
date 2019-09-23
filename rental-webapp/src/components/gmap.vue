@@ -147,7 +147,7 @@
 				}"
     >
       <!-- Nextbikes Marker -->
-      <div v-if="showNextBike === 'true'" class="showWrapper">
+      <div v-if="showNextBike" class="showWrapper">
         <GmapMarker
           :key="index"
           v-for="(m, index) in nextBikes"
@@ -160,7 +160,7 @@
       </div>
 
       <!-- Rhingo Marker -->
-      <div v-if="showRhingo === 'true'" class="showWrapper">
+      <div v-if="showRhingo" class="showWrapper">
         <GmapMarker
           :key="index"
           v-for="(m, index) in rhingo"
@@ -173,7 +173,7 @@
       </div>
 
       <!-- Tier Marker -->
-      <div v-if="showTier === 'true'" class="showWrapper">
+      <div v-if="showTier" class="showWrapper">
         <GmapMarker
           :key="index"
           v-for="(m, index) in tier"
@@ -186,7 +186,7 @@
       </div>
 
         <!-- Lime Marker -->
-      <div v-if="showLime === 'true'" class="showWrapper">
+      <div v-if="showLime" class="showWrapper">
         <GmapMarker
           :key="index"
           v-for="(m, index) in lime"
