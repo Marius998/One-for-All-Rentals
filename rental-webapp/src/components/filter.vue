@@ -157,8 +157,10 @@ export default {
     ],
     loading: false,
     loading_deselect: false,
+
     selected : [],
     store : Object
+
   }),
 
   props : ['showNextBikes','showRhingo','showTier','showLime'],
@@ -169,6 +171,7 @@ export default {
         this.showNextBikes,
         this.showRhingo,
         this.showTier,
+        this.showFordBike,
         this.showLime
       ]);
     },
