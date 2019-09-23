@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <transition
+    enter-active-class="animated slideInUp fast"
+    leave-active-class="animated slideOutDown fast">
       <v-card class="card" width="100vw" height="60vh">
         <v-toolbar flat color="transparent">
           <v-toolbar-title>Filter</v-toolbar-title>
@@ -110,7 +112,7 @@
           >Alle Auswählen</v-btn>
         </v-card-actions>
       </v-card>
-    </div>
+  </transition>
 </template>
 
 <script>

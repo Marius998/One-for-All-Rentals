@@ -1,8 +1,7 @@
 <template>
 <transition
-    enter-active-class="animated bounceInLeft"
-    leave-active-class="animated bounceOutRight">
-  <div>
+    enter-active-class="animated slideInUp fast"
+    leave-active-class="animated slideOutDown fast">
     <v-card class="infoCard" height="60vh" :color="scooter.color">
       <v-card-title class="display-2 white--text">
         {{scooter.provider }}
@@ -51,7 +50,6 @@
         <v-btn :href="scooter.deeplink" large class="rent-btn">Ausleihen</v-btn>
       </v-card-actions>
     </v-card>
-  </div>
 </transition>
 
 </template>
