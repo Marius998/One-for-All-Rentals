@@ -116,8 +116,8 @@
 				}"
     >
       <GmapCluster
-        zoomOnClick = true
-        :maxZoom="14"
+        :zoomOnClick="true"
+        :maxZoom="15"
         :minimumClusterSize="4"
       >
         <!-- Nextbikes Marker -->
@@ -287,6 +287,7 @@ export default {
     panToCurrent() {
       this.$refs.mapRef.$mapPromise.then(map => {
         map.panTo(this.userPosition);
+        map.setZoom(16);
       });
     },
 
