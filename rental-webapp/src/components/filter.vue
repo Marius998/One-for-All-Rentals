@@ -187,9 +187,9 @@ export default {
   },
 
   created() {
-    if (localStorage.getItem('Nextbike') == 'true') {this.selected.push(0);}
-    if (localStorage.getItem('Rhingo') == 'true') {this.selected.push(2);}
-    if (localStorage.getItem('Tier') == 'true') {this.selected.push(3);}
+    if (localStorage.getItem('Nextbike') == 'true' || localStorage.getItem('Nextbike') == null) {this.selected.push(0);}
+    if (localStorage.getItem('Rhingo') == 'true' || localStorage.getItem('Rhingo') == null) {this.selected.push(2);}
+    if (localStorage.getItem('Tier') == 'true' || localStorage.getItem('Tier') == null) {this.selected.push(3);}
     if (localStorage.getItem('Lime') == 'true') {this.selected.push(4);}
   },
 
