@@ -188,6 +188,17 @@
           :key="index"
           v-for="(m, index) in fordBikes"
 
+          :position="{lat : m.lat, lng : m.lng}"
+          :clickable="true"
+          :draggable="false"
+          :icon="m.icon"
+
+
+          @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard"
+            />
+      </div>
+
+
         <!-- Lime Marker -->
       <div v-if="showLime" class="showWrapper">
         <GmapMarker
@@ -198,16 +209,14 @@
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
-
-          @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard"
-        />
-      </div>
-
-
-          @click="currentScooter = lime[index]; display_infocard=!display_infocard"
+           @click="currentScooter = lime[index]; display_infocard=!display_infocard"
           repeat = "20px"
         />
       </div>
+
+
+         
+      
 
 
         <!-- User Marker -->
