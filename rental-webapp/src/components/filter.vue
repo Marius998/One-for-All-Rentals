@@ -157,21 +157,22 @@ export default {
     ],
     loading: false,
     loading_deselect: false,
-    selected: [0,2,3],
 
-    showNextBikes: this,
-    showRhingo: true,
-    showTier: true,
-    showFordBike: true
+    selected : [],
+    store : Object
+
   }),
 
+  props : ['showNextBikes','showRhingo','showTier','showLime'],
+  
   methods: {
     sendData: function() {
       this.$emit("provider", [
         this.showNextBikes,
         this.showRhingo,
         this.showTier,
-        this.showFordBike
+        this.showFordBike,
+        this.showLime
       ]);
     },
 
@@ -226,9 +227,30 @@ export default {
       this.showNextBikes = this.selected.includes(0);
       this.showRhingo = this.selected.includes(2);
       this.showTier = this.selected.includes(3);
+      this.showLime = this.selected.includes(4);
 
       this.sendData();
     }
+  },
+  created() {
+
+    console.log("Filter created");
+    this.store = window.localStorage;
+    console.log(this.store.getItem('Nextbike'));
+    
+      if(this.store.getItem('Nextbike') == 'true'){
+          this.selected.push(0);
+      }
+
+       if(this.store.getItem('Rhingo') == 'true'){
+          this.selected.push(2);
+      }
+       if(this.store.getItem('Tier') == 'true'){
+          this.selected.push(3);
+      }
+       if(this.store.getItem('Lime') == 'true'){
+          this.selected.push(4);
+      }      
   }
 };
 </script>

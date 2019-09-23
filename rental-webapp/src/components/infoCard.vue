@@ -1,4 +1,7 @@
 <template>
+<transition
+    enter-active-class="animated bounceInLeft"
+    leave-active-class="animated bounceOutRight">
   <div>
     <v-card class="infoCard" height="60vh" :color="scooter.color">
       <v-card-title class="display-2 white--text">
@@ -49,6 +52,8 @@
       </v-card-actions>
     </v-card>
   </div>
+</transition>
+
 </template>
 
 

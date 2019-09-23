@@ -1,10 +1,16 @@
 <template>
   <div>
-    <app-route :userPos="userPosition" :overlay="overlay_route"></app-route>
+    <app-route class="routeMenu" :userPos="userPosition" v-show="display_route"></app-route>
 
-    <providerFilter v-show="display_filter" @provider="updateProvider"></providerFilter>
+    <providerFilter v-show="display_filter" @provider="updateProvider"
+    :showLime="showLime"
+    :showRhingo="showRhingo"
+    :showTier="showTier"
+    :showNextBikes="showNextBike"
+        ></providerFilter>  
 
-    <v-speed-dial
+
+    <v-speed-dial v-show="!display_route"
       class="btn"
       v-model="fab"
       top
@@ -28,17 +34,17 @@
         <v-icon color="black">filter_list</v-icon>
       </v-btn>
 
-      <v-btn fab dark small color="white" @click="overlay_route=!overlay_route">
-        <v-icon color="black">directions</v-icon>
+      <v-btn fab dark small color="white" @click="display_route=!display_route">
+        <v-icon color="black">attach_money</v-icon>
       </v-btn>
     </v-speed-dial>
 
     <v-btn
-      :class="{close_btn_pos1 : overlay_route, close_btn_pos2 : display_filter || display_infocard}"
+      :class="{close_btn_pos1 : display_route, close_btn_pos2 : display_filter || display_infocard}"
       fab
       color="white"
-      v-show="overlay_route || display_infocard || display_filter"
-      @click="overlay_route=false; display_filter=false; display_infocard=false"
+      v-show="display_route || display_infocard || display_filter"
+      @click="display_route=false; display_filter=false; display_infocard=false"
     >
       <v-icon color="black">close</v-icon>
     </v-btn>
@@ -48,8 +54,8 @@
       class="gmap"
       :center="{lat:50.946256, lng:6.897077}"
       :zoom="16"
-      @click="display_infocard = false; display_filter = false"
-      :class="{blurred : display_infocard || display_filter}"
+      @click="display_infocard = false; display_filter = false; display_route = false"
+      :class="{blurred : display_infocard || display_filter || display_route}"
       map-type-id="roadmap"
       :options="{
 			gestureHandling : 'greedy',
@@ -150,7 +156,7 @@
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
-          @click="currentScooter = nextBikes[index]; display_infocard=!display_infocard; display_filter=false"
+          @click="currentScooter = nextBikes[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
         />
       </div>
 
@@ -163,7 +169,7 @@
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
-          @click="currentScooter = rhingo[index]; display_infocard=!display_infocard"
+          @click="currentScooter = rhingo[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
         />
       </div>
 
@@ -176,22 +182,40 @@
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
-          @click="currentScooter = tier[index]; display_infocard=!display_infocard"
+          @click="currentScooter = tier[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
         />
       </div>
+
 
       <!-- Fordbike Marker -->
       <div v-if="showFordBike" class="showWrapper">
         <GmapMarker
           :key="index"
           v-for="(m, index) in fordBikes"
+
+        <!-- Lime Marker -->
+      <div v-if="showLime" class="showWrapper">
+        <GmapMarker
+          :key="index"
+          v-for="(m, index) in lime"
+
           :position="{lat : m.lat, lng : m.lng}"
           :clickable="true"
           :draggable="false"
           :icon="m.icon"
+
           @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard"
         />
       </div>
+
+
+          @click="currentScooter = lime[index]; display_infocard=!display_infocard"
+          repeat = "20px"
+        />
+      </div>
+
+
+        <!-- User Marker -->
 
       <GmapMarker
         titel="userPosition"
@@ -220,8 +244,13 @@ import providerFilter from "./filter";
 import * as fetchNextbike from "@/scripts/nextBike";
 import * as fetchRhingo from "@/scripts/rhingo";
 import * as fetchTier from "@/scripts/tier";
+
 import * as fetchFordbike from "@/scripts/fordbike";
 // import * as fetchFordbike from "@/scripts/fordbike";
+
+import * as fetchLime from "@/scripts/lime";
+import * as Storage from "@/scripts/Storage";
+
 import { constants } from "crypto";
 
 export default {
@@ -234,18 +263,31 @@ export default {
 
   data() {
     return {
-      overlay_route: false, //steuert das Anzeigen der route component
+
+      store : Object,
+      
+      display_route: false, //steuert das Anzeigen der route component
+
       fab: false, //kontroliert das Speed-dial Icon
 
       // speichert welche Anbieter ausgewählt wurden und als Marker dargestellt werden
       showNextBike: Boolean,
       showRhingo: Boolean,
       showTier: Boolean,
+
       showFordBike: Boolean,
       nextBikes: [], // speichert die nextBikes
       rhingo: [], // speichert die Rhingo Vehicle
       tier: [], // speichert die Tier Vehicle
       fordBikes: [], // speichert die Fordbikes
+
+      showLime: Boolean,
+
+      nextBikes: [], // speichert die nextBikes
+      rhingo: [], // speichert die Rhingo Vehicle
+      tier: [], // speichert die Tier Vehicle
+      lime: [], // speichert die Lime Vehicle
+
 
       display_infocard: false, // entscheidet um die infoCard angezeigt werden soll
       display_filter: false,
@@ -262,10 +304,21 @@ export default {
 
   methods: {
     updateProvider(e) {
+      console.log("update provider");
       this.showNextBike = e[0];
       this.showRhingo = e[1];
-      this.showTier = e[2];
-      
+      this.showTier = e[2];   
+
+      this.showLime = e[3];
+
+      console.log(e);
+
+      this.store.setItem('Nextbike',this.showNextBike);
+      this.store.setItem('Rhingo',this.showRhingo);
+      this.store.setItem('Tier',this.showTier);
+      this.store.setItem('Lime',this.showLime);
+      console.log("asd");
+
     },
     panToCurrent() {
       this.$refs.mapRef.$mapPromise.then(map => {
@@ -314,8 +367,17 @@ export default {
 
   created() {
     this.$nextTick(function() {
-      console.log("locating ...");
 
+      // Filter bei Start mit LokelenDaten synchronisieren
+      this.store = window.localStorage;
+      console.log("store created");
+      
+      this.showNextBike = this.store.getItem('Nextbike');
+      this.showRhingo = this.store.getItem('Rhingo') ;
+      this.showTier = this.store.getItem('Tier') ;
+      this.showLime = this.store.getItem('Lime');
+
+      
       let position = navigator.geolocation.watchPosition(
         position => {
           console.log("located");
@@ -367,6 +429,7 @@ export default {
         .catch(function() {
           console.log("errorTier");
         }),
+
       fetchFordbike
         .fetchFordbike()
         .then(ford => {
@@ -375,6 +438,16 @@ export default {
         .catch(function() {
           console.log("errorFordbike");
         })
+
+        fetchLime
+        .fetchLime()
+        .then(limeScooter => {
+          this.lime = limeScooter;
+        })
+        .catch(function() {
+          console.log("errorTier");
+        });
+
   },
 
   computed: {}
@@ -404,7 +477,7 @@ export default {
   z-index: 100;
   position: fixed;
   bottom: 2vh;
-  right: 2vw;
+  right: 5vw;
 }
 
 .close_btn_pos2 {
