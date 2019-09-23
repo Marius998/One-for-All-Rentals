@@ -3,10 +3,11 @@
     <app-route class="routeMenu" :userPos="userPosition" v-show="overlay_route"></app-route>
 
     <providerFilter v-show="display_filter" @provider="updateProvider"
-     :showNextBike="showNextBike"
-     :showRhingo="showRhingo"
-     :showTier="showTier"
-     :showLime="showLime"></providerFilter>  
+    :showLime="showLime"
+    :showRhingo="showRhingo"
+    :showTier="showTier"
+    :showNextBikes="showNextBike"
+        ></providerFilter>  
 
 
     <v-speed-dial
@@ -277,10 +278,13 @@ export default {
       this.showTier = e[2];
       this.showLime = e[3];
 
+      console.log(e);
+
       this.store.setItem('Nextbike',this.showNextBike);
       this.store.setItem('Rhingo',this.showRhingo);
       this.store.setItem('Tier',this.showTier);
       this.store.setItem('Lime',this.showLime);
+      console.log("asd");
     },
     panToCurrent() {
       this.$refs.mapRef.$mapPromise.then(map => {
@@ -334,9 +338,9 @@ export default {
       this.store = window.localStorage;
       console.log("store created");
       
-      this.showNextBike = this.store.getItem('Nextbike');
-      this.showRhingo = this.store.getItem('Rhingo');
-      this.showTier = this.store.getItem('Tier');
+      this.showNextBike = this.store.getItem('Nextbike') ;
+      this.showRhingo = this.store.getItem('Rhingo') ;
+      this.showTier = this.store.getItem('Tier') ;
       this.showLime = this.store.getItem('Lime');
 
       
