@@ -4115,11 +4115,14 @@ input, select, textarea {
 		width: 30%;
 	}
 
-	.flex-box {
-		display: flex;
-		justify-content: space-evenly;
-	}
-
 	.mockup-headline {
 		margin-top: 55px;
+	}
+
+
+	#logo {
+		width: 30%;
+		margin-top: 50px;
+		
+
 	}
