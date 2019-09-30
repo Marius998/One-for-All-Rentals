@@ -4109,3 +4109,17 @@ input, select, textarea {
 					}
 
 	}
+
+
+	.mockup {
+		width: 30%;
+	}
+
+	.flex-box {
+		display: flex;
+		justify-content: space-evenly;
+	}
+
+	.mockup-headline {
+		margin-top: 55px;
+	}
