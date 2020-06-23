@@ -12,7 +12,7 @@
       right
       open-on-hover
       direction="bottom"
-      transition="slide-y-reverse-transition"
+      transition="slide-y-reverse-transition" 
     >
       <template v-slot:activator>
         <v-btn v-model="fab" color="white" fab dark>
