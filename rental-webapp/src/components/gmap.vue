@@ -433,7 +433,7 @@ export default {
         })
         .catch(function() {
           console.log("errorRhingo");
-        }),
+        })
       fetchTier
         .fetchTier()
         .then((tierScooter) => {

@@ -6,8 +6,6 @@ import * as VueGoogleMaps from "vue2-google-maps";
 
 Vue.config.productionTip = false;
 
-console.debug(process.env.VUE_APP_MAPS_API_KEY)
-
 Vue.use(VueGoogleMaps, {
   load: {
     key: process.env.VUE_APP_MAPS_API_KEY,

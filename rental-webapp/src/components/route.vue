@@ -10,7 +10,10 @@
               label="Ziel eingeben..."
               :loading="loading"
               clearable
-              @click:clear="distance = undefined; searchStarted = false"
+              @click:clear="
+                distance = undefined;
+                searchStarted = false;
+              "
               append-icon="search"
               @click:append="getRoute"
               @keydown.enter="getRoute"
@@ -19,7 +22,13 @@
         </v-card>
 
         <div class="second_card" v-if="distance">
-          <v-card class="distance-card" color="transparent" text-color="black" flat large>
+          <v-card
+            class="distance-card"
+            color="transparent"
+            text-color="black"
+            flat
+            large
+          >
             <v-row align="center" justify="center">
               <v-chip class="ma-2" color="white" text-color="black">
                 <v-icon left>navigation</v-icon>
@@ -35,14 +44,19 @@
                   <v-card :color="provider.color" dark>
                     <v-list-item three-line>
                       <v-list-item-content class="align-self-start">
-                        <v-list-item-title class="headline mb-2" v-text="provider.name"></v-list-item-title>
+                        <v-list-item-title
+                          class="headline mb-2"
+                          v-text="provider.name"
+                        ></v-list-item-title>
 
-                        <v-list-item-subtitle v-text="provider.type"></v-list-item-subtitle>
+                        <v-list-item-subtitle
+                          v-text="provider.type"
+                        ></v-list-item-subtitle>
 
                         <div class="flex-box-item">
                           <v-chip class="ma-2" color="white" text-color="black">
                             <v-icon small left>query_builder</v-icon>
-                            {{ provider.duration}} Minuten
+                            {{ provider.duration }} Minuten
                           </v-chip>
 
                           <v-chip class="ma-2" color="white" text-color="black">
@@ -65,7 +79,6 @@
   </transition>
 </template>
 
-
 <script>
 import { constants } from "crypto";
 
@@ -80,7 +93,7 @@ export default {
         bikeDistance: undefined,
         bikeDuration: undefined,
         moppedDistance: undefined,
-        moppedDuration: undefined
+        moppedDuration: undefined,
       },
 
       distance: undefined,
@@ -100,7 +113,7 @@ export default {
           type: "Motorroller",
           duration: undefined,
           priceCurrentRide: undefined,
-          distance: undefined
+          distance: undefined,
         },
         {
           name: "NextBike",
@@ -114,7 +127,7 @@ export default {
           type: "Fahrrad",
           duration: undefined,
           priceCurrentRide: undefined,
-          distance: undefined
+          distance: undefined,
         },
         {
           name: "FordBike",
@@ -128,7 +141,7 @@ export default {
           type: "Fahrrad",
           duration: undefined,
           priceCurrentRide: undefined,
-          distance: undefined
+          distance: undefined,
         },
         {
           name: "Tier",
@@ -142,7 +155,7 @@ export default {
           type: "E-Scooter",
           duration: undefined,
           priceCurrentRide: undefined,
-          distance: undefined
+          distance: undefined,
         },
         {
           name: "Lime",
@@ -156,15 +169,15 @@ export default {
           type: "E-Scooter",
           duration: undefined,
           priceCurrentRide: undefined,
-          distance: undefined
-        }
-      ]
+          distance: undefined,
+        },
+      ],
     };
   },
 
   methods: {
     getBikeRoute() {
-      var key = "AIzaSyDP0J6PujCjhbuKcqJOfXvuiwgxyGYXKOc";
+      var key = process.env.VUE_APP_DIRECTIONS_API_KEY;
       var proxyUrl = "https://cors-anywhere.herokuapp.com/";
       var origin = this.userPos.lat + "," + this.userPos.lng;
 
@@ -176,9 +189,9 @@ export default {
         "&mode=bicycling&key=" +
         key;
 
-      return fetch(proxyUrl + apiBike)
-        .then(res => res.json())
-        .then(data => {
+      return fetch(apiBike)
+        .then((res) => res.json())
+        .then((data) => {
           console.log("bikeFetched");
           this.routeData.bikeDistance = data.routes[0].legs[0].distance.value;
           this.routeData.bikeDuration = data.routes[0].legs[0].duration.value;
@@ -189,7 +202,8 @@ export default {
     },
 
     getMoppedRoute() {
-      var key = "AIzaSyDP0J6PujCjhbuKcqJOfXvuiwgxyGYXKOc";
+      var key = process.env.VUE_APP_DIRECTIONS_API_KEY;
+
       var proxyUrl = "https://cors-anywhere.herokuapp.com/";
       var origin = this.userPos.lat + "," + this.userPos.lng;
 
@@ -203,9 +217,9 @@ export default {
         "&mode=driving&avoid=highways&key=" +
         key;
 
-      return fetch(proxyUrl + apiMoped)
-        .then(res => res.json())
-        .then(data => {
+      return fetch(apiMoped)
+        .then((res) => res.json())
+        .then((data) => {
           console.log("moppedFetched");
           this.routeData.moppedDistance = data.routes[0].legs[0].distance.value;
           this.routeData.moppedDuration = data.routes[0].legs[0].duration.value;
@@ -230,7 +244,7 @@ export default {
     },
 
     calculatePrice() {
-      this.provider.forEach(provider => {
+      this.provider.forEach((provider) => {
         if (provider.bikeRoute) {
           provider.distance = Math.round(this.routeData.bikeDistance / 1000);
           this.distance = provider.distance;
@@ -253,7 +267,7 @@ export default {
             Math.ceil((provider.pricePerUnit * provider.duration) / 30);
         }
       });
-    }
+    },
   },
 
   computed: {
@@ -263,21 +277,19 @@ export default {
       } else {
         return false;
       }
-    }
+    },
   },
 
   watch: {
     searchStarted: function reloadProvider() {
       this.provider.forEach(
-        provider =>
+        (provider) =>
           (provider.choosen = localStorage.getItem(provider.name) == "true")
       );
-    }
-  }
+    },
+  },
 };
 </script>
-
-
 
 <style scoped>
 .overlay-card {
@@ -348,7 +360,3 @@ export default {
   display: none;
 }
 </style>
-
-
-
-

@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "findyourvehicle",
     "public": "dist",
     "ignore": [
       "firebase.json",
