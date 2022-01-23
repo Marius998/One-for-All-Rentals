@@ -11,7 +11,7 @@
     "core-js": "^2.6.5",
     "firebase": "^9.6.4",
     "marker-clusterer-plus": "^2.1.4",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "vue": "^2.6.10",
     "vue-radial-menu": "^1.1.1",
     "vue-router": "^3.0.3",
