@@ -1,8 +1,15 @@
 <template>
   <div>
-    <app-route class="routeMenu" :userPos="userPosition" v-show="display_route"></app-route>
+    <app-route
+      class="routeMenu"
+      :userPos="userPosition"
+      v-show="display_route"
+    ></app-route>
 
-    <providerFilter v-show="display_filter" @provider="updateProvider"></providerFilter>
+    <providerFilter
+      v-show="display_filter"
+      @provider="updateProvider"
+    ></providerFilter>
 
     <v-speed-dial
       v-show="!display_route"
@@ -12,7 +19,7 @@
       right
       open-on-hover
       direction="bottom"
-      transition="slide-y-reverse-transition" 
+      transition="slide-y-reverse-transition"
     >
       <template v-slot:activator>
         <v-btn v-model="fab" color="white" fab dark>
@@ -25,21 +32,40 @@
         <v-icon color="black">location_searching</v-icon>
       </v-btn>
 
-      <v-btn fab dark small color="white" @click="display_filter=!display_filter">
+      <v-btn
+        fab
+        dark
+        small
+        color="white"
+        @click="display_filter = !display_filter"
+      >
         <v-icon color="black">filter_list</v-icon>
       </v-btn>
 
-      <v-btn fab dark small color="white" @click="display_route=!display_route">
+      <v-btn
+        fab
+        dark
+        small
+        color="white"
+        @click="display_route = !display_route"
+      >
         <v-icon color="black">attach_money</v-icon>
       </v-btn>
     </v-speed-dial>
 
     <v-btn
-      :class="{close_btn_pos1 : display_route, close_btn_pos2 : display_filter || display_infocard}"
+      :class="{
+        close_btn_pos1: display_route,
+        close_btn_pos2: display_filter || display_infocard,
+      }"
       fab
       color="white"
       v-show="display_route || display_infocard || display_filter"
-      @click="display_route=false; display_filter=false; display_infocard=false"
+      @click="
+        display_route = false;
+        display_filter = false;
+        display_infocard = false;
+      "
     >
       <v-icon color="black">close</v-icon>
     </v-btn>
@@ -47,89 +73,98 @@
     <GmapMap
       ref="mapRef"
       class="gmap"
-      :center="{lat:50.946256, lng:6.897077}"
+      :center="{ lat: 50.946256, lng: 6.897077 }"
       :zoom="16"
-      @click="display_infocard = false; display_filter = false; display_route = false"
-      :class="{blurred : display_infocard || display_filter || display_route}"
+      @click="
+        display_infocard = false;
+        display_filter = false;
+        display_route = false;
+      "
+      :class="{ blurred: display_infocard || display_filter || display_route }"
       map-type-id="roadmap"
       :options="{
-			gestureHandling : 'greedy',
-			disableDefaultUI : true,
-			styles: [
-						{
-              elementType: 'geometry',
-              stylers: [{color: '#011b26'}]
-              },
-						{
-              elementType: 'labels.icon',
-              stylers: [{visibility: 'off'}]
-            },
-            {
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#021a26'},{lightness: -5},{visibility: 'on'}]
-            },
-						{
-              elementType: 'labels.text.stroke',
-              stylers: [{weight: 1.5}]
-            },
-						{
-							featureType: 'administrative',
-							elementType: 'geometry',
-							stylers: [{color: '#757575'}]
-						},
-						{
-							featureType: 'administrative.land_parcel',
-							elementType: 'geometry',
-							stylers: [{visibility: 'off'}]
-						},
-						{
-							featureType: 'poi.park',
-							elementType: 'geometry.fill',
-							stylers: [{color: '#002226'}]
-						},
-						{
-							featureType: 'road',
-							elementType: 'geometry.fill',
-							stylers: [{color: '#496773'}]
-						},
-						{
-							featureType: 'transit',
-							elementType: 'geometry.fill',
-							stylers: [{color: '#2f4d59'}]
-						},
-						{
-              featureType: 'transit.station.bus',
-              elementType: 'labels.icon',
-              stylers: [{saturation: -60},{visibility: 'on'}]
-            },
-						{
-              featureType: 'transit.station.rail',
-              elementType: 'labels.icon',
-              stylers: [{saturation: -60},{visibility: 'on'}]
-            },
-						{
-							featureType: 'water',
-							elementType: 'geometry',
-							stylers: [{color: '#01111e'}]
-						}
-					]
-				}"
+        gestureHandling: 'greedy',
+        disableDefaultUI: true,
+        styles: [
+          {
+            elementType: 'geometry',
+            stylers: [{ color: '#011b26' }],
+          },
+          {
+            elementType: 'labels.icon',
+            stylers: [{ visibility: 'off' }],
+          },
+          {
+            elementType: 'labels.text.fill',
+            stylers: [
+              { color: '#021a26' },
+              { lightness: -5 },
+              { visibility: 'on' },
+            ],
+          },
+          {
+            elementType: 'labels.text.stroke',
+            stylers: [{ weight: 1.5 }],
+          },
+          {
+            featureType: 'administrative',
+            elementType: 'geometry',
+            stylers: [{ color: '#757575' }],
+          },
+          {
+            featureType: 'administrative.land_parcel',
+            elementType: 'geometry',
+            stylers: [{ visibility: 'off' }],
+          },
+          {
+            featureType: 'poi.park',
+            elementType: 'geometry.fill',
+            stylers: [{ color: '#002226' }],
+          },
+          {
+            featureType: 'road',
+            elementType: 'geometry.fill',
+            stylers: [{ color: '#496773' }],
+          },
+          {
+            featureType: 'transit',
+            elementType: 'geometry.fill',
+            stylers: [{ color: '#2f4d59' }],
+          },
+          {
+            featureType: 'transit.station.bus',
+            elementType: 'labels.icon',
+            stylers: [{ saturation: -60 }, { visibility: 'on' }],
+          },
+          {
+            featureType: 'transit.station.rail',
+            elementType: 'labels.icon',
+            stylers: [{ saturation: -60 }, { visibility: 'on' }],
+          },
+          {
+            featureType: 'water',
+            elementType: 'geometry',
+            stylers: [{ color: '#01111e' }],
+          },
+        ],
+      }"
     >
-      <GmapCluster
-        :zoomOnClick="true"
-        :maxZoom="15"
-        :minimumClusterSize="4"
-      >
+      <GmapCluster :zoomOnClick="true" :maxZoom="15" :minimumClusterSize="4">
         <!-- Nextbikes Marker -->
         <div v-if="showNextBike" class="showWrapper">
           <GmapMarker
             :key="index"
             v-for="(m, index) in nextBikes"
-            :position="{lat : m.lat, lng : m.lng}"
+            :position="{ lat: m.lat, lng: m.lng }"
             :clickable="true"
             :draggable="false"
             :icon="m.icon"
-            @click="currentScooter = nextBikes[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
+            @click="
+              currentScooter = nextBikes[index];
+              display_infocard = !display_infocard;
+              display_filter = false;
+              display_route = false;
+            "
           />
         </div>
 
@@ -138,11 +173,16 @@
           <GmapMarker
             :key="index"
             v-for="(m, index) in rhingo"
-            :position="{lat : m.lat, lng : m.lng}"
+            :position="{ lat: m.lat, lng: m.lng }"
             :clickable="true"
             :draggable="false"
             :icon="m.icon"
-            @click="currentScooter = rhingo[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
+            @click="
+              currentScooter = rhingo[index];
+              display_infocard = !display_infocard;
+              display_filter = false;
+              display_route = false;
+            "
           />
         </div>
 
@@ -151,11 +191,16 @@
           <GmapMarker
             :key="index"
             v-for="(m, index) in tier"
-            :position="{lat : m.lat, lng : m.lng}"
+            :position="{ lat: m.lat, lng: m.lng }"
             :clickable="true"
             :draggable="false"
             :icon="m.icon"
-            @click="currentScooter = tier[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
+            @click="
+              currentScooter = tier[index];
+              display_infocard = !display_infocard;
+              display_filter = false;
+              display_route = false;
+            "
           />
         </div>
 
@@ -164,11 +209,16 @@
           <GmapMarker
             :key="index"
             v-for="(m, index) in fordBikes"
-            :position="{lat : m.lat, lng : m.lng}"
+            :position="{ lat: m.lat, lng: m.lng }"
             :clickable="true"
             :draggable="false"
             :icon="m.icon"
-            @click="currentScooter = fordBikes[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
+            @click="
+              currentScooter = fordBikes[index];
+              display_infocard = !display_infocard;
+              display_filter = false;
+              display_route = false;
+            "
           />
         </div>
 
@@ -177,11 +227,16 @@
           <GmapMarker
             :key="index"
             v-for="(m, index) in lime"
-            :position="{lat : m.lat, lng : m.lng}"
+            :position="{ lat: m.lat, lng: m.lng }"
             :clickable="true"
             :draggable="false"
             :icon="m.icon"
-            @click="currentScooter = lime[index]; display_infocard=!display_infocard; display_filter=false; display_route=false"
+            @click="
+              currentScooter = lime[index];
+              display_infocard = !display_infocard;
+              display_filter = false;
+              display_route = false;
+            "
             repeat="20px"
           />
         </div>
@@ -202,7 +257,6 @@
     <InfoCard v-show="display_infocard" :scooter="currentScooter" />
   </div>
 </template>
-
 
 <script>
 import Vue from "vue";
@@ -226,14 +280,12 @@ import * as fetchFordbike from "@/scripts/fordbike";
 import * as fetchLime from "@/scripts/lime";
 import * as Storage from "@/scripts/Storage";
 
-import { constants } from "crypto";
-
 export default {
   name: "gmap",
   components: {
     "app-route": route,
     InfoCard,
-    providerFilter
+    providerFilter,
   },
 
   data() {
@@ -268,8 +320,8 @@ export default {
       currentScooters: [],
       userPosition: {
         lat: 50.946256,
-        lng: 6.897077
-      }
+        lng: 6.897077,
+      },
     };
   },
 
@@ -285,7 +337,7 @@ export default {
     },
 
     panToCurrent() {
-      this.$refs.mapRef.$mapPromise.then(map => {
+      this.$refs.mapRef.$mapPromise.then((map) => {
         map.panTo(this.userPosition);
         map.setZoom(16);
       });
@@ -294,7 +346,7 @@ export default {
     setMarkerPosition(position) {
       userPosition = {
         lat: position.coords.latitude,
-        lng: position.coords.longitude
+        lng: position.coords.longitude,
       };
     },
 
@@ -307,14 +359,14 @@ export default {
       while (vehicleList[vehicleCounter] != undefined) {
         const marker = {
           lat: vehicleList[vehicleCounter].lat,
-          lng: vehicleList[vehicleCounter].lng
+          lng: vehicleList[vehicleCounter].lng,
         };
 
         this.currentScooters.push({
           position: marker,
           icon: vehicleList[vehicleCounter].icon,
           vehicle: vehicleList[vehicleCounter],
-          provider: vehicleList[vehicleCounter].provider
+          provider: vehicleList[vehicleCounter].provider,
         });
         vehicleCounter++;
       }
@@ -327,13 +379,13 @@ export default {
       this.currentScooters = this.currentScooters.filter(function(obj) {
         return obj.provider != provider;
       });
-    }
+    },
   },
 
   created() {
     this.$nextTick(function() {
       let position = navigator.geolocation.watchPosition(
-        position => {
+        (position) => {
           console.log("located");
           console.log(position);
           console.log("lat:", position.coords.latitude);
@@ -341,23 +393,23 @@ export default {
 
           this.userPosition = {
             lat: position.coords.latitude,
-            lng: position.coords.longitude
+            lng: position.coords.longitude,
           };
         },
-        positionError => {
+        (positionError) => {
           console.log(positionError);
         },
         {
           enableHighAccuracy: false,
           timeout: 30000,
-          maximumAge: 15000
+          maximumAge: 15000,
         }
       );
 
-      navigator.geolocation.getCurrentPosition(position => {
+      navigator.geolocation.getCurrentPosition((position) => {
         this.userPosition = {
           lat: position.coords.latitude,
-          lng: position.coords.longitude
+          lng: position.coords.longitude,
         };
 
         this.panToCurrent();
@@ -368,7 +420,7 @@ export default {
   mounted() {
     fetchNextbike
       .fetchNextbike()
-      .then(bikes => {
+      .then((bikes) => {
         this.nextBikes = bikes;
       })
       .catch(function() {
@@ -376,7 +428,7 @@ export default {
       }),
       fetchRhingo
         .fetchRhingo()
-        .then(moped => {
+        .then((moped) => {
           this.rhingo = moped;
         })
         .catch(function() {
@@ -384,7 +436,7 @@ export default {
         }),
       fetchTier
         .fetchTier()
-        .then(tierScooter => {
+        .then((tierScooter) => {
           this.tier = tierScooter;
         })
         .catch(function() {
@@ -392,28 +444,24 @@ export default {
         }),
       fetchFordbike
         .fetchFordbike()
-        .then(ford => {
+        .then((ford) => {
           this.fordBikes = ford;
         })
         .catch(function() {
           console.log("errorFordbike");
         });
-
     fetchLime
       .fetchLime()
-      .then(limeScooter => {
+      .then((limeScooter) => {
         this.lime = limeScooter;
       })
       .catch(function() {
         console.log("errorLime");
       });
   },
-
-  computed: {}
+  computed: {},
 };
 </script>
-
-
 
 <style scoped>
 .gmap {
@@ -446,5 +494,3 @@ export default {
   top: 10vh;
 }
 </style>
-
-

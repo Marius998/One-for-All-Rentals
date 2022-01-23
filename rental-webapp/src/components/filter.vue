@@ -23,7 +23,7 @@
                 <v-img :src="selection.avatar"></v-img>
               </v-avatar>
 
-              <span>{{selection.text}}</span>
+              <span>{{ selection.text }}</span>
             </v-chip>
           </ul>
         </v-row>

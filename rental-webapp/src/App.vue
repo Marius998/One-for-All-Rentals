@@ -14,11 +14,8 @@ import appBar from "./components/appBar";
 export default {
   name: "App",
   components: {
-    appBar
+    appBar,
   },
-  data: () => ({
-    //
-  })
 };
 </script>
 
