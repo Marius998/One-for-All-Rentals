@@ -7,7 +7,7 @@ https://marius998.github.io/One-for-All-Rentals/
 
 ## Live Demo 
 
-https://allforone.hammer-marius.de
+https://one-for-all-b8cd4.web.app
 
 
 ## Project setup
